@@ -49,12 +49,12 @@ def GChain.iter {X : Type*} [MetricSpace X] [SeminormedAddCommGroup X]
 
 @[simp] lemma GChain.iter_succ {X} [MetricSpace X] [SeminormedAddCommGroup X]
     (G : GChain X) (n : ℕ) (x : X) : G.iter (n + 1) x = G.apply (G.iter n x) := by
-  simp [GChain.iter, Function.iterate_succ', Function.comp]
+  simp only [GChain.iter, Function.iterate_succ', Function.comp_apply]
 
 lemma GChain.iter_add {X} [MetricSpace X] [SeminormedAddCommGroup X]
     (G : GChain X) (m n : ℕ) (x : X) :
-    G.iter (m + n) x = G.iter n (G.iter m x) := by
-  simp [GChain.iter, Function.iterate_add, Function.comp]
+    G.iter (m + n) x = G.iter m (G.iter n x) := by
+  simp only [GChain.iter, Function.iterate_add, Function.comp_apply]
 
 -- ---------------------------------------------------------------------------
 -- 2.  g-series regime taxonomy
@@ -190,17 +190,19 @@ theorem poincare_collatz_contracting
       dist (G.iter n x) (G.iter (n + 1) x) < r_star := by
   -- kⁿ → 0, so kⁿ · dist(x, G(x)) < r_star for large n
   -- We want n ≥ 33 as well — take max of the two requirements
-  set d := dist x (G.apply x)
-  -- If d = 0 then G(x) = x and all iterates equal x; dist = 0 < r_star
-  by_cases hd : d = 0
-  · exact ⟨33, le_refl _, by
-      have : G.apply x = x := by
-        have := dist_eq_zero.mp hd; exact this.symm
-      simp [GChain.iter, this, r_star_pos]⟩
-  · -- d > 0
-    have hd_pos : 0 < d := lt_of_le_of_ne dist_nonneg (Ne.symm hd)
+  -- If dist(x, G(x)) = 0 then G(x) = x and all iterates equal x; dist = 0 < r_star
+  by_cases hd : dist x (G.apply x) = 0
+  · refine ⟨33, le_refl _, ?_⟩
+    -- iter_consecutive_dist gives dist(G^33 x, G^34 x) ≤ k^33 * dist(x, G x) = 0
+    have bound := iter_consecutive_dist G k hk_nn hk_lip x 33
+    rw [hd, mul_zero] at bound
+    linarith [r_star_pos,
+              dist_nonneg (x := G.iter 33 x) (y := G.iter (33 + 1) x)]
+  · -- dist(x, G(x)) > 0
+    have hd_pos : 0 < dist x (G.apply x) := lt_of_le_of_ne dist_nonneg (Ne.symm hd)
     -- We need kⁿ * d < r_star, i.e. kⁿ < r_star / d
     -- Since k < 1 and k ≥ 0, kⁿ → 0
+    set d := dist x (G.apply x) with hd_def
     have hk_pow : Filter.Tendsto (fun n => k ^ n) Filter.atTop (nhds 0) :=
       tendsto_pow_atTop_nhds_zero_of_lt_one hk_nn hk_lt
     -- There exists N₁ such that n ≥ N₁ → kⁿ * d < r_star
@@ -210,10 +212,8 @@ theorem poincare_collatz_contracting
       obtain ⟨N₁, hN₁⟩ := hk_pow (r_star / d) hr
       refine ⟨N₁, fun n hn => ?_⟩
       have hkn := hN₁ n hn
-      rw [Real.dist_eq, abs_of_nonneg (pow_nonneg hk_nn n)] at hkn
-      -- |kⁿ - 0| = kⁿ < r_star / d, so kⁿ * d < r_star
-      rw [sub_zero] at hkn
-      exact (div_lt_iff hd_pos).mp hkn
+      rw [Real.dist_eq, sub_zero, abs_of_nonneg (pow_nonneg hk_nn n)] at hkn
+      exact (lt_div_iff hd_pos).mp hkn
     obtain ⟨N₁, hN₁⟩ := this
     -- Take n = max(33, N₁)
     set n := max 33 N₁
