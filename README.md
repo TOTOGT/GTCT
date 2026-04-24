@@ -5,7 +5,7 @@
 > "Your education is yours. No one can take it away from you."  
 > — Pablo Nogueira Grossi, Newark NJ · *The Seed*
 
-**Buy access:** [brodanova6.gumroad.com/l/soundworks](https://brodanova6.gumroad.com/l/soundworks)  
+**Buy access:** [g6llc.gumroad.com/l/soundworks](https://g6llc.gumroad.com/l/soundworks)  
 **IMPA Portal:** [totogt.github.io/AXLE/impa-portal.html](https://totogt.github.io/AXLE/impa-portal.html)  
 **Public site:** [totogt.github.io/3M](https://totogt.github.io/3M/)
 
@@ -228,7 +228,7 @@ git submodule update --init --recursive
 | G⁴ | GTCT T1 — The IMPA Edition | included | Submitted to IMPA |
 | G⁵ | The Seed — Complete Completeness | 979-8-9954416-5-6 | Published |
 
-**Buy:** [brodanova6.gumroad.com/l/soundworks](https://brodanova6.gumroad.com/l/soundworks)  
+**Buy:** [g6llc.gumroad.com/l/soundworks](https://g6llc.gumroad.com/l/soundworks)  
 **PayPal eBook:** [paypal.me/pgrossi/213.24](https://www.paypal.com/paypalme/pgrossi/213.24)  
 **PayPal Hardcover:** [paypal.me/pgrossi/263.36](https://www.paypal.com/paypalme/pgrossi/263.36)
 
