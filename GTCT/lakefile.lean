@@ -15,3 +15,8 @@ require mathlib from git
 lean_lib GCTC where
   -- Library roots are the files in GCTC/
   globs := #[.andSubmodules `GCTC]
+
+-- dm³ dual-cavity multi-orbit extension
+lean_lib DualChamberGTCT where
+  srcDir := "lean/dm3-dual-cavity"
+  globs  := #[.submodules `DualChamberGTCT]
