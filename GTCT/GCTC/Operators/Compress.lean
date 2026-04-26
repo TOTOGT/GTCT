@@ -6,6 +6,7 @@ Authors: Pablo Nogueira Grossi
 
 -- GCTC.Operators.Compress
 import Mathlib.Topology.MetricSpace.Basic
+import Mathlib.Topology.MetricSpace.Lipschitz
 import Mathlib.Analysis.Normed.Group.Basic
 
 namespace GCTC
