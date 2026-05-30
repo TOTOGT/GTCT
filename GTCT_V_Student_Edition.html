@@ -5,6 +5,7 @@
 <title>Principia Orthogona V — Student Edition | Edição do Estudante</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 /* =========================================================
    PRINCIPIA ORTHOGONA · VOLUME V — STUDENT EDITION
    Bilingual IMPA-style textbook with integrated
@@ -282,7 +283,8 @@ pre.lean .cm{color:#6272a4;font-style:italic}
 /* print */
 @media print{
   html,body{background:#fff;color:#000}
-  .machine, .onboard{background:#fff;color:#000;border-color:#bbb}
+  .machine{display:none !important}
+  .onboard{background:#fff;color:#000;border-color:#bbb}
   .level-head .en, .level-head .br,
   .side.en, .side.br{background:#fff;color:#000}
   .thm{background:#f4f4f4}
@@ -493,7 +495,7 @@ pre.lean .cm{color:#6272a4;font-style:italic}
    <p>Contact manifolds are the odd-dimensional cousins of symplectic manifolds. In classical mechanics they host thermodynamic phase spaces and time-dependent Hamiltonians. Here, the contact form is the geometric enforcement of sequence — the reason GTCT operators do not commute.</p>
 
    <h3>Lean 4</h3>
-<pre class="lean"><span class="cm">-- Axiom 1 encoded as a Lean 4 structure skeleton</span>
+<pre class="lean"><span class="cm">-- Axiom 1 — SKETCH ONLY (pseudocode, not Mathlib4-compilable)</span>
 <span class="kw">structure</span> <span class="tp">ContactManifold</span> (n : <span class="tp">ℕ</span>) <span class="kw">where</span>
   M     : <span class="tp">Type*</span>
   smooth : <span class="tp">SmoothManifold</span> M (2*n+1)
@@ -531,7 +533,7 @@ Using Volume V, explain in plain English why Axiom 1 (contact structure) is <em>
    <p>Variedades de contato são as primas ímpares das variedades simpléticas. Abrigam espaços de fase termodinâmicos e hamiltonianos dependentes do tempo. Aqui, a forma de contato é a imposição geométrica de sequência — a razão pela qual os operadores da GTCT não comutam.</p>
 
    <h3>Lean 4</h3>
-<pre class="lean"><span class="cm">-- Axioma 1 codificado como esqueleto de estrutura em Lean 4</span>
+<pre class="lean"><span class="cm">-- Axioma 1 — ESBOÇO (pseudocódigo, não compila no Mathlib4)</span>
 <span class="kw">structure</span> <span class="tp">VariedadeContato</span> (n : <span class="tp">ℕ</span>) <span class="kw">where</span>
   M            : <span class="tp">Type*</span>
   suave        : <span class="tp">VariedadeSuave</span> M (2*n+1)
@@ -673,7 +675,7 @@ Usando o Volume V, explique em português claro por que o Axioma 1 (estrutura de
   unit_norm    : ∀ x, (∑ i, (δ i x)^2) = 1
 
 <span class="kw">def</span> dominant (Δ : <span class="tp">DimField</span> M) (x : M) : <span class="tp">Fin</span> 12 :=
-  <span class="tp">Finset</span>.argmax (fun i => Δ.δ i x) <span class="tp">Finset</span>.univ</pre>
+  <span class="tp">Finset</span>.univ.argmax (fun i => Δ.δ i x)  <span class="cm">-- use argmax? in current Mathlib4</span></pre>
 
    <h4>Exercises</h4>
    <div class="ex"><span class="n">2.1</span><span class="stars">★</span> Show that the unit-norm constraint forces the image of Δ to lie on S¹¹.</div>
@@ -710,7 +712,7 @@ Given Axioms 8–9 from Volume V, produce a worked example of Δ on the 3-sphere
   norma_unit  : ∀ x, (∑ i, (δ i x)^2) = 1
 
 <span class="kw">def</span> dominante (Δ : <span class="tp">CampoDim</span> M) (x : M) : <span class="tp">Fin</span> 12 :=
-  <span class="tp">Finset</span>.argmax (fun i => Δ.δ i x) <span class="tp">Finset</span>.univ</pre>
+  <span class="tp">Finset</span>.univ.argmax (fun i => Δ.δ i x)  <span class="cm">-- use argmax? in current Mathlib4</span></pre>
 
    <h4>Exercícios</h4>
    <div class="ex"><span class="n">2.1</span><span class="stars">★</span> Mostre que a restrição de norma força a imagem de Δ a estar em S¹¹.</div>
@@ -747,7 +749,6 @@ Com os Axiomas 8–9 do Volume V, produza um exemplo resolvido de Δ na 3-esfera
       <!-- 4 columns × 3 rows of 6x6 mini-heatmaps (represent shift + rank-1 spot) -->
       <g id="matgrid"></g>
     </g>
-    <script/>
     <!-- static labeled heatmaps drawn inline -->
     <g transform="translate(30,30)">
      <!-- We draw 12 mini-matrices programmatically via embedded lines -->
@@ -1800,6 +1801,11 @@ Usando o Cap. 8 e os Apêndices G–K do Volume V, escreva um ensaio de pós-gra
      ========================================================= -->
 <script>
 const engines={};
+let _sharedCtx=null;
+function getSharedCtx(){
+  if(!_sharedCtx) _sharedCtx=new (window.AudioContext||window.webkitAudioContext)();
+  return _sharedCtx;
+}
 function makeEngine(id,cymId,pal){
   return {id,palette:pal,ctx:null,master:null,analyser:null,voices:{bass:null,triad:null,binaural:null,drum:null},
           params:{arame:0.8,caxixi:0.35,binDelta:7,bpm:104},cym:document.getElementById(cymId),
@@ -1807,12 +1813,19 @@ function makeEngine(id,cymId,pal){
 }
 function ensureAudio(E){
   if(E.ctx) return;
-  E.ctx=new (window.AudioContext||window.webkitAudioContext)();
+  E.ctx=getSharedCtx();
   E.master=E.ctx.createGain(); E.master.gain.value=0.65;
   E.analyser=E.ctx.createAnalyser(); E.analyser.fftSize=2048;
   E.master.connect(E.analyser); E.analyser.connect(E.ctx.destination);
 }
-function stopVoice(E,n){ if(E.voices[n]&&E.voices[n].stop){E.voices[n].stop(); E.voices[n]=null;} }
+function stopVoice(E,n){
+  if(!E.voices[n]) return;
+  try{ if(E.voices[n].stop) E.voices[n].stop(); }
+  catch(e){}
+  try{ if(E.voices[n].disconnect) E.voices[n].disconnect(); }
+  catch(e){}
+  E.voices[n]=null;
+}
 function stopAll(E){ Object.keys(E.voices).forEach(k=>stopVoice(E,k)); E.running=false; }
 
 function startBass(E){
@@ -1926,7 +1939,7 @@ function drawCym(E){
     }
   }
   g.fillStyle=c1; g.beginPath(); g.arc(cx,cy,3.5,0,Math.PI*2); g.fill();
-  requestAnimationFrame(()=>drawCym(E));
+  if(E.running!==false) requestAnimationFrame(()=>drawCym(E));
 }
 
 function bind(E,pfx){
@@ -1934,9 +1947,8 @@ function bind(E,pfx){
     btn.addEventListener('click',()=>{
       ensureAudio(E); if(E.ctx.state==='suspended') E.ctx.resume();
       const a=btn.dataset.action, v=btn.dataset.voice;
-      if(a==='start'){startBass(E);startTriad(E);startBinaural(E);startDrum(E);
-        document.querySelectorAll(`[data-engine="${E.id}"][data-voice]`).forEach(b=>b.classList.add('active'));
-        E.running=true;}
+      if(a==='start'){E.running=true; startBass(E);startTriad(E);startBinaural(E);startDrum(E);
+        document.querySelectorAll(`[data-engine="${E.id}"][data-voice]`).forEach(b=>b.classList.add('active'));}
       else if(a==='stop'){stopAll(E);
         document.querySelectorAll(`[data-engine="${E.id}"][data-voice]`).forEach(b=>b.classList.remove('active'));}
       else if(v){
@@ -1964,7 +1976,8 @@ const enE=makeEngine('en','cymEn',['#0ABAB5','#9cf3ef','#022b2a']);
 const brE=makeEngine('br','cymBr',['#c8a24a','#009c3b','#002776']);
 engines.en=enE; engines.br=brE;
 bind(enE,'en'); bind(brE,'br');
-drawCym(enE); drawCym(brE);
+// Defer canvas init until layout is complete
+setTimeout(()=>{ enE.running=false; brE.running=false; drawCym(enE); drawCym(brE); }, 100);
 </script>
 </body>
 </html>
