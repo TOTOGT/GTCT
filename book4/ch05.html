@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch 5 · OPERA SATOR · Jet Space · Principia Orthogona Book 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;700&family=Cinzel:wght@400;600;900&display=swap" rel="stylesheet">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+:root {
+  --void:    #04040a;
+  --deep:    #07080f;
+  --card:    #0f1018;
+  --gold:    #c9a84c;
+  --gold2:   #e8c96a;
+  --teal:    #2dd4bf;
+  --crimson: #dc2626;
+  --text:    #e8e4d8;
+  --muted:   #6b6757;
+  --dim:     #3a3828;
+  --border:  rgba(201,168,76,0.12);
+  --border2: rgba(201,168,76,0.28);
+  --dim-color: #fb923c; /* 5D = amber/orange */
+  /* per-word colours */
+  --sator: #c9a84c;
+  --arepo: #2dd4bf;
+  --tenet: #c084fc;
+  --opera: #fb923c;
+  --rotas: #e05a3a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cormorant Garamond',serif;
+  background:var(--void);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  font-size:18px;line-height:1.8;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:0.5;
+}
+nav{
+  position:fixed;top:0;width:100%;z-index:500;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 3rem;border-bottom:1px solid var(--border);
+  background:rgba(4,4,10,0.92);backdrop-filter:blur(16px);
+}
+.nav-mark{font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.25em;color:var(--gold);}
+.nav-links{display:flex;gap:2rem;flex-wrap:wrap;}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover,.nav-links a.cur{color:var(--gold);}
+.chapter-nav{
+  background:rgba(4,4,10,0.8);border-top:1px solid var(--border);
+  padding:0.9rem 3rem;display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:1rem;
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+}
+.chapter-nav a{color:var(--muted);text-decoration:none;padding:0.3rem 0.8rem;border:1px solid var(--border);transition:all 0.2s;}
+.chapter-nav a:hover{color:var(--gold);border-color:var(--border2);}
+.chapter-nav .current{color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;padding:9rem 2rem 5rem;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 50%, rgba(251,146,60,0.06) 0%, transparent 65%),
+    radial-gradient(ellipse 25% 25% at 15% 80%, rgba(201,168,76,0.03) 0%, transparent 55%);
+}
+.dim-badge{
+  display:inline-block;background:var(--dim-color);color:#100400;
+  font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;
+  padding:0.2rem 0.9rem;border-radius:3px;margin-bottom:1.2rem;letter-spacing:0.08em;
+}
+.chapter-label{
+  font-family:'JetBrains Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.4em;text-transform:uppercase;
+  color:var(--teal);border:1px solid rgba(45,212,191,0.3);
+  padding:0.25rem 0.75rem;margin-bottom:2rem;display:inline-block;
+}
+h1{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.2rem,6vw,5rem);
+  font-weight:900;line-height:0.95;color:var(--gold);
+  text-shadow:0 0 80px rgba(201,168,76,0.18);
+  margin-bottom:0.5rem;
+}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,2.2vw,1.5rem);
+  font-style:italic;color:rgba(232,228,216,0.55);margin-bottom:2.2rem;
+}
+.hero-meta{
+  font-family:'JetBrains Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.15em;color:var(--muted);margin-bottom:2.5rem;line-height:2.2;
+}
+
+/* SATOR SQUARE — hero version */
+.sator-hero{
+  display:inline-grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:3px;margin:0 auto 2.5rem;
+  border:1px solid var(--border2);padding:6px;
+  background:rgba(201,168,76,0.04);
+}
+.sh-cell{
+  width:52px;height:52px;display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:1.3rem;font-weight:900;
+  letter-spacing:0.05em;
+  border:1px solid rgba(201,168,76,0.08);
+  transition:all 0.4s;cursor:default;
+  color:rgba(201,168,76,0.25);
+}
+.sh-cell.lit-sator{color:var(--sator);background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.3);text-shadow:0 0 16px rgba(201,168,76,0.4);}
+.sh-cell.lit-arepo{color:var(--arepo);background:rgba(45,212,191,0.07);border-color:rgba(45,212,191,0.25);text-shadow:0 0 16px rgba(45,212,191,0.35);}
+.sh-cell.lit-tenet{color:var(--tenet);background:rgba(192,132,252,0.07);border-color:rgba(192,132,252,0.25);text-shadow:0 0 16px rgba(192,132,252,0.35);}
+.sh-cell.lit-opera{color:var(--opera);background:rgba(251,146,60,0.07);border-color:rgba(251,146,60,0.25);text-shadow:0 0 16px rgba(251,146,60,0.35);}
+.sh-cell.lit-rotas{color:var(--rotas);background:rgba(224,90,58,0.07);border-color:rgba(224,90,58,0.25);text-shadow:0 0 16px rgba(224,90,58,0.35);}
+.sh-cell.lit-center{color:white;background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.3);text-shadow:0 0 20px white;}
+
+.opening-stmt{
+  max-width:680px;margin:0 auto;
+  font-size:clamp(1.05rem,2.4vw,1.4rem);
+  font-style:italic;line-height:1.75;
+  color:rgba(232,228,216,0.78);
+  border-left:2px solid var(--border2);
+  padding-left:2rem;text-align:left;
+}
+.scroll-cue{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  font-family:'JetBrains Mono',monospace;font-size:0.55rem;
+  letter-spacing:0.2em;color:var(--dim);
+  animation:bob 2.2s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);}}
+
+/* PROSE */
+.prose{max-width:820px;margin:0 auto;padding:5rem 2rem;}
+.sec-label{
+  font-family:'JetBrains Mono',monospace;font-size:0.56rem;
+  letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.2rem;margin-top:4rem;display:block;
+}
+.sec-label:first-child{margin-top:0;}
+h2{
+  font-family:'Cinzel',serif;font-size:clamp(1.4rem,3vw,2.2rem);
+  font-weight:600;color:var(--text);margin-bottom:1.2rem;line-height:1.15;
+  border-bottom:1px solid var(--border);padding-bottom:0.5rem;
+}
+p{margin-bottom:1.2rem;color:rgba(232,228,216,0.78);font-size:1.05rem;line-height:1.9;}
+p strong{color:var(--gold);font-weight:400;}
+p em{font-style:italic;color:rgba(232,228,216,0.9);}
+
+.eq-block{
+  background:#050508;border:1px solid var(--border);
+  border-left:3px solid var(--dim-color);
+  padding:1.6rem 2rem;margin:2rem 0;
+  font-family:'JetBrains Mono',monospace;font-size:0.82rem;
+  line-height:2.2;overflow-x:auto;
+}
+.eq-label{font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim-color);margin-bottom:0.8rem;display:block;}
+.eq-block .mc{color:var(--muted);}
+
+.env{border:1px solid var(--border);padding:1.4rem 1.8rem;margin:2rem 0;background:var(--card);}
+.env-head{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.7rem;}
+.env.thm .env-head{color:var(--gold);}
+.env.dfn .env-head{color:var(--teal);}
+.env.rem .env-head{color:var(--dim-color);}
+.env p{font-style:italic;margin-bottom:0;color:rgba(232,228,216,0.7);}
+.env p+p{margin-top:0.6rem;text-indent:0;}
+
+.keyidea{
+  border:1px solid rgba(201,168,76,0.25);border-left:3px solid var(--gold);
+  background:rgba(201,168,76,0.03);padding:1.4rem 1.8rem;margin:2rem 0;
+}
+.keyidea strong{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.6rem;}
+.keyidea p{margin-bottom:0;color:rgba(232,228,216,0.72);}
+
+/* interactive sator square */
+.sator-interactive{
+  margin:3rem 0;
+  display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start;
+}
+@media(max-width:700px){.sator-interactive{grid-template-columns:1fr;}}
+.sator-grid{
+  display:inline-grid;grid-template-columns:repeat(5,1fr);
+  gap:4px;flex-shrink:0;
+}
+.sg-cell{
+  width:60px;height:60px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:1.5rem;font-weight:900;
+  border:1px solid rgba(201,168,76,0.1);
+  color:rgba(201,168,76,0.2);
+  transition:all 0.35s;cursor:default;position:relative;
+}
+.sg-cell.active-sator{color:var(--sator);background:rgba(201,168,76,0.1);border-color:rgba(201,168,76,0.4);box-shadow:0 0 12px rgba(201,168,76,0.2);}
+.sg-cell.active-arepo{color:var(--arepo);background:rgba(45,212,191,0.08);border-color:rgba(45,212,191,0.3);box-shadow:0 0 12px rgba(45,212,191,0.15);}
+.sg-cell.active-tenet{color:var(--tenet);background:rgba(192,132,252,0.08);border-color:rgba(192,132,252,0.3);box-shadow:0 0 12px rgba(192,132,252,0.15);}
+.sg-cell.active-opera{color:var(--opera);background:rgba(251,146,60,0.08);border-color:rgba(251,146,60,0.3);box-shadow:0 0 12px rgba(251,146,60,0.2);}
+.sg-cell.active-rotas{color:var(--rotas);background:rgba(224,90,58,0.08);border-color:rgba(224,90,58,0.3);box-shadow:0 0 12px rgba(224,90,58,0.15);}
+.sg-cell.active-n{color:white;background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.4);box-shadow:0 0 18px rgba(255,255,255,0.15);}
+
+.sator-panel{padding-top:0.5rem;}
+.sator-word-btn{
+  display:flex;align-items:flex-start;gap:1rem;
+  padding:0.9rem 1rem;margin-bottom:0.5rem;
+  border:1px solid var(--border);background:none;
+  cursor:pointer;width:100%;text-align:left;
+  transition:all 0.25s;font-family:'Cormorant Garamond',serif;
+}
+.sator-word-btn:hover{background:rgba(201,168,76,0.03);}
+.sator-word-btn.selected{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.04);}
+.sw-word{font-family:'Cinzel',serif;font-size:1.1rem;min-width:80px;font-weight:600;}
+.sw-latin{font-size:0.78rem;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-bottom:0.2rem;display:block;}
+.sw-op{font-size:0.72rem;font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem;display:block;}
+.sw-desc{font-size:0.9rem;color:rgba(232,228,216,0.6);line-height:1.5;}
+.sw-coord{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--dim-color);margin-top:0.3rem;display:block;}
+
+/* coord map */
+.coord-map{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+  margin:2.5rem 0;
+}
+.cm-cell{background:var(--card);padding:1.2rem 0.8rem;text-align:center;}
+.cm-word{font-family:'Cinzel',serif;font-size:1.1rem;display:block;margin-bottom:0.3rem;}
+.cm-coord{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--dim-color);display:block;margin-bottom:0.3rem;}
+.cm-op{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.4rem;}
+.cm-desc{font-size:0.78rem;color:rgba(232,228,216,0.45);line-height:1.4;}
+
+.pb-prompt{
+  background:rgba(201,168,76,0.04);border:1px solid var(--border2);
+  border-left:3px solid var(--gold);
+  padding:1.2rem 1.5rem;margin:3rem 0;
+  font-family:'JetBrains Mono',monospace;font-size:0.75rem;
+  color:var(--muted);line-height:1.8;position:relative;
+}
+.pb-prompt::before{content:"COPY PROMPT";display:block;font-size:0.56rem;letter-spacing:0.22em;color:var(--gold);margin-bottom:0.7rem;}
+.copy-btn{
+  position:absolute;top:0.9rem;right:0.9rem;padding:0.22rem 0.65rem;
+  background:var(--card);color:var(--gold);border:1px solid var(--border2);
+  cursor:pointer;font-size:0.62rem;font-family:'JetBrains Mono',monospace;
+}
+.copy-btn:hover{background:rgba(201,168,76,0.08);}
+
+.chapter-nav-bottom{
+  border-top:1px solid var(--border);padding:1.2rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+}
+.chapter-nav-bottom a{color:var(--muted);text-decoration:none;padding:0.35rem 0.9rem;border:1px solid var(--border);transition:all 0.2s;}
+.chapter-nav-bottom a:hover{color:var(--gold);border-color:var(--border2);}
+
+footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;max-width:820px;margin:0 auto;}
+footer p{font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.1em;color:var(--muted);line-height:2.4;}
+footer a{color:var(--gold);text-decoration:none;}
+
+/* highlight spans in prose */
+.w-sator{color:var(--sator);}
+.w-arepo{color:var(--arepo);}
+.w-tenet{color:var(--tenet);}
+.w-opera{color:var(--opera);}
+.w-rotas{color:var(--rotas);}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-mark">Principia Orthogona · Book 4</span>
+  <div class="nav-links">
+    <a href="index.html">Contents</a>
+    <a href="hub.html">Hub</a>
+    <a href="ch01.html">Ch 1</a>
+    <a href="ch02.html">Ch 2</a>
+    <a href="ch03.html">Ch 3</a>
+    <a href="ch04.html">Ch 4</a>
+    <a href="ch05.html" class="cur">Ch 5</a>
+  </div>
+</nav>
+
+<div class="chapter-nav">
+  <a href="ch04.html">← Ch 4 · Tesseract</a>
+  <span class="current">Chapter 5 · 5D · OPERA SATOR</span>
+  <a href="ch06.html">Ch 6 · 5D+t →</a>
+</div>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div style="position:relative;z-index:10;">
+    <div class="chapter-label">Book 4 · Chapter 5 · Dimension Ladder · 5D</div>
+    <div class="dim-badge">5D</div>
+
+    <!-- Animated Sator Square hero -->
+    <div class="sator-hero" id="satorHero">
+      <!-- row 0: SATOR -->
+      <div class="sh-cell" data-word="sator">S</div>
+      <div class="sh-cell" data-word="sator">A</div>
+      <div class="sh-cell" data-word="sator">T</div>
+      <div class="sh-cell" data-word="sator">O</div>
+      <div class="sh-cell" data-word="sator">R</div>
+      <!-- row 1: AREPO -->
+      <div class="sh-cell" data-word="arepo">A</div>
+      <div class="sh-cell" data-word="arepo">R</div>
+      <div class="sh-cell" data-word="arepo">E</div>
+      <div class="sh-cell" data-word="arepo">P</div>
+      <div class="sh-cell" data-word="arepo">O</div>
+      <!-- row 2: TENET -->
+      <div class="sh-cell" data-word="tenet">T</div>
+      <div class="sh-cell" data-word="tenet">E</div>
+      <div class="sh-cell" data-word="tenet" id="center-n">N</div>
+      <div class="sh-cell" data-word="tenet">E</div>
+      <div class="sh-cell" data-word="tenet">T</div>
+      <!-- row 3: OPERA -->
+      <div class="sh-cell" data-word="opera">O</div>
+      <div class="sh-cell" data-word="opera">P</div>
+      <div class="sh-cell" data-word="opera">E</div>
+      <div class="sh-cell" data-word="opera">R</div>
+      <div class="sh-cell" data-word="opera">A</div>
+      <!-- row 4: ROTAS -->
+      <div class="sh-cell" data-word="rotas">R</div>
+      <div class="sh-cell" data-word="rotas">O</div>
+      <div class="sh-cell" data-word="rotas">T</div>
+      <div class="sh-cell" data-word="rotas">A</div>
+      <div class="sh-cell" data-word="rotas">S</div>
+    </div>
+
+    <h1>OPERA<br>SATOR</h1>
+    <div class="hero-sub">Five words. Five dimensions. One square that reads the same in every direction.</div>
+    <div class="hero-meta">
+      $J^1(\mathbb{R}, \mathbb{R}^2)$ · jet space · prolongation · 5D contact structure<br>
+      SATOR · AREPO · TENET · OPERA · ROTAS
+    </div>
+    <div class="opening-stmt">
+      The Sator Square is the oldest known word square. First-century Rome. Pompeii. A 5×5 grid of 25 letters that reads identically left-to-right, right-to-left, top-to-bottom, bottom-to-top. Palindrome in every direction simultaneously. It is also a map of jet space $J^1(\mathbb{R}, \mathbb{R}^2)$ — the 5-dimensional contact manifold that carries the ODE from Chapter 1 into its full geometric home.
+    </div>
+  </div>
+  <div class="scroll-cue">↓ scroll</div>
+</div>
+
+<div class="prose">
+
+  <span class="sec-label">§ 5.1</span>
+  <h2>The square</h2>
+
+  <p>Written on a wall in Pompeii before 79 AD. Scratched in stone at Cirencester. Found in Ethiopia, Hungary, Egypt. The Sator Square predates contact geometry by two thousand years. It does not know what jet space is. And yet:</p>
+
+  <div class="eq-block">
+    <span class="eq-label">The Sator Square</span>
+    <div style="font-family:'Cinzel',serif;font-size:1.1rem;line-height:2;letter-spacing:0.3em;color:var(--text);">
+      <span style="color:var(--sator)">S A T O R</span><br>
+      <span style="color:var(--arepo)">A R E P O</span><br>
+      <span style="color:var(--tenet)">T E N E T</span><br>
+      <span style="color:var(--opera)">O P E R A</span><br>
+      <span style="color:var(--rotas)">R O T A S</span>
+    </div>
+    <div class="mc" style="margin-top:1rem;">-- reads identically: →, ←, ↓, ↑, and as a torus (wraps)</div>
+    <div class="mc">-- 5 words · 5 letters each · 5×5 = 25 · one central N</div>
+    <div class="mc">-- the N at position (2,2) is the only letter with no pair</div>
+  </div>
+
+  <p>Each word is five letters. There are five words. The square lives in five dimensions — not as a metaphor, but structurally: a 5×5 grid is a rank-2 tensor over $\mathbb{Z}_5$, and its palindrome property is a symmetry group acting on five independent directions. When you unfold that symmetry into the language of jet spaces, you get $J^1(\mathbb{R}, \mathbb{R}^2)$: the canonical 5-dimensional contact manifold.</p>
+
+  <span class="sec-label">§ 5.2</span>
+  <h2>Five words, five coordinates</h2>
+
+  <p>Click each word to light up its row and reveal its coordinate and operator assignment.</p>
+
+</div>
+
+<!-- Interactive Sator Square -->
+<div style="max-width:900px;margin:0 auto;padding:0 2rem 2rem;">
+  <div class="sator-interactive">
+    <div>
+      <div class="sator-grid" id="satorGrid">
+        <!-- Row 0: SATOR -->
+        <div class="sg-cell" data-word="sator" data-row="0" data-col="0">S</div>
+        <div class="sg-cell" data-word="sator" data-row="0" data-col="1">A</div>
+        <div class="sg-cell" data-word="sator" data-row="0" data-col="2">T</div>
+        <div class="sg-cell" data-word="sator" data-row="0" data-col="3">O</div>
+        <div class="sg-cell" data-word="sator" data-row="0" data-col="4">R</div>
+        <!-- Row 1: AREPO -->
+        <div class="sg-cell" data-word="arepo" data-row="1" data-col="0">A</div>
+        <div class="sg-cell" data-word="arepo" data-row="1" data-col="1">R</div>
+        <div class="sg-cell" data-word="arepo" data-row="1" data-col="2">E</div>
+        <div class="sg-cell" data-word="arepo" data-row="1" data-col="3">P</div>
+        <div class="sg-cell" data-word="arepo" data-row="1" data-col="4">O</div>
+        <!-- Row 2: TENET -->
+        <div class="sg-cell" data-word="tenet" data-row="2" data-col="0">T</div>
+        <div class="sg-cell" data-word="tenet" data-row="2" data-col="1">E</div>
+        <div class="sg-cell" data-word="tenet" data-row="2" data-col="2" id="cellN">N</div>
+        <div class="sg-cell" data-word="tenet" data-row="2" data-col="3">E</div>
+        <div class="sg-cell" data-word="tenet" data-row="2" data-col="4">T</div>
+        <!-- Row 3: OPERA -->
+        <div class="sg-cell" data-word="opera" data-row="3" data-col="0">O</div>
+        <div class="sg-cell" data-word="opera" data-row="3" data-col="1">P</div>
+        <div class="sg-cell" data-word="opera" data-row="3" data-col="2">E</div>
+        <div class="sg-cell" data-word="opera" data-row="3" data-col="3">R</div>
+        <div class="sg-cell" data-word="opera" data-row="3" data-col="4">A</div>
+        <!-- Row 4: ROTAS -->
+        <div class="sg-cell" data-word="rotas" data-row="4" data-col="0">R</div>
+        <div class="sg-cell" data-word="rotas" data-row="4" data-col="1">O</div>
+        <div class="sg-cell" data-word="rotas" data-row="4" data-col="2">T</div>
+        <div class="sg-cell" data-word="rotas" data-row="4" data-col="3">A</div>
+        <div class="sg-cell" data-word="rotas" data-row="4" data-col="4">S</div>
+      </div>
+    </div>
+
+    <div class="sator-panel" id="satorPanel">
+
+      <button class="sator-word-btn" data-word="sator">
+        <span class="sw-word" style="color:var(--sator)">SATOR</span>
+        <div>
+          <span class="sw-latin">sator, satoris (m.) — the sower, the planter, the originator</span>
+          <span class="sw-op" style="color:var(--sator)">Operator C · Compress</span>
+          <span class="sw-desc">The seed before the path. Reduces to the invariant core. The fermion of Chapter 1, now lifted to 5D as the base coordinate $x$.</span>
+          <span class="sw-coord">Jet coord: $x$ — the independent variable</span>
+        </div>
+      </button>
+
+      <button class="sator-word-btn" data-word="arepo">
+        <span class="sw-word" style="color:var(--arepo)">AREPO</span>
+        <div>
+          <span class="sw-latin">arepo (unknown / hapax) — the plow, or a proper name; the one who drives the plow</span>
+          <span class="sw-op" style="color:var(--arepo)">Operator K · Threshold / curvature</span>
+          <span class="sw-desc">The word with no etymology. A hapax legomenon — appears once, nowhere else in Latin. In jet space: $y_1$, the first dependent variable, the first direction above 1D.</span>
+          <span class="sw-coord">Jet coord: $y_1$ — first dependent variable</span>
+        </div>
+      </button>
+
+      <button class="sator-word-btn" data-word="tenet">
+        <span class="sw-word" style="color:var(--tenet)">TENET</span>
+        <div>
+          <span class="sw-latin">tenet (v.) — holds, contains, keeps; the 3rd person singular of tenere</span>
+          <span class="sw-op" style="color:var(--tenet)">Contact form $\alpha$ · Non-integrability</span>
+          <span class="sw-desc">The central word. The only perfect palindrome in the square. $\alpha \wedge d\alpha \neq 0$ — the contact form holds the structure together, cannot be integrated, resists reduction. The N at position (2,2) is the only unpaired letter: the fixed point.</span>
+          <span class="sw-coord">Jet coord: $y_2$ — second dependent variable · central</span>
+        </div>
+      </button>
+
+      <button class="sator-word-btn" data-word="opera">
+        <span class="sw-word" style="color:var(--opera)">OPERA</span>
+        <div>
+          <span class="sw-latin">opera, operae (f.) — work, labour, the works; plural of opus</span>
+          <span class="sw-op" style="color:var(--opera)">Operator chain G = U∘F∘K∘C · The Works</span>
+          <span class="sw-desc">The operator chain is the opera. Every chapter of every book in this series is one performance. The 5D jet space is the stage on which the full chain finally has room to act simultaneously.</span>
+          <span class="sw-coord">Jet coord: $p_1 = dy_1/dx$ — first slope coordinate</span>
+        </div>
+      </button>
+
+      <button class="sator-word-btn" data-word="rotas">
+        <span class="sw-word" style="color:var(--rotas)">ROTAS</span>
+        <div>
+          <span class="sw-latin">rotas (v.) — turns, rotates; accusative plural of rota (wheel)</span>
+          <span class="sw-op" style="color:var(--rotas)">Reeb flow · $\dot\theta = 1$ · rotation</span>
+          <span class="sw-desc">The Reeb flow turns. The wheel that was $\dot\theta = 1$ in 3D is now the rotation in the jet bundle — the prolongation of the ODE that carries it from 3D into 5D without breaking the contact structure.</span>
+          <span class="sw-coord">Jet coord: $p_2 = dy_2/dx$ — second slope coordinate</span>
+        </div>
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<div class="prose" style="padding-top:0;">
+
+  <span class="sec-label">§ 5.3</span>
+  <h2>Jet space $J^1(\mathbb{R}, \mathbb{R}^2)$</h2>
+
+  <p>The first-order jet space of maps from $\mathbb{R}$ to $\mathbb{R}^2$ is the space of all first-order Taylor data of such maps at every point. Concretely:</p>
+
+  <div class="eq-block">
+    <span class="eq-label">Definition — Jet space $J^1(\mathbb{R}, \mathbb{R}^2)$</span>
+    $$J^1(\mathbb{R}, \mathbb{R}^2) = \{(x,\, y_1,\, y_2,\, p_1,\, p_2)\} \cong \mathbb{R}^5$$
+    <div class="mc">-- x ∈ ℝ: base coordinate (SATOR — the sower, the seed, the origin)</div>
+    <div class="mc">-- y₁, y₂ ∈ ℝ: dependent variables (AREPO, TENET — what grows from x)</div>
+    <div class="mc">-- p₁ = dy₁/dx, p₂ = dy₂/dx: slope/velocity (OPERA, ROTAS — the motion)</div>
+    <br>
+    <div style="color:var(--dim-color);">Contact form on J¹(ℝ, ℝ²):</div>
+    $$\alpha_1 = dy_1 - p_1\,dx, \qquad \alpha_2 = dy_2 - p_2\,dx.$$
+    <div class="mc">-- A curve is a solution of an ODE iff it is tangent to ker(α₁) ∩ ker(α₂)</div>
+    <div class="mc">-- Together: α = α₁ ∧ α₂ encodes both equations simultaneously</div>
+  </div>
+
+  <p>The key step is <strong>prolongation</strong>: given a curve $(x, y_1(x), y_2(x))$ in the base space $\mathbb{R}^3$, its prolongation to $J^1$ is the 5-dimensional curve:</p>
+
+  <div class="eq-block">
+    <span class="eq-label">Prolongation</span>
+    $$x \;\mapsto\; \big(x,\; y_1(x),\; y_2(x),\; y_1'(x),\; y_2'(x)\big) \in J^1(\mathbb{R}, \mathbb{R}^2).$$
+    <div class="mc">-- A solution of the ODE system prolongs to a Legendrian curve in J¹</div>
+    <div class="mc">-- "Legendrian" = tangent to ker(α₁) ∩ ker(α₂) at every point</div>
+    <div class="mc">-- The contact structure on J¹ is the geometric encoding of the ODE</div>
+  </div>
+
+  <span class="sec-label">§ 5.4</span>
+  <h2>The palindrome property = contact symmetry</h2>
+
+  <p>The Sator Square reads the same in every direction. This is not an accident of Latin word choice — it is a symmetry constraint on the 25-letter configuration space. The group of symmetries of the square acts by reflections and rotations on the 5×5 grid. Every symmetry preserves the word structure.</p>
+
+  <p>The contact structure on $J^1(\mathbb{R}, \mathbb{R}^2)$ has an analogous property. A <strong>contact symmetry</strong> (contactomorphism) is a diffeomorphism $\phi: J^1 \to J^1$ that preserves the contact distribution $\ker(\alpha_1) \cap \ker(\alpha_2)$. These symmetries act on the five coordinates $(x, y_1, y_2, p_1, p_2)$, and every symmetry preserves the ODE structure — exactly as every symmetry of the Sator Square preserves the word structure.</p>
+
+  <div class="env thm">
+    <div class="env-head">Theorem 5.1 — Lie's theorem on contact symmetries</div>
+    <p>Every contact symmetry of $J^1(\mathbb{R}, \mathbb{R}^n)$ is either a point transformation (acting on the base $(x, y_1, \ldots, y_n)$ and prolonged to the slopes $p_i$) or a genuine contact transformation that mixes $x$, $y_i$, and $p_i$ non-trivially. The latter — the <em>Galilean Contact Transformations</em> — are the subject of Chapter 6.</p>
+  </div>
+
+  <span class="sec-label">§ 5.5</span>
+  <h2>The central N</h2>
+
+  <p>Every letter in the Sator Square appears twice — except one. The <strong>N</strong> at position (2,2), the exact centre of the grid, appears once. It has no pair. It is the only element of the square that is fixed by every symmetry — the unique invariant point of the 5×5 palindrome.</p>
+
+  <p>In $J^1(\mathbb{R}, \mathbb{R}^2)$, the analogue of the central N is the <strong>contact distribution itself</strong>: the 3-plane field $\ker(\alpha_1) \cap \ker(\alpha_2)$ at each point. This is the structure that every contactomorphism preserves, the invariant object at the centre of the 5-dimensional geometry. It is not a coordinate — it is the constraint. It holds everything together. <span class="w-tenet">TENET</span>.</p>
+
+  <div class="keyidea">
+    <strong>The N as fixed point</strong>
+    <p>In 1D (Ch 1): the fixed point was $x^* = 1$, the fermion occupation number.<br>
+    In 3D (Ch 3): the fixed point was the Reeb orbit $\{r=1\}$, the helical attractor.<br>
+    In 5D (Ch 5): the fixed point is the central N — the contact distribution at the origin of $J^1$, invariant under all contactomorphisms.<br>
+    At every dimension, there is a single unpaired object at the centre. The ladder does not move toward a fixed point. It <em>is</em> the fixed point, expressed in ascending dimensions.</p>
+  </div>
+
+  <span class="sec-label">§ 5.6</span>
+  <h2>The dm³ system in jet space</h2>
+
+  <p>The dm³ ODE from Chapter 3 had one dependent variable $r$ and two "extra" coordinates $(\theta, z)$. In jet space language, we can recast this as a system with two dependent variables $(r, \theta)$ as functions of the base coordinate $z$ (reinterpreting $z$ as the independent variable). The slope coordinates are then $p_r = dr/dz$ and $p_\theta = d\theta/dz$, and the prolonged system lives in $J^1(\mathbb{R}, \mathbb{R}^2)$:</p>
+
+  <div class="eq-block">
+    <span class="eq-label">dm³ in jet coordinates</span>
+    <div style="color:var(--sator)">$x = z$ &nbsp;&nbsp;<span class="mc">— SATOR: the independent variable, the sower</span></div>
+    <div style="color:var(--arepo)">$y_1 = r$ &nbsp;&nbsp;<span class="mc">— AREPO: the radius, the first dependent variable</span></div>
+    <div style="color:var(--tenet)">$y_2 = \theta$ &nbsp;<span class="mc">— TENET: the angle, the central rotation</span></div>
+    <div style="color:var(--opera)">$p_1 = dr/dz$ &nbsp;<span class="mc">— OPERA: the radial velocity, the works</span></div>
+    <div style="color:var(--rotas)">$p_2 = d\theta/dz = 1/\dot{z}$ &nbsp;<span class="mc">— ROTAS: the angular rate, the wheel turns</span></div>
+    <br>
+    <div class="mc">The contact forms α₁ = dr − p₁ dz and α₂ = dθ − p₂ dz encode both</div>
+    <div class="mc">ODE equations simultaneously as a Legendrian submanifold of J¹.</div>
+  </div>
+
+  <p>The attractor $\{r=1, \dot\theta = 1\}$ from Chapter 3 is now a <strong>Legendrian submanifold</strong> of $J^1(\mathbb{R}, \mathbb{R}^2)$ — a curve tangent to the contact distribution at every point. The Sator Square is the map: <span class="w-sator">SATOR</span> plants the base, <span class="w-arepo">AREPO</span> curves it, <span class="w-tenet">TENET</span> holds the structure, <span class="w-opera">OPERA</span> does the work, <span class="w-rotas">ROTAS</span> turns the wheel. The square reads the same in every direction because the ODE — once lifted to jet space — looks the same from every direction too.</p>
+
+  <span class="sec-label">§ 5.7</span>
+  <h2>What Chapter 6 will add: time</h2>
+
+  <p>We are in 5D jet space. The ODE lives as a Legendrian curve. The contact symmetries are classified. One class of symmetries has not yet been named — the <strong>Galilean Contact Transformations</strong> that mix the slope coordinates with the base coordinate using a time parameter. Adding that parameter — treating time $t$ as a sixth geometric direction — is the move to 5D+t. That is Chapter 6: the arena in which GTCT acts, the space where the full operator chain $G = U \circ F \circ K \circ C$ finally closes.</p>
+
+  <div class="coord-map">
+    <div class="cm-cell"><span class="cm-word" style="color:var(--sator)">SATOR</span><span class="cm-coord">$x$</span><span class="cm-op">base</span><span class="cm-desc">seed, origin, independent variable</span></div>
+    <div class="cm-cell"><span class="cm-word" style="color:var(--arepo)">AREPO</span><span class="cm-coord">$y_1$</span><span class="cm-op">C · K</span><span class="cm-desc">first dependent var, the threshold</span></div>
+    <div class="cm-cell"><span class="cm-word" style="color:var(--tenet)">TENET</span><span class="cm-coord">$y_2$</span><span class="cm-op">$\alpha$</span><span class="cm-desc">central, invariant, holds structure</span></div>
+    <div class="cm-cell"><span class="cm-word" style="color:var(--opera)">OPERA</span><span class="cm-coord">$p_1$</span><span class="cm-op">F · U</span><span class="cm-desc">first slope, the fold and unfold</span></div>
+    <div class="cm-cell"><span class="cm-word" style="color:var(--rotas)">ROTAS</span><span class="cm-coord">$p_2$</span><span class="cm-op">T</span><span class="cm-desc">second slope, the wheel, rotation</span></div>
+  </div>
+
+  <div class="pb-prompt">
+You are reading Chapter 5 of <em>Principia Orthogona Book 4 — Higher Dimensions</em> by Pablo Nogueira Grossi.
+
+The chapter introduces the 5D jet space $J^1(\mathbb{R}, \mathbb{R}^2)$ through the Sator Square. Five coordinates $(x, y_1, y_2, p_1, p_2)$ correspond to the five words SATOR, AREPO, TENET, OPERA, ROTAS. The palindrome property of the square corresponds to contact symmetry of jet space. The central N — the only unpaired letter — corresponds to the contact distribution, the invariant structure preserved by all contactomorphisms.
+
+Your task: The chapter maps TENET to the contact form $\alpha$ and the central N to the contact distribution. TENET is a palindrome — it reads the same forwards and backwards. Write two paragraphs: (1) What does it mean for a mathematical object to be "palindromic" — to look the same from both ends? Give a precise definition, not a metaphor. (2) The contact distribution $\ker(\alpha_1) \cap \ker(\alpha_2)$ is preserved by all contactomorphisms — it is an invariant. In what sense is an invariant "palindromic"? Draw the analogy precisely: what is the "forwards" and what is the "backwards" for a contact invariant?
+    <button class="copy-btn" onclick="navigator.clipboard.writeText(this.parentElement.innerText.replace('COPY PROMPT','').trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1800)">Copy</button>
+  </div>
+
+</div>
+
+<div class="chapter-nav-bottom">
+  <a href="ch04.html">← Ch 4 · Tesseract</a>
+  <a href="ch06.html">Ch 6 · 5D+t · GTCT →</a>
+</div>
+
+<footer>
+  <p>
+    Principia Orthogona · Book 4 · Higher Dimensions · © 2026 Pablo Nogueira Grossi · G6 LLC<br>
+    ORCID 0009-0000-6496-2186 · <a href="https://doi.org/10.5281/zenodo.19117400" target="_blank">Zenodo 10.5281/zenodo.19117400</a><br>
+    <span style="opacity:0.5">Chapter 5 · 5D · OPERA SATOR · Jet Space J¹(ℝ, ℝ²)</span>
+  </p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// HERO: cycle through words lighting up the Sator Square
+// ═══════════════════════════════════════════════════════
+const words = ['sator','arepo','tenet','opera','rotas'];
+const heroCells = document.querySelectorAll('#satorHero .sh-cell');
+let heroIdx = 0;
+let heroPhase = 0; // 0=row, 1=col, 2=both, 3=all, 4=off
+
+function heroTick() {
+  // clear all
+  heroCells.forEach(c => {
+    c.className = 'sh-cell';
+  });
+  document.getElementById('center-n').className = 'sh-cell';
+
+  const w = words[heroIdx];
+  // light row
+  heroCells.forEach(c => {
+    if (c.dataset.word === w) c.classList.add('lit-' + w);
+  });
+  // always light center N specially during tenet
+  if (w === 'tenet') document.getElementById('center-n').classList.add('lit-center');
+
+  heroIdx = (heroIdx + 1) % words.length;
+}
+
+heroTick();
+setInterval(heroTick, 900);
+
+// ═══════════════════════════════════════════════════════
+// INTERACTIVE SQUARE
+// ═══════════════════════════════════════════════════════
+const gridCells = document.querySelectorAll('#satorGrid .sg-cell');
+const wordBtns  = document.querySelectorAll('.sator-word-btn');
+let activeWord  = null;
+
+function activateWord(word) {
+  activeWord = word;
+  // grid
+  gridCells.forEach(c => {
+    c.className = 'sg-cell';
+    if (c.dataset.word === word) c.classList.add('active-' + word);
+  });
+  // special N during tenet
+  if (word === 'tenet') document.getElementById('cellN').classList.add('active-n');
+
+  // also light the same letter in other rows (column highlighting)
+  const wordArr = {sator:'SATOR',arepo:'AREPO',tenet:'TENET',opera:'OPERA',rotas:'ROTAS'};
+  const letters = [...wordArr[word]];
+  gridCells.forEach(c => {
+    const col = parseInt(c.dataset.col);
+    if (c.dataset.word !== word && c.textContent === letters[col]) {
+      c.style.opacity = '0.5';
+      c.style.color = getComputedStyle(document.documentElement).getPropertyValue('--' + word);
+    } else if (c.dataset.word !== word) {
+      c.style.opacity = '0.25';
+    } else {
+      c.style.opacity = '1';
+    }
+  });
+
+  // buttons
+  wordBtns.forEach(b => {
+    b.classList.toggle('selected', b.dataset.word === word);
+  });
+}
+
+wordBtns.forEach(btn => {
+  btn.addEventListener('click', () => activateWord(btn.dataset.word));
+});
+
+gridCells.forEach(c => {
+  c.addEventListener('click', () => activateWord(c.dataset.word));
+});
+
+// auto-cycle if no interaction
+let autoCycle = true;
+let autoCycleIdx = 0;
+const autoCycleTimer = setInterval(() => {
+  if (!autoCycle) return;
+  activateWord(words[autoCycleIdx % words.length]);
+  autoCycleIdx++;
+}, 2200);
+
+document.getElementById('satorGrid').addEventListener('click', () => { autoCycle = false; });
+</script>
+
+</body>
+</html>

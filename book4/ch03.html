@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ch 3 · Contact 3-Manifold · Principia Orthogona Book 4</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+:root{
+  --navy:#1a2744; --gold:#c9a84c; --cream:#faf7f0; --smoke:#f0ece4;
+  --mid:#3a4f7a; --rule:#8a7340; --text:#1c1c1c; --light:#e8e2d4;
+  --teal:#1a5c5c; --accent:#8b3a0f;
+  --dim-color:#e05a3a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'EB Garamond','Georgia',serif;color:var(--text);background:var(--cream);line-height:1.75;font-size:17px}
+
+nav{background:var(--navy);padding:.75rem 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.nav-logo{color:var(--gold);font-weight:bold;font-size:.88rem;letter-spacing:.1em;text-decoration:none;font-family:sans-serif}
+.nav-links{display:flex;gap:1.2rem;list-style:none;flex-wrap:wrap}
+.nav-links a{color:#bbb;text-decoration:none;font-size:.78rem;font-family:sans-serif}
+.nav-links a:hover,.nav-links a.cur{color:var(--gold)}
+
+.chapter-nav{background:var(--smoke);border-top:1px solid var(--light);padding:.9rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-family:sans-serif;font-size:.78rem}
+.chapter-nav a{color:var(--mid);text-decoration:none;padding:.35rem .85rem;border:1px solid var(--light);background:white}
+.chapter-nav a:hover{background:var(--navy);color:var(--gold)}
+.chapter-nav .current{color:var(--rule);letter-spacing:.1em;text-transform:uppercase;font-size:.7rem}
+
+.hero{background:var(--navy);color:white;padding:4rem 2rem 3rem}
+.hero-inner{max-width:880px;margin:0 auto}
+.eyebrow{font-family:sans-serif;font-size:.72rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.9rem}
+.dim-badge{display:inline-block;background:var(--dim-color);color:white;font-family:'Courier New',monospace;font-size:1.1rem;font-weight:bold;padding:.2rem .8rem;border-radius:3px;margin-bottom:.8rem}
+h1{font-size:clamp(1.8rem,4.5vw,3rem);color:white;line-height:1.15;margin-bottom:.5rem}
+.hero-sub{color:var(--gold);font-style:italic;font-size:1.15rem;margin-bottom:1rem}
+.gold-rule{width:60px;height:2px;background:var(--gold);margin:1.2rem 0}
+.hero-desc{color:#bbb;font-size:.95rem;line-height:1.85;max-width:680px}
+
+.prose{padding:3rem 2rem}
+.prose-inner{max-width:820px;margin:0 auto}
+.section-label{font-family:sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--rule);margin-bottom:.4rem;margin-top:2.5rem}
+h2{font-size:1.5rem;color:var(--navy);margin-bottom:.6rem;border-bottom:2px solid var(--gold);padding-bottom:.3rem;display:inline-block}
+p{margin-bottom:1rem;font-size:.98rem;line-height:1.88;color:#333}
+p strong{color:var(--navy)}
+
+.eq-block{background:var(--smoke);border-left:4px solid var(--dim-color);padding:1.1rem 1.6rem;margin:1.6rem 0;border-radius:0 4px 4px 0;overflow-x:auto}
+.eq-label{font-family:'Courier New',monospace;font-size:.7rem;color:var(--rule);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+
+.env{border:1px solid var(--light);padding:1.2rem 1.5rem;margin:1.8rem 0;border-radius:4px;background:white}
+.env-head{font-family:sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem}
+.env.thm .env-head{color:var(--accent)}
+.env.dfn .env-head{color:var(--mid)}
+.env.rem .env-head{color:var(--teal)}
+.env p{font-style:italic;margin-bottom:0;font-size:.96rem}
+.env p+p{margin-top:.5rem;text-indent:0}
+
+.keyidea{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid var(--gold);padding:1.2rem 1.5rem;margin:1.8rem 0;border-radius:0 4px 4px 0}
+.keyidea strong{color:var(--navy);font-size:.88rem;font-family:sans-serif;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:.4rem}
+.keyidea p{margin-bottom:0;font-size:.95rem;color:#444}
+
+/* bridge panel — connecting back to Book 3 */
+.bridge{background:#0f1a2e;color:#a8b8d0;padding:2.4rem 2rem;margin:2.4rem 0;border-radius:6px}
+.bridge-inner{max-width:760px;margin:0 auto}
+.bridge-eyebrow{font-family:sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.bridge h3{font-size:1.3rem;color:white;margin-bottom:.8rem}
+.bridge p{font-size:.93rem;line-height:1.85;margin-bottom:.8rem;color:#8a9ab8}
+.bridge strong{color:#c8d4e8}
+.bridge .ode-box{font-family:'Courier New',monospace;font-size:.82rem;background:rgba(255,255,255,0.06);border-left:3px solid var(--dim-color);padding:.9rem 1.2rem;border-radius:0 4px 4px 0;margin:.8rem 0;color:#e05a3a;line-height:2}
+
+.sim-wrap{margin:2.4rem 0}
+.sim-wrap canvas{display:block;width:100%;border:1px solid var(--light);border-radius:4px;background:#07050f;cursor:crosshair}
+.sim-controls{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.7rem;align-items:center;font-family:sans-serif;font-size:.82rem;color:#555}
+.sim-controls label{display:flex;align-items:center;gap:.3rem}
+.sim-controls input[type=range]{width:90px}
+.sim-btn{padding:.3rem .9rem;background:var(--navy);color:var(--gold);border:none;border-radius:3px;cursor:pointer;font-size:.8rem;font-family:sans-serif}
+.sim-btn:hover{background:var(--mid)}
+.sim-caption{font-size:.82rem;color:#666;font-style:italic;margin-top:.5rem}
+
+.pb-prompt{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid var(--gold);padding:1.1rem 1.4rem;margin:2.4rem 0;border-radius:0 4px 4px 0;font-family:'Courier New',monospace;font-size:.8rem;color:#555;line-height:1.7;position:relative}
+.pb-prompt::before{content:"COPY PROMPT";display:block;font-size:.65rem;letter-spacing:.18em;color:var(--rule);margin-bottom:.5rem}
+.copy-btn{position:absolute;top:.8rem;right:.8rem;padding:.25rem .7rem;background:var(--navy);color:var(--gold);border:none;border-radius:3px;cursor:pointer;font-size:.72rem;font-family:sans-serif}
+
+.chapter-nav-bottom{background:var(--smoke);border-top:2px solid var(--light);padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-family:sans-serif;font-size:.82rem}
+.chapter-nav-bottom a{color:var(--mid);text-decoration:none;padding:.4rem 1rem;border:1px solid var(--light);background:white}
+.chapter-nav-bottom a:hover{background:var(--navy);color:var(--gold)}
+
+footer{background:#0f1a2e;color:#5a6582;padding:2rem;text-align:center;font-size:.78rem;line-height:1.85;font-family:sans-serif}
+footer a{color:#7a8298;text-decoration:none}
+footer a:hover{color:var(--gold)}
+footer .meta{margin-top:.6rem;font-size:.72rem;color:#3d4865;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">⚜ PRINCIPIA ORTHOGONA · BOOK 4 ⚜</a>
+  <ul class="nav-links">
+    <li><a href="ch00-student-edition.html">Ch 0</a></li>
+    <li><a href="ch01.html">Ch 1</a></li>
+    <li><a href="ch02.html">Ch 2</a></li>
+    <li><a href="ch03.html" class="cur">Ch 3</a></li>
+  </ul>
+</nav>
+
+<div class="chapter-nav">
+  <a href="ch02.html">← Ch 2 · 2D+t</a>
+  <span class="current">Chapter 3 · Contact 3-Manifold</span>
+  <a href="ch04.html">Ch 4 · First Lift →</a>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Book 4 · Chapter 3 · Dimension Ladder</div>
+    <div class="dim-badge">3D</div>
+    <h1>The Contact 3-Manifold</h1>
+    <div class="hero-sub">Flat space curves. The helix finds its attractor.</div>
+    <div class="gold-rule"></div>
+    <p class="hero-desc">Chapter 2 gave us flat $\mathbb{R}^3$ with a contact structure. Now the manifold bends. Instead of carrying the contact form on flat space, we carry it on a curved 3-dimensional surface — a contact 3-manifold. The dynamics that were linear in $\mathbb{R}^3$ become nonlinear. A preferred class of curves appears — the <em>Reeb orbits</em> — and one of them is an attractor. This is the setting of the dm³ toy ODE, the helical convergence that anchored Book 3.</p>
+  </div>
+</div>
+
+<div class="prose">
+  <div class="prose-inner">
+
+    <div class="section-label">§ 3.1</div>
+    <h2>What makes a manifold curved</h2>
+
+    <p>In Chapter 2, the extended phase space was flat $\mathbb{R}^3$. "Flat" means that parallel lines stay parallel, angles are preserved over long distances, and the Pythagorean theorem holds everywhere. The contact form on flat space is the prototype $\alpha = dz - y\,dx$.</p>
+
+    <p>A <strong>manifold</strong> is a space that looks flat in every small neighbourhood but may curve globally. The surface of a sphere is a 2-manifold: zoom in on any small patch and it looks like a plane, but globally it closes up and has no boundary. A contact 3-manifold is the same idea in one dimension higher, with the contact structure along for the ride.</p>
+
+    <p>The curvature changes the dynamics. On flat space, every Reeb orbit (the canonical flow of the contact structure) is a straight line in the $z$-direction. On a curved manifold, Reeb orbits can close up, spiral, or converge — and which behaviour occurs depends on the global shape of the manifold and the specific contact form placed on it.</p>
+
+    <div class="section-label">§ 3.2</div>
+    <h2>The Reeb vector field</h2>
+
+    <p>Given a contact form $\alpha$ on a 3-manifold $M$, there is a canonical vector field attached to it — the <strong>Reeb vector field</strong> $R_\alpha$ — defined by two conditions:</p>
+
+    <div class="eq-block">
+      <div class="eq-label">Definition — Reeb vector field</div>
+      $$\iota_{R_\alpha} d\alpha = 0, \qquad \iota_{R_\alpha} \alpha = 1.$$
+    </div>
+
+    <p>The first condition says $R_\alpha$ lies in the kernel of $d\alpha$ — it is "invisible" to the symplectic part of the contact structure. The second says $\alpha$ measures $R_\alpha$ as having unit length. Together they pick out a unique vector field at every point of $M$.</p>
+
+    <p>The flow lines of $R_\alpha$ are called <strong>Reeb orbits</strong>. They are the intrinsic dynamics of the contact structure — not imposed from outside, but generated by the geometry of $\alpha$ itself.</p>
+
+    <div class="env dfn">
+      <div class="env-head">Definition 3.1 — Reeb orbit</div>
+      <p>A smooth curve $\gamma: \mathbb{R} \to M$ is a <em>Reeb orbit</em> if $\dot{\gamma}(t) = R_\alpha(\gamma(t))$ for all $t$. A <em>closed Reeb orbit</em> (also called a <em>periodic orbit</em>) satisfies $\gamma(T) = \gamma(0)$ for some $T > 0$.</p>
+    </div>
+
+    <p>On the standard contact structure $\alpha = dz - y\,dx$ on $\mathbb{R}^3$, the Reeb vector field is simply $\partial_z$ — every orbit is a vertical line, none are closed. On a curved manifold the picture is richer. The key theorem governing closed Reeb orbits is Weinstein's conjecture (proved by Taubes in 2007): on any closed contact 3-manifold, there exists at least one closed Reeb orbit. The circadian clock of Book 3 Chapter 3 is this theorem, instantiated in biology.</p>
+
+    <div class="section-label">§ 3.3</div>
+    <h2>The dm³ contact manifold</h2>
+
+    <p>The specific contact 3-manifold used in dm³ has coordinates $(r, \theta, z)$ — a cylindrical coordinate system where $r > 0$ is the radial distance, $\theta \in [0, 2\pi)$ is the angle, and $z \in \mathbb{R}$ is the height. The contact form is constructed so that its Reeb flow produces convergence to the unit circle $r = 1$.</p>
+
+    <p>The dynamical system placed on this manifold is:</p>
+
+    <div class="eq-block">
+      <div class="eq-label">System (3.1) — the dm³ toy ODE</div>
+      $$\dot{r} = r(1 - r^2) + 2(r-1)e^{-z}$$
+      $$\dot{\theta} = 1$$
+      $$\dot{z} = r^2 - 2(r-1)^2 e^{-z}$$
+    </div>
+
+    <p>This is not arbitrary. Each term is geometrically motivated:</p>
+
+    <p>The $r(1-r^2)$ term in $\dot{r}$ is the radial ODE from Chapter 1, pulling every radius toward $r = 1$. The correction term $2(r-1)e^{-z}$ encodes the coupling between radial and axial dynamics — it vanishes when $r = 1$ (on the attractor) and decays exponentially as $z \to \infty$. The $\dot{\theta} = 1$ says the orbit winds at constant angular speed: one full revolution per unit time. The $\dot{z}$ equation advances height at a rate that also settles when $r \to 1$.</p>
+
+    <div class="section-label">§ 3.4</div>
+    <h2>The attractor theorem</h2>
+
+    <div class="env thm">
+      <div class="env-head">Theorem 3.2 — Helical convergence (dm³)</div>
+      <p>For System (3.1), every trajectory with initial condition $r(0) > 1$ converges exponentially to the unit circle $r = 1$ at rate $\mu = -2$. The attractor is the closed Reeb orbit $\gamma^* = \{r = 1,\, \dot{\theta} = 1\}$ — a helix winding at unit speed around the cylinder $r = 1$.</p>
+      <p>On the inner side, the true basin boundary is $r^* \approx 0.8$. Trajectories with $r(0) \in (r^*, 1)$ also converge to $\gamma^*$; trajectories with $r(0) < r^*$ diverge inward.</p>
+    </div>
+
+    <p>The rate $\mu = -2$ is the Lyapunov exponent of the linearised flow near the attractor — the $\mu$ operator in the dm³ recurrence ladder ($\pi \to \phi \to \mu \to \eta \to \Delta \to \Sigma \to \Omega$). It is not a coincidence. The Lyapunov exponent of the contact Reeb flow <em>is</em> the operator $\mu$, instantiated on this manifold.</p>
+
+    <div class="keyidea">
+      <strong>Why r* ≈ 0.8, not 1/3</strong>
+      <p>An earlier Gronwall estimate suggested the inner basin boundary was the symmetric ball $|r - 1| < 1/3 = \varepsilon_0$. Numerical integration (DOP853 integrator, see the GTCT repository) revealed the true boundary is $r^* \approx 0.8$ — asymmetric because the correction term $2(r-1)e^{-z}$ is not symmetric in $r$ around $r=1$. The Lean 4 formalisation in AXLE has been updated to reflect this. $\varepsilon_0 = 1/3$ remains the <em>stability radius</em> for the linearised system; $r^*$ is the true nonlinear boundary.</p>
+    </div>
+
+    <div class="section-label">§ 3.5</div>
+    <h2>Convergence in the simulator</h2>
+
+    <p>The simulation below integrates System (3.1) numerically. The left panel shows the $(r, z)$ portrait — a cross-section of the cylinder. The right panel shows a 3D projection of the helix in $(r, \theta, z)$ space, viewed from a fixed angle. Seed new orbits by clicking the left panel.</p>
+
+    <div class="sim-wrap">
+      <canvas id="sim3d" width="800" height="400"></canvas>
+      <div class="sim-controls">
+        <label>Speed <input type="range" id="spd" min="0.2" max="4" step="0.1" value="1.2"></label>
+        <label>Trails <input type="range" id="trl" min="40" max="400" step="20" value="180"></label>
+        <button class="sim-btn" id="rst">Reset</button>
+        <label style="margin-left:auto">
+          <input type="checkbox" id="show_basin" checked> Show basin boundary r*
+        </label>
+      </div>
+      <p class="sim-caption">Fig 3.1 — Left: $(r,z)$ portrait. Dashed lines: attractor $r=1$ (gold) and basin boundary $r^* \approx 0.8$ (red). Right: helical orbits in $(r, \theta, z)$ space. All outer orbits converge to the unit helix.</p>
+    </div>
+
+    <div class="section-label">§ 3.6</div>
+    <h2>The G-chain on a curved manifold</h2>
+
+    <p>We saw in Chapter 2 how the G-chain $G = U \circ F \circ K \circ C$ maps onto the contact structure of flat $\mathbb{R}^3$. On a curved manifold the same mapping holds, but each operator now has geometric content:</p>
+
+    <p><strong>C</strong> is the contact form $\alpha$ itself — the compression of the full ODE to a single geometric constraint on the manifold.</p>
+
+    <p><strong>K</strong> is the non-integrability condition, now carrying curvature. The quantity $\alpha \wedge d\alpha$ is not just non-zero; its magnitude encodes how strongly the contact planes twist as you move along the manifold. At the attractor $r = 1$, this twist is maximal — the contact planes rotate fastest precisely where the helix lives.</p>
+
+    <p><strong>F</strong> is the Reeb flow — the solution operator that carries a point along the Reeb orbit. It builds the trajectory from the contact structure.</p>
+
+    <p><strong>U</strong> is the projection $\pi: M \to \Sigma$ to the base surface $\Sigma = \{z = 0\}$. The 3D helix projects down to the circle $r = 1$ in the plane — the visible, observable attractor.</p>
+
+    <div class="section-label">§ 3.7</div>
+    <h2>A note on Book 3</h2>
+
+    <div class="bridge">
+      <div class="bridge-inner">
+        <div class="bridge-eyebrow">Bridge — Book 3 / Chapter 10</div>
+        <h3>You have been here before.</h3>
+        <p>Book 3 arrived at this manifold from the biology: circadian clocks (Chapter 3), neural oscillators (Chapter 4), immune memory (Chapter 5) — all were instances of the contact structure on a 3-manifold, interpreted domain by domain. The helical attractor was the unifying object behind all of them.</p>
+        <p>Book 4 arrives at the same manifold from the mathematics: starting from the 1D ODE, promoting time to a coordinate (Chapter 2), curving the resulting flat space (this chapter). The two paths meet here.</p>
+        <p><strong>What Book 4 adds</strong> is what comes next: Chapter 4 asks what happens when you add a fourth coordinate. The helix is no longer the destination — it is the floor.</p>
+        <div class="ode-box">dm³ toy ODE (System 3.1):<br>
+ṙ = r(1−r²) + 2(r−1)e^{−z}<br>
+θ̇ = 1<br>
+ż = r² − 2(r−1)²e^{−z}<br><br>
+Attractor: r = 1, μ = −2, basin: r* ≈ 0.8</div>
+      </div>
+    </div>
+
+    <div class="section-label">§ 3.8</div>
+    <h2>What Chapter 4 will add</h2>
+
+    <p>We are sitting on a contact 3-manifold with one closed Reeb orbit as attractor. Chapter 4 introduces a fourth coordinate $w$. The manifold becomes 4-dimensional. The contact structure meets its natural partner — the <strong>symplectic structure</strong> — and a new object appears: the <em>symplectisation</em> of the contact manifold, a 4-manifold that contains the 3-manifold as a hypersurface.</p>
+
+    <p>The question Chapter 4 answers: does the helical attractor persist when you embed the 3-manifold into 4D? The answer is yes — but the proof requires a new tool that does not exist in 3D: <em>holomorphic curves</em>. That is where the dimensional climb truly begins.</p>
+
+    <div class="section-label">§ 3.9</div>
+    <h2>$\pi \approx 3.14$: finding the hypersphere</h2>
+
+    <p>The period of the dm³ Reeb orbit is $T^* = 2\pi$. That $\pi$ is not a label — it is a measurement. One full revolution of the helix $\dot{\theta} = 1$ takes exactly $2\pi$ units of time, returning the angle $\theta$ to its starting value. The attractor is the set of all such returns: the closed Reeb orbit at $r = 1$.</p>
+
+    <p>Now ask: what is the simplest space in which a closed orbit with period $2\pi$ and a contact structure naturally coexist? The answer is $S^3$ — the unit 3-sphere.</p>
+
+    <div class="eq-block">
+      <div class="eq-label">The 3-sphere — definition</div>
+      $$S^3 = \{(z_1, z_2) \in \mathbb{C}^2 : |z_1|^2 + |z_2|^2 = 1\}.$$
+      <div style="color:var(--muted);font-size:.78rem;margin-top:.5rem;">Equivalently: $S^3 \subset \mathbb{R}^4$ with $x_1^2 + x_2^2 + x_3^2 + x_4^2 = 1$.</div>
+      <div style="color:var(--muted);font-size:.78rem;">The unit hypersphere. Lives in 4D. Its boundary dimension is 3.</div>
+    </div>
+
+    <p>$S^3$ carries a canonical contact structure. Write $z_j = x_j + iy_j$ for $j = 1, 2$. The standard contact form on $S^3$ is:</p>
+
+    <div class="eq-block">
+      <div class="eq-label">Standard contact form on $S^3$</div>
+      $$\alpha_{\text{std}} = \frac{1}{2}\sum_{j=1}^{2}(x_j\,dy_j - y_j\,dx_j)\Big|_{S^3}.$$
+    </div>
+
+    <p>The Reeb vector field of $\alpha_{\text{std}}$ generates the <strong>Hopf flow</strong>: $(z_1, z_2) \mapsto (e^{it}z_1, e^{it}z_2)$. Every orbit is a circle of period $2\pi$. The orbit space — the set of all Reeb orbits — is $S^2$. This is the <strong>Hopf fibration</strong>: $S^3 \to S^2$ with fibers $S^1$.</p>
+
+    <div class="env thm">
+      <div class="env-head">Theorem 3.3 — $S^3$ is the canonical contact 3-manifold</div>
+      <p>$(S^3, \ker\alpha_{\text{std}})$ is the unique (up to contactomorphism) tight contact structure on $S^3$. Every closed Reeb orbit has period $2\pi$. The dm³ contact manifold $M = \mathbb{R}^2_+ \times \mathbb{R}$ with its helical attractor at $r=1$, $T^* = 2\pi$, is locally contactomorphic to $(S^3, \ker\alpha_{\text{std}})$ near the attractor.</p>
+    </div>
+
+    <p>This is why $\pi$ appears in the dm³ system as the first rung of the recurrence ladder — it is not the area constant or the ratio of circumference to diameter arriving by coincidence. It is the <em>period of the Reeb orbit on the contact 3-manifold</em>, and that manifold is, at its canonical core, $S^3$.</p>
+
+    <div class="keyidea">
+      <strong>The hypersphere hidden in the cylinder</strong>
+      <p>The dm³ coordinates $(r, \theta, z)$ describe a solid cylinder. The attractor $r=1$ is a surface inside it. But the geometry near the attractor — the contact planes, the Reeb flow, the period $2\pi$ — is that of $S^3$. The cylinder is a chart. The hypersphere is the canonical model. When Chapter 4 adds a fourth coordinate $w$, it will be adding the ambient $\mathbb{R}^4$ that $S^3$ has always been sitting inside.</p>
+    </div>
+
+    <p>The dimensional ladder now has a sharper picture. The 3D step is not "some curved manifold" — it is $S^3$, the unit hypersphere in $\mathbb{R}^4$. Chapter 4 is the step into $\mathbb{R}^4$ itself, where $S^3$ lives as a hypersurface. The climb from 3D to 4D is the move from the sphere to its ambient space.</p>
+
+  </div>
+</div>
+
+<!-- copy prompt -->
+<div class="prose" style="padding-top:0">
+  <div class="prose-inner">
+    <div class="pb-prompt">
+      You are reading Chapter 3 of <em>Principia Orthogona Book 4 — Higher Dimensions</em> by Pablo Nogueira Grossi.
+
+The chapter introduces the contact 3-manifold, the Reeb vector field, and the dm³ toy ODE (System 3.1). The key result is Theorem 3.2: every trajectory with r(0) > 1 converges exponentially to the helix r = 1 at rate μ = −2. The inner basin boundary is r* ≈ 0.8, not the symmetric 1/3.
+
+Your task: The chapter claims that the Lyapunov exponent μ = −2 of the Reeb attractor is the same μ that appears in the dm³ recurrence ladder (π → φ → μ → η → Δ → Σ → Ω). Write two paragraphs: (1) what a Lyapunov exponent measures in general — its geometric meaning in terms of nearby trajectories; (2) why it is significant that μ = −2 appears both as a convergence rate of a specific ODE and as a rung of the recurrence ladder. Is this a coincidence, a definition, or a theorem? Use the language of this chapter.
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(this.parentElement.innerText.replace('COPY PROMPT','').trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1800)">Copy</button>
+    </div>
+  </div>
+</div>
+
+<div class="chapter-nav-bottom">
+  <a href="ch02.html">← Ch 2 · 2D+t</a>
+  <a href="ch04.html">Ch 4 · First Lift →</a>
+</div>
+
+<footer>
+  <div>Principia Orthogona · Book 4 · Higher Dimensions · © 2026 Pablo Nogueira Grossi · G6 LLC</div>
+  <div>ORCID 0009-0000-6496-2186 · Zenodo DOI <a href="https://doi.org/10.5281/zenodo.19117400" target="_blank">10.5281/zenodo.19117400</a></div>
+  <div class="meta">CHAPTER 3 · 3D · CONTACT 3-MANIFOLD</div>
+</footer>
+
+<script>
+const canvas = document.getElementById('sim3d');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const half = W / 2;
+
+// ---- integrator: dm³ toy ODE ----
+function deriv(r, th, z) {
+  const dr = r*(1 - r*r) + 2*(r-1)*Math.exp(-z);
+  const dth = 1;
+  const dz = r*r - 2*(r-1)*(r-1)*Math.exp(-z);
+  return [dr, dth, dz];
+}
+
+function rk4(r, th, z, dt) {
+  const [k1r,k1t,k1z] = deriv(r,th,z);
+  const [k2r,k2t,k2z] = deriv(r+dt/2*k1r, th+dt/2*k1t, z+dt/2*k1z);
+  const [k3r,k3t,k3z] = deriv(r+dt/2*k2r, th+dt/2*k2t, z+dt/2*k2z);
+  const [k4r,k4t,k4z] = deriv(r+dt*k3r, th+dt*k3t, z+dt*k3z);
+  return [
+    r  + dt/6*(k1r+2*k2r+2*k3r+k4r),
+    th + dt/6*(k1t+2*k2t+2*k3t+k4t),
+    z  + dt/6*(k1z+2*k2z+2*k3z+k4z)
+  ];
+}
+
+// ---- orbits ----
+let orbits = [];
+const SEEDS = [
+  {r:1.7, th:0,    z:0, hue:50},
+  {r:1.4, th:1,    z:0, hue:200},
+  {r:1.2, th:2,    z:0, hue:140},
+  {r:0.9, th:0.5,  z:0, hue:310},   // inner-basin convergent
+  {r:2.0, th:3,    z:0, hue:20},
+];
+function initOrbits() {
+  orbits = SEEDS.map(s => ({r:s.r, th:s.th, z:s.z, hue:s.hue, trail:[]}));
+}
+initOrbits();
+
+function TRAIL() { return +document.getElementById('trl').value; }
+function SPD()   { return +document.getElementById('spd').value; }
+
+// ---- left panel: (r,z) portrait ----
+function rzToCanvas(r, z) {
+  // r: 0..2.5 → x: 20..half-20
+  // z: -1..15 → y: H-20..20
+  const px = 20 + (r / 2.5) * (half - 40);
+  const py = (H-20) - ((z + 1) / 16) * (H - 40);
+  return [px, py];
+}
+
+function drawLeft() {
+  // axes
+  ctx.strokeStyle = '#2a3048'; ctx.lineWidth = 1;
+  const [ox, oy] = rzToCanvas(0, -1);
+  const [rx2, ] = rzToCanvas(2.5, -1);
+  const [, zy2] = rzToCanvas(0, 15);
+  ctx.beginPath();
+  ctx.moveTo(ox, oy); ctx.lineTo(rx2, oy);
+  ctx.moveTo(ox, oy); ctx.lineTo(ox, zy2);
+  ctx.stroke();
+  ctx.fillStyle='#556'; ctx.font='11px sans-serif';
+  ctx.fillText('r', rx2-8, oy+14);
+  ctx.fillText('z', ox+6, zy2+14);
+
+  // attractor r=1 (gold dashed)
+  const [ax] = rzToCanvas(1, -1);
+  ctx.setLineDash([5,4]); ctx.strokeStyle = '#c9a84c88'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(ax, H-20); ctx.lineTo(ax, 20); ctx.stroke();
+
+  // basin boundary r* ≈ 0.8 (red dashed)
+  if (document.getElementById('show_basin').checked) {
+    const [bx] = rzToCanvas(0.8, -1);
+    ctx.strokeStyle = '#e05a3a88';
+    ctx.beginPath(); ctx.moveTo(bx, H-20); ctx.lineTo(bx, 20); ctx.stroke();
+  }
+  ctx.setLineDash([]);
+
+  // labels
+  ctx.fillStyle='#c9a84c'; ctx.font='10px sans-serif';
+  ctx.fillText('r=1', ax+4, 30);
+  if (document.getElementById('show_basin').checked) {
+    const [bx2] = rzToCanvas(0.8,-1);
+    ctx.fillStyle='#e05a3a'; ctx.fillText('r*', bx2+3, 30);
+  }
+
+  ctx.fillStyle='#c9a84c88'; ctx.font='bold 11px sans-serif';
+  ctx.fillText('(r, z) portrait', 8, 16);
+}
+
+// ---- right panel: isometric 3D projection of (r,θ,z) ----
+function proj3d(r, th, z) {
+  // Cartesian: x=r cos θ, y=r sin θ
+  const cx3 = r * Math.cos(th);
+  const cy3 = r * Math.sin(th);
+  // isometric-ish onto canvas
+  const cx = half + half/2 + 10;
+  const cy = H/2 + 30;
+  const sx = 52, sy = 32, sz = 22;
+  const px = cx + cx3*sx - cy3*sy*0.4;
+  const py = cy - cy3*sy*0.4 - z*sz*0.22 + cx3*0;
+  return [px, py];
+}
+
+function drawRight() {
+  // axes
+  ctx.strokeStyle = '#2a3048'; ctx.lineWidth = 1;
+  const o = proj3d(0,0,0);
+  const ex = proj3d(2.2,0,0);
+  const ey = proj3d(0,Math.PI/2,0);
+  const ez = proj3d(0,0,10);
+  ctx.beginPath();
+  ctx.moveTo(o[0],o[1]); ctx.lineTo(ex[0],ex[1]);
+  ctx.moveTo(o[0],o[1]); ctx.lineTo(ey[0],ey[1]);
+  ctx.moveTo(o[0],o[1]); ctx.lineTo(ez[0],ez[1]);
+  ctx.stroke();
+  ctx.fillStyle='#556'; ctx.font='11px sans-serif';
+  ctx.fillText('r', ex[0]+4, ex[1]+4);
+  ctx.fillText('θ', ey[0]-12, ey[1]+4);
+  ctx.fillText('z', ez[0]+4, ez[1]);
+
+  // draw attractor helix r=1 (gold)
+  ctx.strokeStyle='#c9a84c55'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
+  ctx.beginPath();
+  for (let t=0; t<18; t+=0.08) {
+    const p = proj3d(1, t % (2*Math.PI), t*0.5);
+    t===0 ? ctx.moveTo(p[0],p[1]) : ctx.lineTo(p[0],p[1]);
+  }
+  ctx.stroke(); ctx.setLineDash([]);
+
+  ctx.fillStyle='#c9a84c'; ctx.font='bold 11px sans-serif';
+  ctx.fillText('(r, θ, z) space', half+8, 16);
+}
+
+function draw() {
+  ctx.fillStyle = '#07050f';
+  ctx.fillRect(0,0,W,H);
+
+  // divider
+  ctx.strokeStyle='#1a2030'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(half,0); ctx.lineTo(half,H); ctx.stroke();
+
+  drawLeft();
+  drawRight();
+
+  const dt = 0.018 * SPD();
+  const maxT = TRAIL();
+
+  orbits.forEach(o => {
+    // step
+    const [nr, nth, nz] = rk4(o.r, o.th, o.z, dt);
+    o.r = Math.max(0.01, nr);
+    o.th = nth;
+    o.z = Math.min(nz, 18); // cap z
+    o.trail.push({r:o.r, th:o.th % (2*Math.PI), z:o.z});
+    if (o.trail.length > maxT) o.trail.shift();
+
+    // draw left trail
+    for (let i=1; i<o.trail.length; i++) {
+      const a = i/o.trail.length;
+      ctx.strokeStyle = `hsla(${o.hue},75%,62%,${a*0.8})`;
+      ctx.lineWidth = 1.4;
+      const [x1,y1] = rzToCanvas(o.trail[i-1].r, o.trail[i-1].z);
+      const [x2,y2] = rzToCanvas(o.trail[i].r,   o.trail[i].z);
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    }
+    // head left
+    const [hx,hy] = rzToCanvas(o.r, o.z);
+    ctx.fillStyle = `hsl(${o.hue},90%,72%)`;
+    ctx.beginPath(); ctx.arc(hx,hy,3,0,Math.PI*2); ctx.fill();
+
+    // draw right trail (use last 60 pts for 3d)
+    const t3 = o.trail.slice(-60);
+    for (let i=1; i<t3.length; i++) {
+      const a = i/t3.length;
+      ctx.strokeStyle = `hsla(${o.hue},70%,58%,${a*0.7})`;
+      ctx.lineWidth = 1.4;
+      const p1 = proj3d(t3[i-1].r, t3[i-1].th, t3[i-1].z);
+      const p2 = proj3d(t3[i].r,   t3[i].th,   t3[i].z);
+      ctx.beginPath(); ctx.moveTo(p1[0],p1[1]); ctx.lineTo(p2[0],p2[1]); ctx.stroke();
+    }
+    if (t3.length > 0) {
+      const hp = proj3d(o.r, o.th, o.z);
+      ctx.fillStyle = `hsl(${o.hue},90%,72%)`;
+      ctx.beginPath(); ctx.arc(hp[0],hp[1],3,0,Math.PI*2); ctx.fill();
+    }
+  });
+
+  requestAnimationFrame(draw);
+}
+
+// click left panel to seed
+canvas.addEventListener('click', e => {
+  const rect = canvas.getBoundingClientRect();
+  const cx = (e.clientX - rect.left) * (W / rect.width);
+  if (cx < half) {
+    const cy = (e.clientY - rect.top) * (H / rect.height);
+    // invert rzToCanvas
+    const r = (cx - 20) / (half - 40) * 2.5;
+    const z = ((H-20 - cy) / (H-40)) * 16 - 1;
+    if (r > 0.05 && r < 2.45) {
+      orbits.push({r, th: Math.random()*2*Math.PI, z: Math.max(-0.9, z), hue: Math.random()*360, trail:[]});
+    }
+  }
+});
+
+document.getElementById('rst').addEventListener('click', () => { initOrbits(); });
+
+draw();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hidden Geometry of Electromagnetic Forces</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #0d0f14;
+  --paper:  #f5f0e8;
+  --gold:   #c9a84c;
+  --copper: #b5651d;
+  --teal:   #1a7a7a;
+  --cream:  #faf7f2;
+  --muted:  #6b6560;
+  --rule:   #c9a84c44;
+  --glow:   #4fc3f7;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 60% 40%, #1a2a3a 0%, var(--ink) 65%);
+}
+
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+  max-width: 860px;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.3s forwards;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: 1.1;
+  color: var(--paper);
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.6s forwards;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: #a0a8b0;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto 2.5rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.9s forwards;
+}
+
+.scroll-cue {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 1s 1.3s forwards, pulse 2.5s 2.3s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%,100% { opacity: 0.5; } 50% { opacity: 1; }
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,15,20,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 2.5rem;
+}
+
+.nav-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.82rem;
+  color: #888;
+  text-decoration: none;
+  transition: color 0.2s;
+  letter-spacing: 0.04em;
+}
+
+.nav-links a:hover { color: var(--paper); }
+
+/* ── LAYOUT ── */
+.section {
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.section-rule {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin-bottom: 2.5rem;
+  opacity: 0.5;
+}
+
+p { line-height: 1.82; color: #b8b0a6; margin-bottom: 1.2rem; font-size: 1rem; }
+p strong { color: var(--paper); font-weight: 500; }
+
+/* ── DIVIDER ── */
+.full-rule {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+
+/* ── FARADAY EFFECT SECTION ── */
+.faraday-section {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.faraday-section .section-title { color: var(--ink); }
+.faraday-section p { color: #4a4540; }
+.faraday-section p strong { color: var(--ink); }
+
+.faraday-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+@media (max-width: 700px) { .faraday-grid { grid-template-columns: 1fr; } }
+
+.faraday-canvas-wrap {
+  position: relative;
+  background: var(--ink);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#faraday-canvas {
+  width: 100%;
+  display: block;
+}
+
+.canvas-label {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.fact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.fact-list li {
+  padding-left: 1.2rem;
+  border-left: 2px solid var(--gold);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #4a4540;
+}
+
+.fact-list li strong { color: var(--ink); display: block; margin-bottom: 0.2rem; }
+
+/* ── INDUCTION SECTION ── */
+.induction-section {
+  background: #0a0c10;
+}
+
+.induction-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (max-width: 700px) { .induction-inner { grid-template-columns: 1fr; } }
+
+#induction-canvas {
+  width: 100%;
+  border-radius: 4px;
+  background: #060810;
+  display: block;
+}
+
+/* ── HELICAL SECTION ── */
+.helical-section {
+  background: linear-gradient(180deg, var(--ink) 0%, #0a1a20 100%);
+  text-align: center;
+}
+
+#helical-canvas {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  display: block;
+  border-radius: 4px;
+  background: #040810;
+}
+
+/* ── BUSINESS BRIDGE ── */
+.bridge-section {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.bridge-section .section-title { color: var(--ink); }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.card {
+  background: white;
+  border-top: 3px solid var(--gold);
+  padding: 1.8rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+}
+
+.card-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+}
+.card-body { font-size: 0.88rem; color: #5a5550; line-height: 1.7; }
+.card-tag {
+  display: inline-block;
+  margin-top: 0.8rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--copper);
+  border: 1px solid var(--copper);
+  padding: 0.15rem 0.5rem;
+}
+
+/* ── QUOTE ── */
+.quote-section {
+  background: var(--ink);
+  text-align: center;
+  padding: 5rem 2rem;
+  border-top: 1px solid var(--rule);
+}
+
+blockquote {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 1.9rem);
+  color: var(--paper);
+  max-width: 760px;
+  margin: 0 auto;
+  line-height: 1.65;
+  position: relative;
+}
+
+blockquote::before {
+  content: '\201C';
+  position: absolute;
+  top: -1rem;
+  left: -1.5rem;
+  font-size: 5rem;
+  color: var(--gold);
+  opacity: 0.25;
+  line-height: 1;
+}
+
+cite {
+  display: block;
+  margin-top: 1.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-style: normal;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #080a0e;
+  border-top: 1px solid var(--rule);
+  padding: 2rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+footer p {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: #444;
+  margin: 0;
+}
+
+/* ── REVEAL ON SCROLL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Michael Faraday · 1791–1867 · The Hidden Geometry</div>
+    <h1 class="hero-title">
+      Everything electromagnetic<br>moves in a <em>spiral</em>
+    </h1>
+    <p class="hero-sub">
+      Light bends around magnetic fields. Electrons spiral through plasma.
+      Generators spin because geometry demands it.
+      Faraday showed that electromagnetic forces are not straight lines —
+      they are twisting, living structures.
+    </p>
+    <div class="scroll-cue">▼ &nbsp; scroll to understand &nbsp; ▼</div>
+  </div>
+</section>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Faraday · Electromagnetic Forces</span>
+  <ul class="nav-links">
+    <li><a href="#faraday">Faraday Effect</a></li>
+    <li><a href="#induction">Induction</a></li>
+    <li><a href="#helical">Helical Motion</a></li>
+    <li><a href="#business">Applications</a></li>
+  </ul>
+</nav>
+
+<!-- FARADAY EFFECT -->
+<section class="faraday-section" id="faraday">
+  <div class="section" style="max-width:1100px">
+    <div class="reveal">
+      <div class="section-label">Discovery 1 · 1845</div>
+      <h2 class="section-title">Magnetism bends the<br>path of light itself</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="faraday-grid reveal">
+      <div class="faraday-canvas-wrap">
+        <canvas id="faraday-canvas" height="340"></canvas>
+        <div class="canvas-label">Live · Polarization plane rotation under magnetic field</div>
+      </div>
+      <ul class="fact-list">
+        <li>
+          <strong>What Faraday found</strong>
+          Linearly polarized light, traveling through matter parallel to a magnetic field,
+          has its polarization plane <em>rotated</em> by the field — the first proof
+          that magnetism and light are connected.
+        </li>
+        <li>
+          <strong>Why it happens</strong>
+          The magnetic field breaks left-right symmetry. Left- and right-circularly
+          polarized components of light travel at slightly different speeds,
+          twisting the combined wave as it moves.
+        </li>
+        <li>
+          <strong>The 2025 surprise</strong>
+          For 180 years, scientists assumed only light's electric field drove the effect.
+          New research confirmed that light's <em>magnetic field component</em>
+          also actively torques electron spins inside the material.
+        </li>
+        <li>
+          <strong>Business application</strong>
+          Optical isolators — devices that let laser light travel one way but
+          block back-reflections — are built on this principle.
+          Every fiber-optic network and high-power laser on Earth uses one.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="full-rule">
+
+<!-- INDUCTION -->
+<section class="induction-section" id="induction">
+  <div class="section">
+    <div class="reveal">
+      <div class="section-label">Discovery 2 · 1831</div>
+      <h2 class="section-title">Motion through a field<br>creates electricity</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="induction-inner reveal">
+      <div>
+        <p>
+          In 1831, Faraday discovered <strong>electromagnetic induction</strong>: moving
+          a magnet through a coil of wire generates an electric current.
+          Not because of any force applied directly — but because the changing
+          magnetic flux through the loop demands it by geometry.
+        </p>
+        <p>
+          Ten years earlier, in 1821, he built the world's first rudimentary electric
+          motor — a wire suspended in mercury that rotated continuously around a
+          fixed magnet. The rotation was not incidental. The <strong>helical force</strong>
+          is the natural consequence of current meeting field.
+        </p>
+        <p style="color:#6b8a9a">
+          <strong style="color:#9ab8c8">Real-world consequence:</strong>
+          Every generator, every induction motor, every wireless charger,
+          every induction cooktop — all are direct descendants of a wire moving
+          through a magnetic field in 1831.
+        </p>
+        <div style="margin-top:2rem; padding:1.2rem 1.5rem; border-left:3px solid var(--gold); background: rgba(201,168,76,0.06);">
+          <div style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase; margin-bottom:0.5rem;">Faraday's Law</div>
+          <div style="font-family:'DM Mono',monospace; font-size:1rem; color:var(--paper);">
+            EMF = −dΦ<sub>B</sub>/dt
+          </div>
+          <div style="font-size:0.82rem; color:#6b8a9a; margin-top:0.5rem;">
+            The electromotive force induced is equal to the rate of change of
+            magnetic flux through the circuit. The negative sign is geometry's
+            way of saying the induced current resists the change.
+          </div>
+        </div>
+      </div>
+      <canvas id="induction-canvas" height="380"></canvas>
+    </div>
+  </div>
+</section>
+
+<hr class="full-rule">
+
+<!-- HELICAL MOTION -->
+<section class="helical-section" id="helical">
+  <div class="section" style="text-align:center">
+    <div class="reveal">
+      <div class="section-label">Discovery 3 · The Universal Pattern</div>
+      <h2 class="section-title">Charged particles don't travel straight.<br>They spiral.</h2>
+      <div class="section-rule" style="margin:0 auto 2.5rem"></div>
+      <p style="max-width:620px; margin:0 auto 3rem; color:#7a9aaa; font-size:1rem">
+        When an electric current runs parallel to a magnetic field, the Lorentz force
+        is always perpendicular to both the velocity and the field.
+        The result: a <strong style="color:var(--paper)">helical trajectory</strong> —
+        the charged particle corkscrews forward through space.
+        This is not a special case. It is the generic case.
+      </p>
+    </div>
+    <canvas id="helical-canvas" height="400" class="reveal"></canvas>
+    <div class="reveal" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:1.5rem; margin-top:3rem; text-align:left">
+      <div style="padding:1.5rem; border:1px solid rgba(201,168,76,0.2); background:rgba(201,168,76,0.04)">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase; margin-bottom:0.6rem">Solar Physics</div>
+        <p style="font-size:0.88rem; color:#7a9aaa; margin:0">Solar flares trace helical field lines. Force-free fields — where current aligns with field — allow plasma structures to remain stable without collapsing.</p>
+      </div>
+      <div style="padding:1.5rem; border:1px solid rgba(79,195,247,0.2); background:rgba(79,195,247,0.04)">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; color:var(--glow); text-transform:uppercase; margin-bottom:0.6rem">Fusion Reactors</div>
+        <p style="font-size:0.88rem; color:#7a9aaa; margin:0">Tokamak reactors confine plasma in a torus using helical magnetic fields. The spiral structure is not chosen arbitrarily — it is the geometry that prevents collapse.</p>
+      </div>
+      <div style="padding:1.5rem; border:1px solid rgba(181,101,29,0.3); background:rgba(181,101,29,0.05)">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; color:var(--copper); text-transform:uppercase; margin-bottom:0.6rem">Particle Accelerators</div>
+        <p style="font-size:0.88rem; color:#7a9aaa; margin:0">CERN's LHC steers protons in circles using thousands of superconducting magnets. Each bending magnet exploits the helical force law to keep the beam on track.</p>
+      </div>
+      <div style="padding:1.5rem; border:1px solid rgba(42,127,127,0.3); background:rgba(42,127,127,0.05)">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; color:var(--teal); text-transform:uppercase; margin-bottom:0.6rem">Chaotic Attractors</div>
+        <p style="font-size:0.88rem; color:#7a9aaa; margin:0">In plasma dynamics, complex electromagnetic systems follow geometric attractors — like the Lorenz attractor — that physically resemble a three-dimensional figure-eight helix.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-rule">
+
+<!-- BUSINESS BRIDGE -->
+<section class="bridge-section" id="business">
+  <div class="section">
+    <div class="reveal">
+      <div class="section-label">Why This Matters · Applications</div>
+      <h2 class="section-title">From a rotating wire<br>to the electrical grid</h2>
+      <div class="section-rule"></div>
+      <p style="max-width:680px; color:#4a4540">
+        Faraday never wrote an equation. He was a blacksmith's son with no formal
+        mathematics. What he had was an extraordinary ability to see the geometric
+        structure of forces — and the persistence to demonstrate it physically.
+        The consequences run through everything you depend on.
+      </p>
+    </div>
+    <div class="card-grid reveal">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Power Generation</div>
+        <div class="card-body">Every generator — coal, gas, wind, hydro, nuclear — works by rotating a conductor through a magnetic field. Electromagnetic induction converts mechanical rotation into electricity at scale.</div>
+        <span class="card-tag">Infrastructure · $trillions/year</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">Fiber Optic Networks</div>
+        <div class="card-body">Optical isolators — built on the Faraday rotation effect — protect every laser source in global fiber-optic infrastructure from back-reflections that would destroy the laser.</div>
+        <span class="card-tag">Telecoms · All internet traffic</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔋</div>
+        <div class="card-title">Wireless Charging</div>
+        <div class="card-body">Inductive charging pads use oscillating magnetic fields to induce current in a receiver coil. No physical contact required. Faraday's 1831 discovery, miniaturised into your phone case.</div>
+        <span class="card-tag">Consumer Electronics</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏥</div>
+        <div class="card-title">MRI Scanners</div>
+        <div class="card-body">Magnetic resonance imaging uses powerful magnetic fields and radio waves to align and then detect the spin of hydrogen protons in tissue. Helical electromagnetic principles at medical scale.</div>
+        <span class="card-tag">Medical Imaging · $8B market</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚂</div>
+        <div class="card-title">Maglev Transport</div>
+        <div class="card-body">Magnetic levitation trains use electromagnetic induction to both levitate and propel the vehicle. No wheels, no friction. The same force law that spun Faraday's wire now floats trains at 600 km/h.</div>
+        <span class="card-tag">Transport · $50B pipeline</span>
+      </div>
+      <div class="card">
+        <div class="card-icon">☀️</div>
+        <div class="card-title">Solar Energy</div>
+        <div class="card-body">Solar inverters convert DC from panels to AC for the grid using electromagnetic switching. Every watt of solar power passes through Faraday induction principles before it reaches a socket.</div>
+        <span class="card-tag">Energy Transition</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section reveal">
+  <blockquote>
+    Nothing is too wonderful to be true if it be consistent with the laws of nature, and in such things as these, experiment is the best test of such consistency.
+    <cite>— Michael Faraday, Laboratory Notebook, 1849</cite>
+  </blockquote>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>The Hidden Geometry of Electromagnetic Forces · Faraday 1821–1845</p>
+  <p>Sources: Faraday (1845) · PMC 12630884 (2025) · USNA Physics · RP-Photonics</p>
+</footer>
+
+<script>
+// roundRect polyfill for browsers that don't support it yet
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+    const radius = Array.isArray(r) ? r[0] : (r || 0);
+    this.beginPath();
+    this.moveTo(x + radius, y);
+    this.lineTo(x + w - radius, y);
+    this.quadraticCurveTo(x + w, y, x + w, y + radius);
+    this.lineTo(x + w, y + h - radius);
+    this.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+    this.lineTo(x + radius, y + h);
+    this.quadraticCurveTo(x, y + h, x, y + h - radius);
+    this.lineTo(x, y + radius);
+    this.quadraticCurveTo(x, y, x + radius, y);
+    this.closePath();
+    return this;
+  };
+}
+
+// ── HERO CANVAS — particles spiraling in a magnetic field ──────────────────
+const hc = document.getElementById('hero-canvas');
+const hx = hc.getContext('2d');
+
+function resizeHero() {
+  hc.width  = hc.offsetWidth;
+  hc.height = hc.offsetHeight;
+}
+resizeHero();
+window.addEventListener('resize', resizeHero);
+
+class HelixParticle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x  = Math.random() * hc.width;
+    this.y  = Math.random() * hc.height;
+    this.z  = Math.random() * Math.PI * 2;  // phase
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.15;
+    this.r  = 18 + Math.random() * 28;      // helix radius
+    this.speed = 0.012 + Math.random() * 0.018;
+    this.life = 0;
+    this.maxLife = 200 + Math.random() * 300;
+    this.hue = Math.random() < 0.6 ? 195 : 38; // blue-cyan or gold
+    this.trail = [];
+  }
+  update() {
+    this.z += this.speed;
+    const spiral_x = Math.cos(this.z) * this.r;
+    const spiral_y = Math.sin(this.z) * this.r * 0.35;
+    this.trail.push({ x: this.x + spiral_x, y: this.y + spiral_y });
+    if (this.trail.length > 40) this.trail.shift();
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life++;
+    if (this.life > this.maxLife || this.x < -100 || this.x > hc.width + 100) this.reset();
+  }
+  draw() {
+    if (this.trail.length < 2) return;
+    for (let i = 1; i < this.trail.length; i++) {
+      const alpha = (i / this.trail.length) * 0.7;
+      hx.beginPath();
+      hx.moveTo(this.trail[i-1].x, this.trail[i-1].y);
+      hx.lineTo(this.trail[i].x,   this.trail[i].y);
+      hx.strokeStyle = `hsla(${this.hue}, 80%, 65%, ${alpha})`;
+      hx.lineWidth = 1.2 * (i / this.trail.length);
+      hx.stroke();
+    }
+    // head glow
+    const last = this.trail[this.trail.length - 1];
+    hx.beginPath();
+    hx.arc(last.x, last.y, 2.5, 0, Math.PI * 2);
+    hx.fillStyle = `hsla(${this.hue}, 90%, 80%, 0.9)`;
+    hx.shadowColor = `hsla(${this.hue}, 90%, 70%, 0.8)`;
+    hx.shadowBlur = 8;
+    hx.fill();
+    hx.shadowBlur = 0;
+  }
+}
+
+const particles = Array.from({length: 28}, () => new HelixParticle());
+
+// Magnetic field lines (background)
+function drawFieldLines() {
+  const spacing = hc.width / 7;
+  for (let i = 0; i <= 7; i++) {
+    hx.beginPath();
+    hx.moveTo(i * spacing, 0);
+    hx.lineTo(i * spacing, hc.height);
+    hx.strokeStyle = 'rgba(201,168,76,0.04)';
+    hx.lineWidth = 1;
+    hx.stroke();
+  }
+}
+
+function animHero() {
+  hx.clearRect(0, 0, hc.width, hc.height);
+  drawFieldLines();
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animHero);
+}
+animHero();
+
+// ── FARADAY CANVAS — polarisation rotation ────────────────────────────────
+const fc = document.getElementById('faraday-canvas');
+const fx = fc.getContext('2d');
+fc.width  = fc.offsetWidth;
+fc.height = 340;
+
+let faradayT = 0;
+
+function drawFaraday() {
+  fc.width = fc.offsetWidth; // keep responsive
+  const W = fc.width, H = fc.height;
+  fx.clearRect(0, 0, W, H);
+
+  // Background
+  fx.fillStyle = '#060810';
+  fx.fillRect(0, 0, W, H);
+
+  const cx = W / 2, cy = H / 2;
+
+  // Draw propagation axis
+  fx.beginPath();
+  fx.moveTo(40, cy);
+  fx.lineTo(W - 40, cy);
+  fx.strokeStyle = 'rgba(201,168,76,0.25)';
+  fx.lineWidth = 1.5;
+  fx.setLineDash([6, 4]);
+  fx.stroke();
+  fx.setLineDash([]);
+
+  // Labels
+  fx.font = '10px DM Mono, monospace';
+  fx.fillStyle = 'rgba(201,168,76,0.6)';
+  fx.fillText('→ propagation direction', 44, cy - 8);
+
+  // Draw the light wave — polarisation plane rotates along z
+  const steps = 80;
+  const waveLen = W - 100;
+  const amplitude = 70;
+
+  for (let i = 0; i < steps; i++) {
+    const t = i / steps;
+    const x = 50 + t * waveLen;
+    // Phase of the wave at this point
+    const phase = t * Math.PI * 4 - faradayT;
+    // Rotation angle increases with propagation (Faraday effect)
+    const rotAngle = t * Math.PI * 0.9;
+    const ey = Math.sin(phase) * amplitude * Math.cos(rotAngle);
+    const ez = Math.sin(phase) * amplitude * Math.sin(rotAngle);
+
+    if (i > 0) {
+      const tPrev = (i-1) / steps;
+      const xPrev = 50 + tPrev * waveLen;
+      const phasePrev = tPrev * Math.PI * 4 - faradayT;
+      const rotPrev = tPrev * Math.PI * 0.9;
+      const eyPrev = Math.sin(phasePrev) * amplitude * Math.cos(rotPrev);
+      const ezPrev = Math.sin(phasePrev) * amplitude * Math.sin(rotPrev);
+
+      // Electric field vector (displayed in 2D)
+      const alpha = 0.5 + 0.5 * t;
+      const r = Math.round(79 + 176 * t);
+      const g = Math.round(195 + 8 * (1-t));
+      const b = Math.round(247 - 50 * t);
+
+      fx.beginPath();
+      fx.moveTo(xPrev, cy + eyPrev * 0.5 + ezPrev * 0.25);
+      fx.lineTo(x,     cy + ey     * 0.5 + ez     * 0.25);
+      fx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+      fx.lineWidth = 2;
+      fx.stroke();
+    }
+  }
+
+  // Draw rotating polarisation indicator at end
+  const endX = W - 60;
+  const endRotAngle = Math.PI * 0.9;
+  const samplePhase = Math.PI * 4 - faradayT;
+  const eyEnd = Math.sin(samplePhase) * 55 * Math.cos(endRotAngle);
+  const ezEnd = Math.sin(samplePhase) * 55 * Math.sin(endRotAngle);
+
+  fx.beginPath();
+  fx.moveTo(endX, cy - eyEnd * 0.5 - ezEnd * 0.25);
+  fx.lineTo(endX, cy + eyEnd * 0.5 + ezEnd * 0.25);
+  fx.strokeStyle = 'rgba(201,168,76,0.9)';
+  fx.lineWidth = 2.5;
+  fx.stroke();
+
+  // Rotation angle annotation
+  const degrees = Math.round((Math.PI * 0.9 * 180 / Math.PI));
+  fx.font = 'bold 11px DM Sans, sans-serif';
+  fx.fillStyle = 'rgba(201,168,76,0.8)';
+  fx.fillText(`${degrees}° rotation`, endX - 30, cy - 65);
+
+  faradayT += 0.025;
+  requestAnimationFrame(drawFaraday);
+}
+drawFaraday();
+
+// ── INDUCTION CANVAS — magnet moving through solenoid coil ────────────────
+const ic = document.getElementById('induction-canvas');
+const ix = ic.getContext('2d');
+ic.width  = ic.offsetWidth;
+ic.height = 380;
+
+let inductionT = 0;
+
+// EMF history for the waveform plot
+const emfHistory = new Array(120).fill(0);
+
+function drawInduction() {
+  ic.width = ic.offsetWidth;
+  const W = ic.width, H = ic.height;
+  ix.clearRect(0, 0, W, H);
+
+  // Background gradient
+  const bg = ix.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#040810');
+  bg.addColorStop(1, '#080c18');
+  ix.fillStyle = bg;
+  ix.fillRect(0, 0, W, H);
+
+  const cx = W / 2;
+  const coilCY = H * 0.48;
+
+  // ── Magnet oscillation ──────────────────────────────────────────────────
+  const amplitude = W * 0.30;
+  const magnetX = cx + Math.sin(inductionT * 0.55) * amplitude;
+  const magnetVx = Math.cos(inductionT * 0.55) * amplitude * 0.55;
+  const emf = -magnetVx / (amplitude * 0.55); // normalised −dΦ/dt
+
+  emfHistory.push(emf);
+  emfHistory.shift();
+
+  // ── Solenoid coil ──────────────────────────────────────────────────────
+  // Draw as a proper helix projected to 2D: back halves first, then magnet, then front halves
+  const numLoops = 9;
+  const coilLeft  = cx - W * 0.20;
+  const coilRight = cx + W * 0.20;
+  const coilSpan  = coilRight - coilLeft;
+  const loopRY = H * 0.13;   // vertical radius of each ellipse
+  const loopRX = coilSpan / (numLoops * 2); // horizontal half-width per loop
+
+  const emfGlow = Math.abs(emf);
+  const baseColor = [181, 101, 29];
+  const glowColor = [79, 195, 247];
+
+  function coilColor(alpha) {
+    const r = Math.round(baseColor[0] + (glowColor[0]-baseColor[0]) * emfGlow);
+    const g = Math.round(baseColor[1] + (glowColor[1]-baseColor[1]) * emfGlow);
+    const b = Math.round(baseColor[2] + (glowColor[2]-baseColor[2]) * emfGlow);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  // Draw back arcs of each loop (behind the magnet plane)
+  for (let i = 0; i < numLoops; i++) {
+    const lx = coilLeft + (i + 0.5) * (coilSpan / numLoops);
+    const rx = coilSpan / (numLoops * 2) * 0.85;
+
+    // Shadow glow
+    if (emfGlow > 0.05) {
+      ix.shadowColor = `rgba(79,195,247,${emfGlow * 0.5})`;
+      ix.shadowBlur = 8;
+    }
+    // Back half — slightly dimmer
+    ix.beginPath();
+    ix.ellipse(lx, coilCY, rx, loopRY, 0, Math.PI, Math.PI * 2);
+    ix.strokeStyle = coilColor(0.35);
+    ix.lineWidth = 2;
+    ix.stroke();
+    ix.shadowBlur = 0;
+  }
+
+  // ── Magnetic field lines (Faraday flux) ───────────────────────────────
+  const mW = 28, mH = 90;
+  const numFieldLines = 7;
+  for (let fi = 0; fi < numFieldLines; fi++) {
+    const t = fi / (numFieldLines - 1); // 0..1
+    const startY = coilCY + (t - 0.5) * loopRY * 1.6;
+    const lineAlpha = 0.12 + 0.18 * (1 - Math.abs(t - 0.5) * 2);
+
+    // Field lines loop from N pole around to S pole
+    ix.beginPath();
+    // Right-going arc from N pole tip
+    const nx = magnetX + mW / 2; // N pole right edge (top)
+    const sx = magnetX + mW / 2; // S pole right edge (bottom)
+
+    // Simple dipole field lines: parabolic arcs looping right
+    const spread = 80 + fi * 20;
+    ix.moveTo(magnetX + mW/2, coilCY - mH/4);
+    ix.bezierCurveTo(
+      magnetX + mW/2 + spread, coilCY - mH/4 + (fi - numFieldLines/2) * 12,
+      magnetX + mW/2 + spread, coilCY + mH/4 + (fi - numFieldLines/2) * 12,
+      magnetX + mW/2, coilCY + mH/4
+    );
+    ix.strokeStyle = `rgba(201,168,76,${lineAlpha})`;
+    ix.lineWidth = 1;
+    ix.setLineDash([3, 4]);
+    ix.stroke();
+    ix.setLineDash([]);
+
+    // Left-going arc from N pole to S pole (field inside magnet shown as straight lines)
+    if (fi < 3) {
+      ix.beginPath();
+      ix.moveTo(magnetX - mW/2, coilCY - mH/4);
+      ix.bezierCurveTo(
+        magnetX - mW/2 - spread * 0.7, coilCY - mH/4 + (fi - 1) * 14,
+        magnetX - mW/2 - spread * 0.7, coilCY + mH/4 + (fi - 1) * 14,
+        magnetX - mW/2, coilCY + mH/4
+      );
+      ix.strokeStyle = `rgba(201,168,76,${lineAlpha * 0.6})`;
+      ix.setLineDash([3, 4]);
+      ix.stroke();
+      ix.setLineDash([]);
+    }
+  }
+
+  // ── Flux arrows through coil (shows direction of Φ change) ────────────
+  const fluxDir = magnetVx > 0 ? 1 : -1;
+  for (let i = 1; i < numLoops - 1; i += 2) {
+    const lx = coilLeft + (i + 0.5) * (coilSpan / numLoops);
+    const arrowY = coilCY;
+    const arrowLen = 10 * fluxDir * Math.abs(emf);
+    if (Math.abs(arrowLen) > 1) {
+      ix.beginPath();
+      ix.moveTo(lx - arrowLen, arrowY);
+      ix.lineTo(lx + arrowLen, arrowY);
+      ix.strokeStyle = `rgba(201,168,76,${Math.abs(emf) * 0.6})`;
+      ix.lineWidth = 1.5;
+      ix.stroke();
+      // Arrowhead
+      ix.beginPath();
+      const tip = lx + arrowLen;
+      ix.moveTo(tip, arrowY);
+      ix.lineTo(tip - 5 * fluxDir, arrowY - 4);
+      ix.lineTo(tip - 5 * fluxDir, arrowY + 4);
+      ix.closePath();
+      ix.fillStyle = `rgba(201,168,76,${Math.abs(emf) * 0.6})`;
+      ix.fill();
+    }
+  }
+
+  // ── Magnet (bar magnet, 3D look) ──────────────────────────────────────
+  // Shadow
+  ix.shadowColor = 'rgba(0,0,0,0.5)';
+  ix.shadowBlur = 12;
+  ix.shadowOffsetX = 3;
+  ix.shadowOffsetY = 3;
+
+  // N pole (red, top half)
+  const grad_N = ix.createLinearGradient(magnetX - mW/2, 0, magnetX + mW/2, 0);
+  grad_N.addColorStop(0, '#a02020');
+  grad_N.addColorStop(0.4, '#e85555');
+  grad_N.addColorStop(1, '#802020');
+  ix.fillStyle = grad_N;
+  ix.beginPath();
+  ix.roundRect(magnetX - mW/2, coilCY - mH/2, mW, mH/2, [4, 4, 0, 0]);
+  ix.fill();
+
+  // S pole (blue, bottom half)
+  const grad_S = ix.createLinearGradient(magnetX - mW/2, 0, magnetX + mW/2, 0);
+  grad_S.addColorStop(0, '#203080');
+  grad_S.addColorStop(0.4, '#4070d0');
+  grad_S.addColorStop(1, '#1a2468');
+  ix.fillStyle = grad_S;
+  ix.beginPath();
+  ix.roundRect(magnetX - mW/2, coilCY, mW, mH/2, [0, 0, 4, 4]);
+  ix.fill();
+
+  // Highlight sheen
+  ix.fillStyle = 'rgba(255,255,255,0.12)';
+  ix.fillRect(magnetX - mW/2 + 3, coilCY - mH/2 + 3, 5, mH - 6);
+
+  ix.shadowBlur = 0; ix.shadowOffsetX = 0; ix.shadowOffsetY = 0;
+
+  // Pole labels
+  ix.font = 'bold 14px DM Sans, sans-serif';
+  ix.fillStyle = 'rgba(255,255,255,0.95)';
+  ix.textAlign = 'center';
+  ix.fillText('N', magnetX, coilCY - mH/4 + 5);
+  ix.fillText('S', magnetX, coilCY + mH/4 + 6);
+  ix.textAlign = 'left';
+
+  // Pole dividing line
+  ix.beginPath();
+  ix.moveTo(magnetX - mW/2, coilCY);
+  ix.lineTo(magnetX + mW/2, coilCY);
+  ix.strokeStyle = 'rgba(255,255,255,0.3)';
+  ix.lineWidth = 1;
+  ix.stroke();
+
+  // ── Front arcs of each loop (in front of magnet) ──────────────────────
+  for (let i = 0; i < numLoops; i++) {
+    const lx = coilLeft + (i + 0.5) * (coilSpan / numLoops);
+    const rx = coilSpan / (numLoops * 2) * 0.85;
+
+    if (emfGlow > 0.05) {
+      ix.shadowColor = `rgba(79,195,247,${emfGlow * 0.7})`;
+      ix.shadowBlur = 10;
+    }
+    // Front half — brighter
+    ix.beginPath();
+    ix.ellipse(lx, coilCY, rx, loopRY, 0, 0, Math.PI);
+    ix.strokeStyle = coilColor(0.9);
+    ix.lineWidth = 2.5;
+    ix.stroke();
+    ix.shadowBlur = 0;
+
+    // Connect adjacent loops with horizontal wires at top and bottom
+    if (i < numLoops - 1) {
+      const lx2 = coilLeft + (i + 1.5) * (coilSpan / numLoops);
+      ix.beginPath();
+      ix.moveTo(lx, coilCY - loopRY);
+      ix.lineTo(lx2, coilCY - loopRY);
+      ix.strokeStyle = coilColor(0.55);
+      ix.lineWidth = 1.5;
+      ix.stroke();
+
+      ix.beginPath();
+      ix.moveTo(lx, coilCY + loopRY);
+      ix.lineTo(lx2, coilCY + loopRY);
+      ix.strokeStyle = coilColor(0.35);
+      ix.lineWidth = 1.5;
+      ix.stroke();
+    }
+  }
+
+  // ── Current flow sparkles on coil when EMF is high ───────────────────
+  if (emfGlow > 0.3) {
+    const sparkCount = Math.floor(emfGlow * 5);
+    for (let s = 0; s < sparkCount; s++) {
+      const si = Math.floor(Math.random() * numLoops);
+      const lx = coilLeft + (si + 0.5) * (coilSpan / numLoops);
+      const angle = Math.random() * Math.PI * 2;
+      const rx = coilSpan / (numLoops * 2) * 0.85;
+      const sx = lx + Math.cos(angle) * rx * 0.8;
+      const sy = coilCY + Math.sin(angle) * loopRY * 0.8;
+      ix.beginPath();
+      ix.arc(sx, sy, 2, 0, Math.PI * 2);
+      ix.fillStyle = `rgba(79,195,247,${0.6 + Math.random() * 0.4})`;
+      ix.shadowColor = 'rgba(79,195,247,1)';
+      ix.shadowBlur = 8;
+      ix.fill();
+      ix.shadowBlur = 0;
+    }
+  }
+
+  // ── EMF waveform plot ────────────────────────────────────────────────
+  const plotX = 16, plotY = H * 0.78;
+  const plotW = W - 32, plotH = H * 0.17;
+
+  // Plot background
+  ix.fillStyle = 'rgba(4,8,20,0.85)';
+  ix.beginPath();
+  ix.roundRect(plotX, plotY, plotW, plotH, 4);
+  ix.fill();
+  ix.strokeStyle = 'rgba(201,168,76,0.2)';
+  ix.lineWidth = 1;
+  ix.stroke();
+
+  // Zero line
+  ix.beginPath();
+  ix.moveTo(plotX + 4, plotY + plotH / 2);
+  ix.lineTo(plotX + plotW - 4, plotY + plotH / 2);
+  ix.strokeStyle = 'rgba(255,255,255,0.08)';
+  ix.lineWidth = 1;
+  ix.stroke();
+
+  // EMF curve
+  ix.beginPath();
+  for (let k = 0; k < emfHistory.length; k++) {
+    const px = plotX + 4 + k * (plotW - 8) / (emfHistory.length - 1);
+    const py = plotY + plotH / 2 - emfHistory[k] * (plotH * 0.44);
+    if (k === 0) ix.moveTo(px, py);
+    else ix.lineTo(px, py);
+  }
+  ix.strokeStyle = 'rgba(79,195,247,0.85)';
+  ix.lineWidth = 1.5;
+  ix.shadowColor = 'rgba(79,195,247,0.5)';
+  ix.shadowBlur = 4;
+  ix.stroke();
+  ix.shadowBlur = 0;
+
+  // EMF label
+  ix.font = '9px DM Mono, monospace';
+  ix.fillStyle = 'rgba(79,195,247,0.7)';
+  ix.fillText('EMF = −dΦ/dt', plotX + 6, plotY + 11);
+
+  // Current value readout
+  const emfDisplay = (emf * 100).toFixed(0);
+  ix.font = 'bold 11px DM Mono, monospace';
+  ix.fillStyle = emf > 0 ? 'rgba(79,195,247,0.9)' : 'rgba(255,120,100,0.9)';
+  ix.textAlign = 'right';
+  ix.fillText(`${emf >= 0 ? '+' : ''}${emfDisplay} V`, plotX + plotW - 6, plotY + 11);
+  ix.textAlign = 'left';
+
+  // ── Direction label ───────────────────────────────────────────────────
+  const movingRight = magnetVx > 0;
+  ix.font = '9px DM Mono, monospace';
+  ix.fillStyle = 'rgba(201,168,76,0.55)';
+  ix.textAlign = 'center';
+  ix.fillText(movingRight ? 'magnet → approaching coil' : 'magnet ← receding from coil',
+    cx, coilCY + loopRY + 22);
+  ix.textAlign = 'left';
+
+  inductionT += 0.020;
+  requestAnimationFrame(drawInduction);
+}
+drawInduction();
+
+// ── HELICAL CANVAS — 3D helix projection ────────────────────────────────
+const hec = document.getElementById('helical-canvas');
+const hex = hec.getContext('2d');
+hec.width  = hec.offsetWidth;
+hec.height = 400;
+
+let helixT = 0;
+
+function drawHelix() {
+  hec.width = hec.offsetWidth;
+  const W = hec.width, H = hec.height;
+  hex.clearRect(0, 0, W, H);
+
+  hex.fillStyle = '#040810';
+  hex.fillRect(0, 0, W, H);
+
+  // Draw magnetic field arrow (B field, vertical blue)
+  const bx = W * 0.15;
+  hex.beginPath();
+  hex.moveTo(bx, H * 0.85);
+  hex.lineTo(bx, H * 0.12);
+  hex.strokeStyle = 'rgba(100,160,255,0.6)';
+  hex.lineWidth = 2;
+  hex.stroke();
+  // arrowhead
+  hex.beginPath();
+  hex.moveTo(bx, H * 0.12);
+  hex.lineTo(bx - 6, H * 0.12 + 14);
+  hex.lineTo(bx + 6, H * 0.12 + 14);
+  hex.closePath();
+  hex.fillStyle = 'rgba(100,160,255,0.6)';
+  hex.fill();
+  hex.font = '11px DM Mono, monospace';
+  hex.fillStyle = 'rgba(100,160,255,0.7)';
+  hex.fillText('B', bx + 8, H * 0.12 + 18);
+
+  // Draw the helical path
+  const centerX = W / 2, centerY = H / 2;
+  const rX = W * 0.18, rY = 55;
+  const numTurns = 3.5;
+  const steps = 300;
+
+  // Trail — past positions fade
+  const trailLen = 80;
+  for (let i = 1; i <= steps; i++) {
+    const t0 = (i - 1) / steps;
+    const t1 = i / steps;
+    const angle0 = t0 * numTurns * Math.PI * 2 - helixT;
+    const angle1 = t1 * numTurns * Math.PI * 2 - helixT;
+    const y0 = H * 0.1 + t0 * H * 0.8;
+    const y1 = H * 0.1 + t1 * H * 0.8;
+    const x0 = centerX + Math.cos(angle0) * rX;
+    const x1 = centerX + Math.cos(angle1) * rX;
+
+    // Depth shading: sin gives front/back
+    const depth = (Math.sin(angle1) + 1) / 2;
+    const alpha = 0.3 + depth * 0.65;
+
+    // Head glow region
+    const headFrac = ((helixT / (Math.PI * 2)) % numTurns) / numTurns;
+    const distToHead = Math.abs(t1 - headFrac);
+    const isNearHead = distToHead < 0.04 || distToHead > 0.96;
+
+    const r = isNearHead ? 120 : 79;
+    const g = isNearHead ? 230 : 195;
+    const b = isNearHead ? 255 : 247;
+
+    hex.beginPath();
+    hex.moveTo(x0, y0);
+    hex.lineTo(x1, y1);
+    hex.strokeStyle = `rgba(${r},${g},${b},${alpha * (isNearHead ? 1.4 : 1)})`;
+    hex.lineWidth = isNearHead ? 3.5 : 1.8;
+    hex.stroke();
+  }
+
+  // Current head of particle
+  const headAngle = helixT % (Math.PI * 2);
+  const headFrac = ((helixT / (Math.PI * 2)) % numTurns) / numTurns;
+  const headY = H * 0.1 + headFrac * H * 0.8;
+  const headX = centerX + Math.cos(headAngle) * rX;
+
+  hex.beginPath();
+  hex.arc(headX, headY, 6, 0, Math.PI * 2);
+  hex.fillStyle = '#4fc3f7';
+  hex.shadowColor = '#4fc3f7';
+  hex.shadowBlur = 20;
+  hex.fill();
+  hex.shadowBlur = 0;
+
+  // Lorentz force annotation
+  const vX = -Math.sin(headAngle) * 22;
+  const vY = 12;
+  hex.beginPath();
+  hex.moveTo(headX, headY);
+  hex.lineTo(headX + vX, headY + vY);
+  hex.strokeStyle = 'rgba(201,168,76,0.8)';
+  hex.lineWidth = 1.5;
+  hex.stroke();
+  hex.font = '9px DM Mono, monospace';
+  hex.fillStyle = 'rgba(201,168,76,0.7)';
+  hex.fillText('v×B', headX + vX + 3, headY + vY + 3);
+
+  // Axis line
+  hex.beginPath();
+  hex.moveTo(centerX, H * 0.05);
+  hex.lineTo(centerX, H * 0.95);
+  hex.strokeStyle = 'rgba(255,255,255,0.06)';
+  hex.lineWidth = 1;
+  hex.setLineDash([4, 6]);
+  hex.stroke();
+  hex.setLineDash([]);
+
+  helixT += 0.028;
+  requestAnimationFrame(drawHelix);
+}
+drawHelix();
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────────
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>

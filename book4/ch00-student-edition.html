@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ch 0 · Student Edition — How to Read This Book · Principia Orthogona Book 4</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+:root{
+  --navy:#1a2744; --gold:#c9a84c; --cream:#faf7f0; --smoke:#f0ece4;
+  --mid:#3a4f7a; --rule:#8a7340; --text:#1c1c1c; --light:#e8e2d4;
+  --teal:#1a5c5c; --accent:#8b3a0f;
+  /* dimension colours */
+  --d1:#4a9eff; --d3:#e05a3a; --d4:#50c878; --d5:#c084fc; --d6:#f59e0b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'EB Garamond','Georgia','Times New Roman',serif;color:var(--text);background:var(--cream);line-height:1.75;font-size:17px}
+
+nav{background:var(--navy);padding:.75rem 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.nav-logo{color:var(--gold);font-weight:bold;font-size:.88rem;letter-spacing:.1em;text-decoration:none;font-family:sans-serif}
+.nav-links{display:flex;gap:1.2rem;list-style:none;flex-wrap:wrap}
+.nav-links a{color:#bbb;text-decoration:none;font-size:.78rem;font-family:sans-serif}
+.nav-links a:hover{color:var(--gold)}
+
+.chapter-nav{background:var(--smoke);border-top:1px solid var(--light);padding:.9rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-family:sans-serif;font-size:.78rem}
+.chapter-nav a{color:var(--mid);text-decoration:none;padding:.35rem .85rem;border:1px solid var(--light);background:white}
+.chapter-nav a:hover{background:var(--navy);color:var(--gold)}
+.chapter-nav .current{color:var(--rule);letter-spacing:.1em;text-transform:uppercase;font-size:.7rem}
+
+.hero{background:var(--navy);color:white;padding:4rem 2rem 3rem}
+.hero-inner{max-width:880px;margin:0 auto}
+.eyebrow{font-family:sans-serif;font-size:.72rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.9rem}
+h1{font-size:clamp(1.8rem,4.5vw,3rem);color:white;line-height:1.15;margin-bottom:.5rem}
+.hero-sub{color:var(--gold);font-style:italic;font-size:1.15rem;margin-bottom:1rem}
+.gold-rule{width:60px;height:2px;background:var(--gold);margin:1.2rem 0}
+.hero-desc{color:#bbb;font-size:.95rem;line-height:1.85;max-width:680px}
+
+section{padding:3rem 2rem}
+.section-inner{max-width:880px;margin:0 auto}
+.section-label{font-family:sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--rule);margin-bottom:.4rem}
+h2{font-size:1.55rem;color:var(--navy);margin-bottom:.6rem;border-bottom:2px solid var(--gold);padding-bottom:.3rem;display:inline-block}
+.lede{font-size:1.05rem;color:var(--mid);font-style:italic;margin-bottom:1.4rem}
+section p{margin-bottom:1rem;font-size:.98rem;line-height:1.85;color:#333}
+section p strong{color:var(--navy)}
+
+/* bilingual */
+.bilingual{padding:3rem 2rem;background:white;border-top:1px solid var(--light);border-bottom:1px solid var(--light)}
+.bilingual-inner{max-width:1080px;margin:0 auto}
+.bilingual-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.4rem}
+@media(max-width:760px){.bilingual-grid{grid-template-columns:1fr}}
+.lang-col{padding:1.4rem 1.6rem;border-radius:6px;border:1px solid var(--light);background:var(--cream)}
+.lang-col.en{border-top:3px solid var(--teal)}
+.lang-col.pt{border-top:3px solid var(--gold)}
+.lang-tag{font-family:sans-serif;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:.6rem}
+.lang-col.en .lang-tag{color:var(--teal)}
+.lang-col.pt .lang-tag{color:var(--rule)}
+.lang-col h3{font-size:1.2rem;color:var(--navy);margin-bottom:.7rem;line-height:1.3}
+.lang-col p{margin-bottom:.85rem;font-size:.94rem;line-height:1.8;color:#333}
+
+/* how to read math */
+.readmath{padding:3rem 2rem;background:var(--smoke);border-top:1px solid var(--light);border-bottom:1px solid var(--light)}
+.readmath-inner{max-width:980px;margin:0 auto}
+.rm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-top:1.4rem}
+.rm-card{background:white;border-left:4px solid var(--accent);padding:1.3rem 1.4rem;border-radius:0 4px 4px 0;border:1px solid var(--light);border-left:4px solid var(--accent)}
+.rm-card h4{font-size:1rem;color:var(--navy);margin-bottom:.5rem}
+.rm-card p{font-size:.87rem;line-height:1.7;color:#444;margin-bottom:.5rem}
+.rm-card .example{font-family:'Courier New',monospace;font-size:.82rem;background:var(--smoke);padding:.5rem .8rem;border-radius:3px;color:var(--accent);margin-top:.5rem}
+
+/* dimension ladder */
+.dimladder{padding:3rem 2rem;background:white;border-top:1px solid var(--light);border-bottom:1px solid var(--light)}
+.dimladder-inner{max-width:980px;margin:0 auto}
+.ladder{display:flex;flex-direction:column;gap:.6rem;margin:1.6rem 0}
+.rung{display:grid;grid-template-columns:60px 1fr;gap:1.2rem;align-items:start;padding:.9rem 1.2rem;border-radius:4px;background:var(--cream);border:1px solid var(--light)}
+.rung-dim{font-family:'Courier New',monospace;font-weight:bold;font-size:1.1rem;padding:.2rem .5rem;border-radius:3px;color:white;text-align:center}
+.rung-dim.d1{background:var(--d1)}
+.rung-dim.d3{background:var(--d3)}
+.rung-dim.d4{background:var(--d4);color:#0a1810}
+.rung-dim.d5{background:var(--d5)}
+.rung-dim.d6{background:var(--d6);color:#1a1208}
+.rung-body h4{font-size:.97rem;color:var(--navy);margin-bottom:.3rem}
+.rung-body p{font-size:.86rem;color:#555;line-height:1.6;margin:0}
+.rung-body .ode{font-family:'Courier New',monospace;font-size:.8rem;color:var(--mid);margin-top:.4rem}
+
+/* three passes */
+.passes{padding:3rem 2rem;background:var(--cream)}
+.passes-inner{max-width:980px;margin:0 auto}
+.passes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:1.4rem}
+.pass-card{background:white;border-top:4px solid;padding:1.4rem 1.4rem;border-radius:0 4px 4px 0;border:1px solid var(--light)}
+.pass-card.p1{border-top-color:var(--teal)}
+.pass-card.p2{border-top-color:var(--gold)}
+.pass-card.p3{border-top-color:#9d4edd}
+.pass-num{font-size:2.2rem;color:var(--navy);line-height:1}
+.pass-name{font-family:sans-serif;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:#666;margin:.3rem 0 .8rem}
+.pass-card h4{font-size:1.05rem;color:var(--navy);margin-bottom:.5rem}
+.pass-card p{font-size:.88rem;line-height:1.7;color:#444}
+.pass-rule{font-family:'Courier New',monospace;font-size:.78rem;color:var(--rule);margin-top:.8rem;padding-top:.6rem;border-top:1px dashed var(--light)}
+
+/* claude how-to */
+.claude{padding:3rem 2rem;background:#fffbeb;border-top:3px solid var(--gold);border-bottom:1px solid var(--light)}
+.claude-inner{max-width:880px;margin:0 auto}
+.claude h2{color:var(--navy)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:1.4rem 0}
+.steps li{counter-increment:s;position:relative;padding:1rem 1.2rem 1rem 3.4rem;background:white;border:1px solid #fde68a;border-left:4px solid var(--gold);margin-bottom:.7rem;border-radius:0 4px 4px 0;font-size:.94rem;line-height:1.7;color:#333}
+.steps li::before{content:counter(s);position:absolute;left:1rem;top:1rem;font-weight:bold;font-size:1.2rem;color:var(--gold)}
+.steps li strong{color:var(--navy)}
+.steps li code{background:var(--smoke);padding:.1rem .4rem;border-radius:2px;font-family:'Courier New',monospace;font-size:.85em;color:var(--rule)}
+
+.cta{padding:3rem 2rem;background:var(--cream);text-align:center}
+.cta-btn{display:inline-block;padding:.85rem 1.8rem;background:var(--navy);color:var(--gold);font-family:sans-serif;font-size:.85rem;font-weight:bold;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border-radius:3px;margin:0 .4rem}
+.cta-btn:hover{background:var(--gold);color:var(--navy)}
+.cta-btn.alt{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+.cta-btn.alt:hover{background:var(--navy);color:var(--gold)}
+
+footer{background:#0f1a2e;color:#5a6582;padding:2rem;text-align:center;font-size:.78rem;line-height:1.85;font-family:sans-serif}
+footer a{color:#7a8298;text-decoration:none}
+footer a:hover{color:var(--gold)}
+footer .meta{margin-top:.6rem;font-size:.72rem;color:#3d4865;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">⚜ PRINCIPIA ORTHOGONA · BOOK 4 ⚜</a>
+  <ul class="nav-links">
+    <li><a href="ch00-student-edition.html" style="color:var(--gold)">Ch 0</a></li>
+    <li><a href="ch01.html">Ch 1</a></li>
+  </ul>
+</nav>
+
+<div class="chapter-nav">
+  <span></span>
+  <span class="current">Chapter 0 · Student Edition · Welcome</span>
+  <a href="ch01.html">Ch 1 · The ODE as a 1-Dimensional Story →</a>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Book 4 · Higher Dimensions · Welcome</div>
+    <h1>Student Edition</h1>
+    <div class="hero-sub">How to read this book — and how to read mathematics.</div>
+    <div class="gold-rule"></div>
+    <p class="hero-desc">You finished Book 3 on a contact 3-manifold. A helix was converging. This book asks: what lives one dimension above that? Then one above that. Then one above that, with time folded in as a sixth slot. Each chapter climbs one rung. This page tells you how to read the mathematics you will encounter on the way up.</p>
+  </div>
+</div>
+
+<!-- bilingual welcome -->
+<div class="bilingual">
+  <div class="bilingual-inner">
+    <div class="bilingual-grid">
+      <div class="lang-col en">
+        <div class="lang-tag">EN — Welcome</div>
+        <h3>Every equation is a compressed sentence.</h3>
+        <p>Mathematics looks like a foreign language. It is. But it is the most regular foreign language ever written: it has almost no exceptions, every symbol has exactly one job, and the grammar is the same on every page of every book in every country.</p>
+        <p>What makes it hard is not complexity — it is density. A single line like $\dot{r} = r(1-r^2)$ contains: a derivative, a variable, an equilibrium condition, and the direction of flow — all at once. This book teaches you to unpack that density one layer at a time.</p>
+        <p>By the end of Chapter 1, you will be able to read an ODE the way you read a sentence. By Chapter 10, you will be reading geometry in six dimensions the same way.</p>
+      </div>
+      <div class="lang-col pt">
+        <div class="lang-tag">PT — Bem-vindo</div>
+        <h3>Cada equação é uma frase comprimida.</h3>
+        <p>A matemática parece uma língua estrangeira. É. Mas é a língua estrangeira mais regular já escrita: quase não tem exceções, cada símbolo tem exatamente uma função, e a gramática é a mesma em toda página de todo livro em todo país.</p>
+        <p>O que a torna difícil não é a complexidade — é a densidade. Uma única linha como $\dot{r} = r(1-r^2)$ contém: uma derivada, uma variável, uma condição de equilíbrio e a direção do fluxo — tudo ao mesmo tempo. Este livro ensina você a desempacotar essa densidade uma camada de cada vez.</p>
+        <p>Ao final do Capítulo 1, você saberá ler uma EDO da mesma forma que lê uma frase. Ao Capítulo 10, estará lendo geometria em seis dimensões do mesmo jeito.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- how to read mathematics -->
+<div class="readmath">
+  <div class="readmath-inner">
+    <div class="section-label">Section 1 · How to Read Mathematics</div>
+    <h2>Six things every equation is trying to tell you</h2>
+    <p class="lede">Before you encounter the first formula in Chapter 1, read these six rules. They apply to every equation in this book.</p>
+    <div class="rm-grid">
+
+      <div class="rm-card">
+        <h4>1. The dot means time</h4>
+        <p>A dot above a variable — $\dot{x}$ — means "the rate of change of $x$ with respect to time." It is shorthand for $dx/dt$. Wherever you see a dot, something is moving or evolving.</p>
+        <div class="example">ẋ = f(x) → "x is changing at rate f(x)"</div>
+      </div>
+
+      <div class="rm-card">
+        <h4>2. The equals sign is a constraint</h4>
+        <p>$\dot{x} = f(x)$ does not say $\dot{x}$ and $f(x)$ happen to be equal right now. It says they are <em>always</em> equal — the equation is a law, a rule the system must obey at every moment.</p>
+        <div class="example">ẋ = 0 → the system is at rest (fixed point)</div>
+      </div>
+
+      <div class="rm-card">
+        <h4>3. Subscripts label, superscripts power</h4>
+        <p>$x_1, x_2, x_3$ are three different variables (components of a vector). $x^2$ is $x$ multiplied by itself. $x_1^2$ is the first component, squared. These are never the same thing.</p>
+        <div class="example">r₁, r₂ = two radii · r² = r squared</div>
+      </div>
+
+      <div class="rm-card">
+        <h4>4. Greek letters are constants or special functions</h4>
+        <p>$\pi$ is the circle constant 3.14… $\phi$ is the golden ratio 1.618… $\mu$ is a Lyapunov exponent. $\eta$ is a growth rate. When you see a Greek letter, ask: is this a fixed number (constant) or a varying quantity (function)?</p>
+        <div class="example">μ = −2 (fixed) · θ̇ = 1 (varying)</div>
+      </div>
+
+      <div class="rm-card">
+        <h4>5. A theorem is a proven sentence</h4>
+        <p>When you see <strong>Theorem:</strong> followed by a statement, that statement has been proved — it is not a hypothesis or a guess. The proof that follows shows the reasoning. You do not need to verify the proof to use the theorem; you need to understand what it says.</p>
+        <div class="example">Theorem: every orbit with r(0) &gt; 1 converges to r = 1.</div>
+      </div>
+
+      <div class="rm-card">
+        <h4>6. A dimension is a degree of freedom</h4>
+        <p>1D: one number describes the state (e.g. position on a line). 3D: three numbers (e.g. $r, \theta, z$). 5D+$t$: five numbers plus time. Each new dimension is a new independent direction — a new thing the system can do that it could not do in one fewer dimension.</p>
+        <div class="example">(r, θ, z) = 3D state · (r, θ, z, w, v, t) = 6D</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- dimension ladder -->
+<div class="dimladder">
+  <div class="dimladder-inner">
+    <div class="section-label">Section 2 · The Ladder</div>
+    <h2>Where you are going — rung by rung</h2>
+    <p class="lede">Book 3 ended at the helical attractor on a contact 3-manifold. This book climbs from there. Each chapter adds one dimension and asks: what does the G-chain do here?</p>
+    <div class="ladder">
+
+      <div class="rung">
+        <div class="rung-dim d1">1D</div>
+        <div class="rung-body">
+          <h4>The ODE — the seed of everything</h4>
+          <p>One variable. One rate. One fixed point. $\dot{x} = f(x)$ is the entire book compressed into a single line. Every higher-dimensional structure in this book is this ODE, lifted.</p>
+          <div class="ode">ẋ = x(1 − x²) → fixed point x* = 1</div>
+        </div>
+      </div>
+
+      <div class="rung">
+        <div class="rung-dim d3">3D</div>
+        <div class="rung-body">
+          <h4>Contact 3-manifold — where Book 3 left off</h4>
+          <p>Add angle $\theta$ and height $z$ to the radial ODE. The fixed point becomes a circle; the orbit becomes a helix. This is the contact structure. Book 3 proved convergence here. Book 4 uses it as the floor.</p>
+          <div class="ode">ṙ = r(1−r²) + 2(r−1)e^{−z} · θ̇ = 1 · ż = r² − 2(r−1)²e^{−z}</div>
+        </div>
+      </div>
+
+      <div class="rung">
+        <div class="rung-dim d4">4D</div>
+        <div class="rung-body">
+          <h4>First lift — a new independent direction</h4>
+          <p>Add one coordinate $w$. The helix is now a curve in 4D space. New phenomena: the contact structure meets symplectic geometry. New question: does the attractor persist? (Yes — Chapter 11.)</p>
+          <div class="ode">(r, θ, z, w) · w governed by the folded contact form</div>
+        </div>
+      </div>
+
+      <div class="rung">
+        <div class="rung-dim d5">5D</div>
+        <div class="rung-body">
+          <h4>Jet space — prolongation of the ODE</h4>
+          <p>The jet space $J^1(\mathbb{R}, \mathbb{R}^2)$ is a natural 5D home for first-order ODEs. Every solution of the 3D system lifts to a curve in 5D. Chapter 12 lives here.</p>
+          <div class="ode">(x, y, p) · p = dy/dx → 5D contact structure</div>
+        </div>
+      </div>
+
+      <div class="rung">
+        <div class="rung-dim d6">5D+<em>t</em></div>
+        <div class="rung-body">
+          <h4>Time as coordinate — the sixth slot</h4>
+          <p>Treat time not as a parameter but as a geometric direction. The state space is now 6-dimensional: 5 spatial + 1 temporal. Galilean Contact Transformations (GTCT) act on this space. The G-chain closes here. Chapter 13 onward.</p>
+          <div class="ode">(r, θ, z, w, v, t) · G = U ∘ F ∘ K ∘ C acting on 6D orbits</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- three passes -->
+<div class="passes">
+  <div class="passes-inner">
+    <div class="section-label">Section 3 · The Three Passes</div>
+    <h2>Read once. Then deepen. Then teach.</h2>
+    <p class="lede">Each pass uses a different sequence. Same chapters, three reading orders, three different lessons.</p>
+    <div class="passes-grid">
+      <div class="pass-card p1">
+        <div class="pass-num">1</div>
+        <div class="pass-name">Pass 1 · Linear</div>
+        <h4>Read the book the boring way once.</h4>
+        <p>Chapters 0 → 15 in dimensional order. You scaffold the language and meet every concept once. No game, no skipping. Goal: comprehension.</p>
+        <p class="pass-rule">order: n + 1</p>
+      </div>
+      <div class="pass-card p2">
+        <div class="pass-num">2</div>
+        <div class="pass-name">Pass 2 · Collatz</div>
+        <h4>Pick a starting chapter. Follow the orbit.</h4>
+        <p>Even chapter → N/2 (compression). Odd chapter → 3N+1 (threshold cross). Every orbit converges to Chapter 1. Goal: connection.</p>
+        <p class="pass-rule">N even → N/2 · N odd → 3N+1</p>
+      </div>
+      <div class="pass-card p3">
+        <div class="pass-num">3</div>
+        <div class="pass-name">Pass 3 · n-Bonacci</div>
+        <h4>Each chapter sums what came before.</h4>
+        <p>Pick $n$: 2 (Fibonacci), 3 (Tribonacci), 4 (Tetranacci). Next chapter = sum of previous $n$. You read your own argument as it compounds. Goal: synthesis — publish something.</p>
+        <p class="pass-rule">a(k) = a(k−1) + … + a(k−n)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- claude how-to -->
+<div class="claude">
+  <div class="claude-inner">
+    <div class="section-label">Section 4 · The Tool</div>
+    <h2>How to use Claude to do the exercises</h2>
+    <p class="lede">Every chapter ends with a <strong>copy-prompt block</strong>. The prompt is the exercise. Claude is the lab. You are the author.</p>
+    <ol class="steps">
+      <li><strong>Install Claude in Chrome</strong> from the Chrome Web Store, or open the Claude desktop app.</li>
+      <li><strong>Open a chapter</strong> in this book. Find the copy-prompt block near the end — a yellow card with a "Copy this prompt" button.</li>
+      <li><strong>Paste the prompt into Claude.</strong> Claude reads the chapter context and produces the artifact the prompt asks for — a derivation, a plot description, a translation, a draft theorem.</li>
+      <li><strong>Log the output</strong> in your <code>research-log.md</code> under the chapter heading. Mark the chapter complete.</li>
+      <li><strong>By Pass 3</strong>, your log will contain 15+ Claude-assisted artifacts. The exit ticket of each chapter feeds the next. You are not just reading. You are building the proof.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="cta">
+  <div class="section-inner">
+    <h2>Ready to begin.</h2>
+    <p style="margin:.6rem 0 1.6rem;font-size:1rem;color:#555">Start at the ODE. Everything else follows from it.</p>
+    <a class="cta-btn" href="ch01.html">Start Chapter 1 — The ODE →</a>
+    <a class="cta-btn alt" href="index.html">← Back to Contents</a>
+  </div>
+</div>
+
+<footer>
+  <div>Principia Orthogona · Book 4 · Higher Dimensions · © 2026 Pablo Nogueira Grossi · G6 LLC</div>
+  <div>ORCID 0009-0000-6496-2186 · Zenodo DOI <a href="https://doi.org/10.5281/zenodo.19117400" target="_blank">10.5281/zenodo.19117400</a></div>
+  <div class="meta">CHAPTER 0 · STUDENT EDITION · OFF-SPIRAL ONBOARDING</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch 4 · The Hypercube · Principia Orthogona Book 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;700&family=Cinzel:wght@400;600;900&display=swap" rel="stylesheet">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+:root {
+  --void:    #04040a;
+  --deep:    #07080f;
+  --card:    #0f1018;
+  --gold:    #c9a84c;
+  --gold2:   #e8c96a;
+  --teal:    #2dd4bf;
+  --crimson: #dc2626;
+  --text:    #e8e4d8;
+  --muted:   #6b6757;
+  --dim:     #3a3828;
+  --border:  rgba(201,168,76,0.12);
+  --border2: rgba(201,168,76,0.28);
+  --dim-color: #50c878; /* 4D = green */
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cormorant Garamond',serif;
+  background:var(--void);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  font-size:18px;line-height:1.8;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:0.5;
+}
+nav{
+  position:fixed;top:0;width:100%;z-index:500;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 3rem;border-bottom:1px solid var(--border);
+  background:rgba(4,4,10,0.92);backdrop-filter:blur(16px);
+}
+.nav-mark{font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.25em;color:var(--gold);}
+.nav-links{display:flex;gap:2rem;flex-wrap:wrap;}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover,.nav-links a.cur{color:var(--gold);}
+.chapter-nav{
+  background:rgba(4,4,10,0.8);border-top:1px solid var(--border);
+  padding:0.9rem 3rem;display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:1rem;
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+}
+.chapter-nav a{
+  color:var(--muted);text-decoration:none;padding:0.3rem 0.8rem;
+  border:1px solid var(--border);transition:all 0.2s;
+}
+.chapter-nav a:hover{color:var(--gold);border-color:var(--border2);}
+.chapter-nav .current{color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;padding:9rem 2rem 4rem;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 50%, rgba(80,200,120,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 25% 25% at 80% 20%, rgba(201,168,76,0.03) 0%, transparent 60%);
+}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;opacity:0.18;}
+.dim-badge{
+  display:inline-block;background:var(--dim-color);color:#03120a;
+  font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;
+  padding:0.2rem 0.9rem;border-radius:3px;margin-bottom:1.2rem;letter-spacing:0.08em;
+}
+.chapter-label{
+  font-family:'JetBrains Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.4em;text-transform:uppercase;
+  color:var(--teal);border:1px solid rgba(45,212,191,0.3);
+  padding:0.25rem 0.75rem;margin-bottom:2rem;display:inline-block;
+}
+h1{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.2rem,6vw,5rem);
+  font-weight:900;line-height:0.95;
+  color:var(--gold);
+  text-shadow:0 0 80px rgba(201,168,76,0.18);
+  margin-bottom:0.5rem;
+}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,2.2vw,1.5rem);
+  font-style:italic;color:rgba(232,228,216,0.55);
+  margin-bottom:2.2rem;
+}
+.hero-meta{
+  font-family:'JetBrains Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.15em;color:var(--muted);
+  margin-bottom:2rem;line-height:2.2;
+}
+.opening-stmt{
+  max-width:680px;margin:0 auto;
+  font-size:clamp(1.05rem,2.4vw,1.45rem);
+  font-style:italic;line-height:1.75;
+  color:rgba(232,228,216,0.78);
+  border-left:2px solid var(--border2);
+  padding-left:2rem;text-align:left;
+}
+.scroll-cue{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  font-family:'JetBrains Mono',monospace;font-size:0.55rem;
+  letter-spacing:0.2em;color:var(--dim);
+  animation:bob 2.2s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);}}
+
+/* PROSE */
+.prose{max-width:820px;margin:0 auto;padding:5rem 2rem;}
+.sec-label{
+  font-family:'JetBrains Mono',monospace;font-size:0.56rem;
+  letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.2rem;margin-top:4rem;display:block;
+}
+.sec-label:first-child{margin-top:0;}
+h2{
+  font-family:'Cinzel',serif;font-size:clamp(1.4rem,3vw,2.2rem);
+  font-weight:600;color:var(--text);margin-bottom:1.2rem;line-height:1.15;
+  border-bottom:1px solid var(--border);padding-bottom:0.5rem;
+}
+p{margin-bottom:1.2rem;color:rgba(232,228,216,0.78);font-size:1.05rem;line-height:1.9;}
+p strong{color:var(--gold);font-weight:400;}
+p em{color:rgba(232,228,216,0.9);font-style:italic;}
+
+.eq-block{
+  background:#050508;border:1px solid var(--border);
+  border-left:3px solid var(--dim-color);
+  padding:1.6rem 2rem;margin:2rem 0;
+  font-family:'JetBrains Mono',monospace;font-size:0.82rem;
+  line-height:2.2;overflow-x:auto;
+}
+.eq-label{font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim-color);margin-bottom:0.8rem;display:block;}
+.eq-block .mc{color:var(--muted);}
+
+.env{border:1px solid var(--border);padding:1.4rem 1.8rem;margin:2rem 0;background:var(--card);}
+.env-head{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:0.7rem;}
+.env.thm .env-head{color:var(--gold);}
+.env.dfn .env-head{color:var(--teal);}
+.env.rem .env-head{color:var(--dim-color);}
+.env p{font-style:italic;margin-bottom:0;color:rgba(232,228,216,0.7);}
+.env p+p{margin-top:0.6rem;text-indent:0;}
+
+.keyidea{
+  border:1px solid rgba(201,168,76,0.25);border-left:3px solid var(--gold);
+  background:rgba(201,168,76,0.03);padding:1.4rem 1.8rem;margin:2rem 0;
+}
+.keyidea strong{
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:0.6rem;
+}
+.keyidea p{margin-bottom:0;color:rgba(232,228,216,0.72);}
+
+/* tesseract sim */
+.tess-wrap{margin:3rem 0;}
+.tess-wrap canvas{
+  display:block;width:100%;background:#06060e;
+  border:1px solid var(--border);cursor:grab;
+}
+.tess-wrap canvas:active{cursor:grabbing;}
+.tess-controls{
+  display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.7rem;
+  align-items:center;font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted);
+}
+.tess-controls label{display:flex;align-items:center;gap:0.4rem;}
+.tess-controls input[type=range]{width:90px;accent-color:var(--dim-color);}
+.tess-btn{
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--teal);border:1px solid rgba(45,212,191,0.3);
+  background:none;padding:0.35rem 0.9rem;cursor:pointer;transition:all 0.2s;
+}
+.tess-btn:hover{background:rgba(45,212,191,0.06);color:var(--gold);}
+.tess-btn.active{background:rgba(45,212,191,0.1);color:var(--gold2);}
+.tess-caption{
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+  color:var(--muted);margin-top:0.6rem;line-height:1.7;
+}
+
+/* coordinate table */
+.coord-table{
+  width:100%;border-collapse:collapse;margin:2rem 0;font-size:0.88rem;
+  border:1px solid var(--border);
+}
+.coord-table th{
+  font-family:'JetBrains Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
+  padding:0.7rem 1rem;border-bottom:1px solid var(--border);
+  background:var(--card);text-align:left;
+}
+.coord-table td{
+  padding:0.75rem 1rem;border-bottom:1px solid rgba(201,168,76,0.06);
+  color:rgba(232,228,216,0.7);font-family:'JetBrains Mono',monospace;font-size:0.75rem;
+}
+.coord-table tr:last-child td{border-bottom:none;}
+.coord-table .dim-cell{color:var(--text);font-size:0.82rem;font-family:'Cormorant Garamond',serif;}
+.coord-table .active{color:var(--dim-color);}
+
+.pb-prompt{
+  background:rgba(201,168,76,0.04);border:1px solid var(--border2);
+  border-left:3px solid var(--gold);
+  padding:1.2rem 1.5rem;margin:3rem 0;
+  font-family:'JetBrains Mono',monospace;font-size:0.75rem;
+  color:var(--muted);line-height:1.8;position:relative;
+}
+.pb-prompt::before{content:"COPY PROMPT";display:block;font-size:0.56rem;letter-spacing:0.22em;color:var(--gold);margin-bottom:0.7rem;}
+.copy-btn{
+  position:absolute;top:0.9rem;right:0.9rem;padding:0.22rem 0.65rem;
+  background:var(--card);color:var(--gold);border:1px solid var(--border2);
+  cursor:pointer;font-size:0.62rem;font-family:'JetBrains Mono',monospace;
+}
+.copy-btn:hover{background:rgba(201,168,76,0.08);}
+
+.chapter-nav-bottom{
+  border-top:1px solid var(--border);padding:1.2rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+}
+.chapter-nav-bottom a{
+  color:var(--muted);text-decoration:none;padding:0.35rem 0.9rem;
+  border:1px solid var(--border);transition:all 0.2s;
+}
+.chapter-nav-bottom a:hover{color:var(--gold);border-color:var(--border2);}
+
+footer{
+  border-top:1px solid var(--border);padding:3rem 2rem;
+  text-align:center;max-width:820px;margin:0 auto;
+}
+footer p{
+  font-family:'JetBrains Mono',monospace;font-size:0.56rem;
+  letter-spacing:0.1em;color:var(--muted);line-height:2.4;
+}
+footer a{color:var(--gold);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-mark">Principia Orthogona · Book 4</span>
+  <div class="nav-links">
+    <a href="index.html">Contents</a>
+    <a href="hub.html">Hub</a>
+    <a href="ch01.html">Ch 1</a>
+    <a href="ch02.html">Ch 2</a>
+    <a href="ch03.html">Ch 3</a>
+    <a href="ch04.html" class="cur">Ch 4</a>
+  </div>
+</nav>
+
+<div class="chapter-nav">
+  <a href="ch03.html">← Ch 3 · Contact 3-Manifold</a>
+  <span class="current">Chapter 4 · 4D · The Hypercube</span>
+  <a href="ch05.html">Ch 5 · Jet Space →</a>
+</div>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <canvas id="heroCanvas"></canvas>
+  <div style="position:relative;z-index:10;">
+    <div class="chapter-label">Book 4 · Chapter 4 · Dimension Ladder · 4D</div>
+    <div class="dim-badge">4D</div>
+    <h1>The<br>Hypercube</h1>
+    <div class="hero-sub">$S^3$ has been sitting inside $\mathbb{R}^4$ all along. Step into the room.</div>
+    <div class="hero-meta">
+      Tesseract · $\mathbb{R}^4$ · symplectisation · $\omega = d\alpha$ · holomorphic curves
+    </div>
+    <div class="opening-stmt">
+      A cube has 8 corners, 12 edges, 6 faces.
+      A tesseract — the 4D hypercube — has 16 corners, 32 edges, 24 faces, 8 cubic cells.
+      Each new dimension multiplies the boundary structure.
+      The contact 3-manifold of Chapter 3 is one of those 8 cubic cells —
+      a face of the room we are about to enter.
+    </div>
+  </div>
+  <div class="scroll-cue">↓ scroll</div>
+</div>
+
+<div class="prose">
+
+  <span class="sec-label">§ 4.1</span>
+  <h2>What a fourth dimension is</h2>
+
+  <p>In three dimensions you have three independent directions: $x$, $y$, $z$. A fourth dimension is simply a fourth independent direction — call it $w$ — such that no combination of $x$, $y$, $z$ can reach it. It is not "time" (though time can play this role). It is not a hidden spatial direction too small to see. It is a direction that is genuinely orthogonal to all three directions you already have.</p>
+
+  <p>Your 3D intuition will resist this. Every visualisation you attempt will project the fourth dimension back onto three. That projection is not a failure — it is the method. The rotating tesseract below shows all sixteen corners of the 4D hypercube, but always as a projection. Learning to read what the projection distorts is the first skill of 4D geometry.</p>
+
+  <div class="env dfn">
+    <div class="env-head">Definition 4.1 — $\mathbb{R}^4$ and the 4-cube</div>
+    <p>$\mathbb{R}^4 = \{(x_1, x_2, x_3, x_4) : x_i \in \mathbb{R}\}$. The unit 4-cube (tesseract) is $[0,1]^4 \subset \mathbb{R}^4$. It has $2^4 = 16$ vertices, $4 \cdot 2^3 = 32$ edges, $6 \cdot 2^2 = 24$ square faces, and $2 \cdot 4 = 8$ cubic cells. Each cubic cell is a standard 3-cube — a copy of the space from Chapters 1–3.</p>
+  </div>
+
+  <table class="coord-table">
+    <thead><tr><th>Dimension</th><th>Object</th><th>Vertices</th><th>Edges</th><th>Faces</th><th>Cells</th></tr></thead>
+    <tbody>
+      <tr><td class="dim-cell">1D — line</td><td>segment</td><td>2</td><td>1</td><td>—</td><td>—</td></tr>
+      <tr><td class="dim-cell">2D — plane</td><td>square</td><td>4</td><td>4</td><td>1</td><td>—</td></tr>
+      <tr><td class="dim-cell">3D — space</td><td>cube</td><td>8</td><td>12</td><td>6</td><td>1</td></tr>
+      <tr style="border:1px solid rgba(80,200,120,0.3)"><td class="dim-cell active">4D — hyperspace</td><td class="active">tesseract</td><td class="active">16</td><td class="active">32</td><td class="active">24</td><td class="active">8</td></tr>
+    </tbody>
+  </table>
+
+  <span class="sec-label">§ 4.2</span>
+  <h2>The rotating tesseract</h2>
+
+  <p>The simulation below projects the tesseract from $\mathbb{R}^4$ into $\mathbb{R}^3$, then onto your screen. Two independent rotations are active: one in the $xy$-plane (ordinary 3D rotation) and one in the $xw$-plane (the 4D rotation that moves the $w$ coordinate). Drag to control the 3D rotation. Use the slider to dial in the 4D rotation. Watch the inner cube appear to pass through the outer cube — that is not a visual glitch; in 4D those cells never intersect.</p>
+
+</div>
+
+<div style="max-width:900px;margin:0 auto;padding:0 2rem 2rem;">
+  <div class="tess-wrap">
+    <canvas id="tessCanvas" width="860" height="500"></canvas>
+    <div class="tess-controls">
+      <label>4D rotation <input type="range" id="rot4d" min="0" max="6.28" step="0.01" value="0.6"></label>
+      <label>Speed <input type="range" id="rotSpd" min="0" max="2" step="0.05" value="0.4"></label>
+      <button class="tess-btn" id="togAuto">Auto-rotate: ON</button>
+      <button class="tess-btn" id="togS3" >Show S³ slice</button>
+      <span id="tessInfo" style="margin-left:auto;color:rgba(80,200,120,0.5);">drag to rotate · scroll = zoom</span>
+    </div>
+    <div class="tess-caption">
+      Fig 4.1 — Tesseract projected from ℝ⁴ → ℝ³ → screen. Green edges: the 4D-rotated "inner" cell. Gold edges: fixed outer cell. The S³ slice (toggle) shows the unit 3-sphere cross-section at $x_4 = 0$ — the contact manifold from Chapter 3, now visible as a surface inside ℝ⁴.
+    </div>
+  </div>
+</div>
+
+<div class="prose" style="padding-top:0;">
+
+  <span class="sec-label">§ 4.3</span>
+  <h2>$S^3$ as a face of the room</h2>
+
+  <p>In §3.9 we established that the dm³ contact manifold near its attractor is locally the 3-sphere $S^3 \subset \mathbb{R}^4$. Now we can see what that means geometrically: $S^3$ is the set of points at unit distance from the origin in $\mathbb{R}^4$. It is a hypersurface — a 3-dimensional boundary of the 4-dimensional ball $B^4$.</p>
+
+  <p>This is the exact analogue of how $S^2$ (the ordinary sphere) is the boundary of the 3-ball $B^3$. You can visualize $S^2$ by imagining the surface of a globe — all points at distance 1 from the centre in $\mathbb{R}^3$. $S^3$ is one dimension up: all points at distance 1 from the origin in $\mathbb{R}^4$.</p>
+
+  <div class="eq-block">
+    <span class="eq-label">The nesting of spheres</span>
+    $$S^1 \subset \mathbb{R}^2 \quad (\text{circle in the plane})$$
+    $$S^2 \subset \mathbb{R}^3 \quad (\text{sphere in space})$$
+    $$S^3 \subset \mathbb{R}^4 \quad (\text{3-sphere in hyperspace})$$
+    <div class="mc">-- S³ = boundary of the 4-ball B⁴</div>
+    <div class="mc">-- Every Reeb orbit of the standard contact structure has period 2π = T*</div>
+    <div class="mc">-- The Hopf fibration: S³ → S² with fibers S¹</div>
+  </div>
+
+  <p>When the tesseract rotates in the $xw$-plane, what you see is a 3D object (a cube or distorted polyhedron) passing through its mirror image. That passage — through and out the other side — is what $S^3$ does continuously. The 3-sphere cannot be embedded in 3D without self-intersection; in 4D it sits cleanly, unobstructed.</p>
+
+  <span class="sec-label">§ 4.4</span>
+  <h2>The symplectisation: $\mathbb{R}^4$ as the natural arena</h2>
+
+  <p>The contact structure on $S^3$ has a natural 4D companion — the <strong>symplectic structure</strong>. Given the contact form $\alpha$ on $S^3$, define the <em>symplectisation</em> as the 4-manifold:</p>
+
+  <div class="eq-block">
+    <span class="eq-label">Symplectisation</span>
+    $$W = S^3 \times \mathbb{R}, \qquad \omega = d(e^s \alpha)$$
+    <div class="mc">-- s ∈ ℝ is the "height" coordinate (the new fourth direction)</div>
+    <div class="mc">-- ω = e^s(ds ∧ α + dα) is a symplectic 2-form: closed and non-degenerate</div>
+    <div class="mc">-- The contact structure on S³ = {s=0} is the restriction ι*α</div>
+  </div>
+
+  <p>The symplectisation is not just a product space with a structure bolted on — it is the canonical 4-manifold associated to any contact 3-manifold, encoding all the geometry of $\alpha$ in a 2-form $\omega$ that is easier to work with analytically. The contact form $\alpha$ on $S^3$ becomes the symplectic form $\omega = d\alpha$ in the tangent directions, plus the new $ds$ direction.</p>
+
+  <div class="keyidea">
+    <strong>Why 4D is the right place for contact geometry</strong>
+    <p>A contact structure on a 3-manifold $M$ is a maximally non-integrable 2-plane field. The symplectic form $\omega$ on $M \times \mathbb{R}$ is a 2-form — it measures areas of 2-dimensional surfaces. In 4D, holomorphic curves (complex 1-dimensional surfaces, real 2-dimensional) are the natural objects that $\omega$ integrates over. This is why contact topology problems — like Weinstein's conjecture, proved in 3D — require 4D techniques: holomorphic curves in the symplectisation.</p>
+  </div>
+
+  <span class="sec-label">§ 4.5</span>
+  <h2>The dm³ system in 4D</h2>
+
+  <p>Chapter 3's dm³ ODE had coordinates $(r, \theta, z)$. The 4D lift adds a coordinate $w$ governed by the contact structure. The extended system is:</p>
+
+  <div class="eq-block">
+    <span class="eq-label">System (4.1) — dm³ lifted to 4D</span>
+    $$\dot{r} = r(1-r^2) + 2(r-1)e^{-z}$$
+    $$\dot{\theta} = 1$$
+    $$\dot{z} = r^2 - 2(r-1)^2 e^{-z}$$
+    $$\dot{w} = s(r,\theta,z,w)$$
+    <div class="mc">-- w is the symplectisation coordinate (the "height" s above S³)</div>
+    <div class="mc">-- s(r,θ,z,w) encodes the symplectic flow in the new direction</div>
+    <div class="mc">-- On w=0: reduces exactly to System (3.1)</div>
+    <div class="mc">-- The attractor {r=1, w=0} is still a closed Reeb orbit on S³ ⊂ ℝ⁴</div>
+  </div>
+
+  <p>The key question is whether the helical attractor $\{r=1\}$ persists when we allow the system to move in the $w$-direction. The answer is yes — and the reason is a theorem in symplectic topology, not just a calculation.</p>
+
+  <div class="env thm">
+    <div class="env-head">Theorem 4.2 — Attractor persistence under symplectisation</div>
+    <p>The closed Reeb orbit $\gamma^* = \{r=1, \theta \in [0,2\pi), z = z_0, w = 0\}$ of System (3.1) persists as an attractor of the 4D system (4.1). Its Lyapunov exponents in the $w$-direction are determined by the symplectic area $\int_D \omega$ of a disk $D$ bounded by $\gamma^*$ in the symplectisation. For the dm³ contact form, this area equals $2\pi$, and the $w$-direction exponent is bounded by $-2$.</p>
+  </div>
+
+  <p>The $2\pi$ that appears in the area integral is the same $T^* = 2\pi$ that appeared as the Reeb period in Chapter 3. The period, the area, and the Lyapunov rate are all expressions of the single number $\pi$ that anchors the dm³ system — each a different face of the same geometric object.</p>
+
+  <span class="sec-label">§ 4.6</span>
+  <h2>Holomorphic curves: the new tool</h2>
+
+  <p>In 3D, the tools are vector fields, flows, and fixed-point theorems. In 4D, the native tool is the <strong>holomorphic curve</strong> — a map $u: \Sigma \to W$ from a Riemann surface $\Sigma$ into the symplectisation $W = S^3 \times \mathbb{R}$ satisfying the Cauchy-Riemann equation:</p>
+
+  <div class="eq-block">
+    <span class="eq-label">Cauchy-Riemann equation for holomorphic curves</span>
+    $$\bar{\partial}_J u = 0, \qquad \text{i.e.,} \quad du \circ j = J \circ du$$
+    <div class="mc">-- j is the complex structure on the source Riemann surface Σ</div>
+    <div class="mc">-- J is an almost complex structure on W compatible with ω</div>
+    <div class="mc">-- Solutions are "pseudo-holomorphic" curves (Gromov 1985)</div>
+    <div class="mc">-- Each Reeb orbit γ* is the asymptotic limit of a family of holomorphic curves</div>
+  </div>
+
+  <p>Gromov's 1985 paper introducing pseudo-holomorphic curves transformed symplectic topology. The key insight: holomorphic curves have a compactness property controlled by the symplectic area $\int_\Sigma u^*\omega$. If you have a sequence of holomorphic curves with bounded area, a subsequence converges — possibly to a broken curve whose pieces are asymptotic to Reeb orbits. This is <em>Gromov compactness</em>, and it is why the closed Reeb orbits (like the dm³ attractor) are not just locally stable but globally detected.</p>
+
+  <div class="env rem">
+    <div class="env-head">Remark 4.3 — Why this matters for dm³</div>
+    <p>In 3D, Theorem 3.2 (attractor convergence) was proved by direct ODE estimates — Gronwall's inequality, Lyapunov functions, the DOP853 numerical correction. Those tools are local: they tell you what happens near $r=1$. Holomorphic curves in the 4D symplectisation are global: they detect $\gamma^*$ from anywhere in the manifold, not just from nearby initial conditions. The 4D lift turns a local convergence theorem into a global topological statement.</p>
+  </div>
+
+  <span class="sec-label">§ 4.7</span>
+  <h2>Reading the tesseract as a contact map</h2>
+
+  <p>Return to the rotating tesseract. Its eight cubic cells correspond to eight "faces" of the 4D arena. The contact manifold $S^3$ is the diagonal cross-section — the set of points equidistant from all eight cells. When you watch the inner cube pass through the outer cube during 4D rotation, you are watching a contact transformation: the Reeb flow carries points on $S^3$ along the fibres of the Hopf fibration, and the 4D rotation is a visual proxy for that flow.</p>
+
+  <p>The gold edges in the simulation hold fixed in 3D. The green edges rotate in the $xw$-plane. The moment of "passing through" — when a green vertex coincides with a gold edge — corresponds to a point on $S^3$ where the $w$-coordinate passes through zero. That locus is exactly the 3D contact manifold of Chapter 3, now visible as a cross-section of the 4D object.</p>
+
+  <div class="keyidea">
+    <strong>The ladder so far</strong>
+    <p>1D: fermion seed $\psi^2 = 0$, pure potential.<br>
+    2D+t: extended phase space, contact form $\alpha = dy - f\,dx$ born.<br>
+    3D: contact 3-manifold, Reeb flow, helical attractor $T^* = 2\pi$, $S^3$ identified.<br>
+    4D: $\mathbb{R}^4$ entered, $S^3$ as hypersurface, symplectisation $\omega = d\alpha$, holomorphic curves appear.<br>
+    Next: Chapter 5 lifts to 5D — jet space $J^1(\mathbb{R}, \mathbb{R}^2)$, where prolongation carries the ODE into a 5-dimensional contact structure.</p>
+  </div>
+
+  <div class="pb-prompt">
+You are reading Chapter 4 of <em>Principia Orthogona Book 4 — Higher Dimensions</em> by Pablo Nogueira Grossi.
+
+The chapter introduces 4D space via the tesseract, establishes S³ as a hypersurface in ℝ⁴, defines the symplectisation W = S³ × ℝ with symplectic form ω = d(eˢα), and states Theorem 4.2 (attractor persistence). The key new tool is the holomorphic curve — a map satisfying the Cauchy-Riemann equation in the symplectisation.
+
+Your task: The chapter claims that "the period, the area, and the Lyapunov rate are all expressions of the single number π." Write three paragraphs, one for each of the three appearances of π: (1) as the Reeb period T* = 2π in the contact 3-manifold; (2) as the symplectic area ∫_D ω = 2π of the disk bounded by the attractor; (3) as the Lyapunov rate bound −2 connected to π via the attractor geometry. For each, give the precise mathematical definition of the quantity and explain why π appears in it. Is the same π in all three cases — or three different faces of one object?
+    <button class="copy-btn" onclick="navigator.clipboard.writeText(this.parentElement.innerText.replace('COPY PROMPT','').trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1800)">Copy</button>
+  </div>
+
+</div>
+
+<div class="chapter-nav-bottom">
+  <a href="ch03.html">← Ch 3 · Contact 3-Manifold</a>
+  <a href="ch05.html">Ch 5 · Jet Space →</a>
+</div>
+
+<footer>
+  <p>
+    Principia Orthogona · Book 4 · Higher Dimensions · © 2026 Pablo Nogueira Grossi · G6 LLC<br>
+    ORCID 0009-0000-6496-2186 · <a href="https://doi.org/10.5281/zenodo.19117400" target="_blank">Zenodo 10.5281/zenodo.19117400</a><br>
+    <span style="opacity:0.5">Chapter 4 · 4D · The Hypercube · Tesseract · Symplectisation</span>
+  </p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// TESSERACT RENDERER
+// ═══════════════════════════════════════════════════════════════
+const tc = document.getElementById('tessCanvas');
+const tctx = tc.getContext('2d');
+const TW = tc.width, TH = tc.height;
+
+// 16 vertices of the unit tesseract in 4D
+const verts4 = [];
+for (let i = 0; i < 16; i++) {
+  verts4.push([
+    (i & 1) ? 1 : -1,
+    (i & 2) ? 1 : -1,
+    (i & 4) ? 1 : -1,
+    (i & 8) ? 1 : -1
+  ]);
+}
+
+// Edges: connect vertices that differ in exactly one bit
+const edges = [];
+for (let a = 0; a < 16; a++)
+  for (let b = a+1; b < 16; b++)
+    if ((a ^ b) && !(a ^ b & (a ^ b) - 1)) // power of 2 XOR = 1 bit diff
+      edges.push([a, b]);
+
+// Classify edges: "outer" (w=-1 face) vs "inner" (w=+1 face) vs "connecting"
+function edgeType(a, b) {
+  const wa = (a & 8) ? 1 : -1, wb = (b & 8) ? 1 : -1;
+  if (wa === -1 && wb === -1) return 'outer';
+  if (wa ===  1 && wb ===  1) return 'inner';
+  return 'connect';
+}
+
+// Rotation matrices in 4D planes
+function rot4d_xy(a) {
+  const c = Math.cos(a), s = Math.sin(a);
+  return [[c,-s,0,0],[s,c,0,0],[0,0,1,0],[0,0,0,1]];
+}
+function rot4d_xw(a) {
+  const c = Math.cos(a), s = Math.sin(a);
+  return [[c,0,0,-s],[0,1,0,0],[0,0,1,0],[s,0,0,c]];
+}
+function rot4d_zw(a) {
+  const c = Math.cos(a), s = Math.sin(a);
+  return [[1,0,0,0],[0,1,0,0],[0,0,c,-s],[0,0,s,c]];
+}
+function mulMV(M, v) { return M.map(row => row.reduce((s,x,i) => s + x*v[i], 0)); }
+function mulMM(A, B) {
+  return A.map(row => B[0].map((_,j) => row.reduce((s,_,k) => s + A[row][k]*B[k][j], 0)));
+}
+// simpler mat mul
+function matmul(A, B) {
+  const n = A.length;
+  return Array.from({length:n}, (_,i) =>
+    Array.from({length:n}, (_,j) =>
+      A[i].reduce((s,_,k) => s + A[i][k]*B[k][j], 0)
+    )
+  );
+}
+
+// Perspective project 4D → 3D → 2D
+function proj4to2(v4, rot3d_phi, rot3d_theta, angle4d, zoom) {
+  // 4D rotations
+  const a4 = parseFloat(document.getElementById('rot4d').value);
+  let v = [...v4];
+  // rotate in xw plane
+  const cw = Math.cos(a4), sw = Math.sin(a4);
+  const nx = v[0]*cw - v[3]*sw;
+  const nw = v[0]*sw + v[3]*cw;
+  v[0] = nx; v[3] = nw;
+  // rotate in zw plane (secondary 4d rotation, slowly)
+  const czw = Math.cos(a4*0.37), szw = Math.sin(a4*0.37);
+  const nz  = v[2]*czw - v[3]*szw;
+  const nw2 = v[2]*szw + v[3]*czw;
+  v[2] = nz; v[3] = nw2;
+
+  // perspective project 4D → 3D
+  const d4 = 3.5;
+  const w4 = d4 / (d4 - v[3]);
+  const x3 = v[0]*w4, y3 = v[1]*w4, z3 = v[2]*w4;
+
+  // 3D rotation (mouse drag)
+  const cp = Math.cos(rot3d_phi),   sp = Math.sin(rot3d_phi);
+  const ct = Math.cos(rot3d_theta), st = Math.sin(rot3d_theta);
+  const x3r =  x3*ct + z3*st;
+  const y3r =  y3*cp - (-x3*st + z3*ct)*sp;
+  const z3r =  y3*sp + (-x3*st + z3*ct)*cp;
+
+  // perspective project 3D → 2D
+  const d3 = 5;
+  const w3 = d3 / (d3 - z3r);
+  return [x3r*w3*zoom + TW/2, -y3r*w3*zoom + TH/2, w3, w4];
+}
+
+// Mouse drag state
+let dragStart = null, phi = 0.42, theta = -0.6;
+let autoRotate = true;
+let showS3 = false;
+let rotT = 0;
+
+tc.addEventListener('mousedown', e => {
+  dragStart = {x: e.clientX, y: e.clientY, phi, theta};
+});
+tc.addEventListener('mousemove', e => {
+  if (!dragStart) return;
+  theta = dragStart.theta + (e.clientX - dragStart.x) * 0.008;
+  phi   = dragStart.phi   - (e.clientY - dragStart.y) * 0.008;
+});
+tc.addEventListener('mouseup', () => dragStart = null);
+tc.addEventListener('mouseleave', () => dragStart = null);
+
+let zoom = 120;
+tc.addEventListener('wheel', e => { zoom *= e.deltaY > 0 ? 0.93 : 1.07; e.preventDefault(); }, {passive:false});
+
+document.getElementById('togAuto').addEventListener('click', function() {
+  autoRotate = !autoRotate;
+  this.textContent = 'Auto-rotate: ' + (autoRotate ? 'ON' : 'OFF');
+  this.classList.toggle('active', !autoRotate);
+});
+document.getElementById('togS3').addEventListener('click', function() {
+  showS3 = !showS3;
+  this.textContent = showS3 ? 'Hide S³ slice' : 'Show S³ slice';
+  this.classList.toggle('active', showS3);
+});
+
+function drawTess() {
+  tctx.fillStyle = '#06060e';
+  tctx.fillRect(0, 0, TW, TH);
+
+  const spd = parseFloat(document.getElementById('rotSpd').value);
+  if (autoRotate) { theta += spd * 0.005; rotT += 0.005; }
+
+  const projected = verts4.map(v => proj4to2(v, phi, theta, 0, zoom));
+
+  // Draw S³ slice: circle approximating the equatorial S² at w=0 cross-section
+  if (showS3) {
+    const N = 64;
+    tctx.beginPath();
+    for (let i = 0; i <= N; i++) {
+      const a = 2*Math.PI*i/N;
+      const v4 = [Math.cos(a), Math.sin(a), 0, 0];
+      const [px, py] = proj4to2(v4, phi, theta, 0, zoom*1.1);
+      i === 0 ? tctx.moveTo(px, py) : tctx.lineTo(px, py);
+    }
+    tctx.strokeStyle = 'rgba(45,212,191,0.25)';
+    tctx.lineWidth = 1.5;
+    tctx.setLineDash([3, 4]);
+    tctx.stroke();
+    tctx.setLineDash([]);
+    // label
+    const lv = proj4to2([1.15, 0, 0, 0], phi, theta, 0, zoom*1.1);
+    tctx.fillStyle = 'rgba(45,212,191,0.4)';
+    tctx.font = '10px JetBrains Mono, monospace';
+    tctx.fillText('S³ ∩ {w=0}', lv[0]+4, lv[1]);
+  }
+
+  // Draw edges
+  edges.forEach(([a, b]) => {
+    const [ax, ay, aw3a, aw4a] = projected[a];
+    const [bx, by, aw3b, aw4b] = projected[b];
+    const type = edgeType(a, b);
+    const depth = (aw4a + aw4b) * 0.5;
+    const alpha = 0.25 + depth * 0.35;
+
+    if (type === 'outer') {
+      tctx.strokeStyle = `rgba(201,168,76,${Math.max(0.1, alpha)})`;
+      tctx.lineWidth = 1.2;
+    } else if (type === 'inner') {
+      tctx.strokeStyle = `rgba(80,200,120,${Math.max(0.15, alpha + 0.2)})`;
+      tctx.lineWidth = 1.5;
+    } else {
+      tctx.strokeStyle = `rgba(150,130,80,${Math.max(0.05, alpha * 0.5)})`;
+      tctx.lineWidth = 0.8;
+    }
+    tctx.beginPath();
+    tctx.moveTo(ax, ay);
+    tctx.lineTo(bx, by);
+    tctx.stroke();
+  });
+
+  // Draw vertices
+  verts4.forEach((v, i) => {
+    const [px, py, w3, w4] = projected[i];
+    const r = 2.5 + w4 * 1.5;
+    const isInner = (i & 8) > 0;
+    tctx.beginPath();
+    tctx.arc(px, py, r, 0, Math.PI*2);
+    tctx.fillStyle = isInner ? `rgba(80,200,120,0.8)` : `rgba(201,168,76,0.7)`;
+    tctx.fill();
+  });
+
+  // label
+  tctx.fillStyle = 'rgba(80,200,120,0.3)';
+  tctx.font = '10px JetBrains Mono, monospace';
+  tctx.textAlign = 'left';
+  tctx.fillText('tesseract [0,1]⁴  ·  16 vertices  ·  32 edges  ·  8 cubic cells', 12, TH - 14);
+
+  requestAnimationFrame(drawTess);
+}
+
+// Hero background — slow rotating tesseract
+const hc = document.getElementById('heroCanvas');
+const hctx = hc.getContext('2d');
+let hT = 0;
+
+function resizeHero() {
+  hc.width  = hc.offsetWidth;
+  hc.height = hc.offsetHeight;
+}
+resizeHero();
+window.addEventListener('resize', resizeHero);
+
+function drawHero() {
+  hctx.clearRect(0, 0, hc.width, hc.height);
+  hT += 0.003;
+  const HW = hc.width, HH = hc.height;
+  const zoom_h = Math.min(HW, HH) * 0.22;
+
+  function proj_h(v4) {
+    const a4 = hT * 0.7;
+    let v = [...v4];
+    const cw = Math.cos(a4), sw = Math.sin(a4);
+    const nx = v[0]*cw - v[3]*sw; const nw = v[0]*sw + v[3]*cw;
+    v[0] = nx; v[3] = nw;
+    const d4 = 3.5, w4 = d4/(d4-v[3]);
+    const x3 = v[0]*w4, y3 = v[1]*w4, z3 = v[2]*w4;
+    const th = hT * 0.4, ph = hT * 0.25;
+    const ct = Math.cos(th), st = Math.sin(th), cp = Math.cos(ph), sp = Math.sin(ph);
+    const x3r = x3*ct + z3*st;
+    const y3r = y3*cp - (-x3*st + z3*ct)*sp;
+    const z3r = y3*sp + (-x3*st + z3*ct)*cp;
+    const d3 = 5, w3 = d3/(d3-z3r);
+    return [x3r*w3*zoom_h + HW/2, -y3r*w3*zoom_h + HH/2];
+  }
+
+  edges.forEach(([a,b]) => {
+    const [ax,ay] = proj_h(verts4[a]);
+    const [bx,by] = proj_h(verts4[b]);
+    const type = edgeType(a,b);
+    hctx.beginPath(); hctx.moveTo(ax,ay); hctx.lineTo(bx,by);
+    hctx.strokeStyle = type === 'inner' ? 'rgba(80,200,120,0.5)' :
+                       type === 'outer' ? 'rgba(201,168,76,0.4)' :
+                                          'rgba(150,130,80,0.2)';
+    hctx.lineWidth = type === 'connect' ? 0.6 : 1;
+    hctx.stroke();
+  });
+
+  requestAnimationFrame(drawHero);
+}
+
+drawHero();
+drawTess();
+</script>
+
+</body>
+</html>

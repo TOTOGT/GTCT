@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ch 2 · 2D+t — Extended Phase Space · Principia Orthogona Book 4</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+:root{
+  --navy:#1a2744; --gold:#c9a84c; --cream:#faf7f0; --smoke:#f0ece4;
+  --mid:#3a4f7a; --rule:#8a7340; --text:#1c1c1c; --light:#e8e2d4;
+  --teal:#1a5c5c; --accent:#8b3a0f;
+  --dim-color:#c084fc;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'EB Garamond','Georgia',serif;color:var(--text);background:var(--cream);line-height:1.75;font-size:17px}
+
+nav{background:var(--navy);padding:.75rem 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.nav-logo{color:var(--gold);font-weight:bold;font-size:.88rem;letter-spacing:.1em;text-decoration:none;font-family:sans-serif}
+.nav-links{display:flex;gap:1.2rem;list-style:none;flex-wrap:wrap}
+.nav-links a{color:#bbb;text-decoration:none;font-size:.78rem;font-family:sans-serif}
+.nav-links a:hover,.nav-links a.cur{color:var(--gold)}
+
+.chapter-nav{background:var(--smoke);border-top:1px solid var(--light);padding:.9rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-family:sans-serif;font-size:.78rem}
+.chapter-nav a{color:var(--mid);text-decoration:none;padding:.35rem .85rem;border:1px solid var(--light);background:white}
+.chapter-nav a:hover{background:var(--navy);color:var(--gold)}
+.chapter-nav .current{color:var(--rule);letter-spacing:.1em;text-transform:uppercase;font-size:.7rem}
+
+.hero{background:var(--navy);color:white;padding:4rem 2rem 3rem}
+.hero-inner{max-width:880px;margin:0 auto}
+.eyebrow{font-family:sans-serif;font-size:.72rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.9rem}
+.dim-badge{display:inline-block;background:var(--dim-color);color:#1a0a2e;font-family:'Courier New',monospace;font-size:1.1rem;font-weight:bold;padding:.2rem .8rem;border-radius:3px;margin-bottom:.8rem}
+h1{font-size:clamp(1.8rem,4.5vw,3rem);color:white;line-height:1.15;margin-bottom:.5rem}
+.hero-sub{color:var(--gold);font-style:italic;font-size:1.15rem;margin-bottom:1rem}
+.gold-rule{width:60px;height:2px;background:var(--gold);margin:1.2rem 0}
+.hero-desc{color:#bbb;font-size:.95rem;line-height:1.85;max-width:680px}
+
+/* body prose */
+.prose{padding:3rem 2rem}
+.prose-inner{max-width:820px;margin:0 auto}
+.section-label{font-family:sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--rule);margin-bottom:.4rem;margin-top:2.5rem}
+h2{font-size:1.5rem;color:var(--navy);margin-bottom:.6rem;border-bottom:2px solid var(--gold);padding-bottom:.3rem;display:inline-block}
+p{margin-bottom:1rem;font-size:.98rem;line-height:1.88;color:#333}
+p strong{color:var(--navy)}
+
+/* display math block */
+.eq-block{background:var(--smoke);border-left:4px solid var(--dim-color);padding:1.1rem 1.6rem;margin:1.6rem 0;border-radius:0 4px 4px 0;overflow-x:auto}
+.eq-label{font-family:'Courier New',monospace;font-size:.7rem;color:var(--rule);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
+
+/* theorem / definition environments */
+.env{border:1px solid var(--light);padding:1.2rem 1.5rem;margin:1.8rem 0;border-radius:4px;background:white}
+.env-head{font-family:sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem}
+.env.thm .env-head{color:var(--accent)}
+.env.dfn .env-head{color:var(--mid)}
+.env.rem .env-head{color:var(--teal)}
+.env p{font-style:italic;margin-bottom:0;font-size:.96rem}
+.env p+p{margin-top:.5rem;text-indent:0}
+
+/* key idea box */
+.keyidea{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid var(--gold);padding:1.2rem 1.5rem;margin:1.8rem 0;border-radius:0 4px 4px 0}
+.keyidea strong{color:var(--navy);font-size:.88rem;font-family:sans-serif;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:.4rem}
+.keyidea p{margin-bottom:0;font-size:.95rem;color:#444}
+
+/* figure placeholder */
+.fig{border:1px dashed #bbb;border-radius:4px;padding:2rem;margin:2rem 0;text-align:center;background:white;color:#888;font-family:sans-serif;font-size:.83rem}
+.fig-cap{font-size:.82rem;color:#666;font-style:italic;text-align:center;margin-top:.5rem}
+
+/* interactive sim */
+.sim-wrap{margin:2.4rem 0}
+.sim-wrap canvas{display:block;width:100%;border:1px solid var(--light);border-radius:4px;background:#0a0a18;cursor:crosshair}
+.sim-controls{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.7rem;align-items:center;font-family:sans-serif;font-size:.82rem;color:#555}
+.sim-controls label{display:flex;align-items:center;gap:.3rem}
+.sim-controls input[type=range]{width:100px}
+.sim-btn{padding:.3rem .9rem;background:var(--navy);color:var(--gold);border:none;border-radius:3px;cursor:pointer;font-size:.8rem;font-family:sans-serif}
+.sim-btn:hover{background:var(--mid)}
+.sim-caption{font-size:.82rem;color:#666;font-style:italic;margin-top:.5rem}
+
+/* copy-prompt */
+.pb-prompt{background:#fffbeb;border:1px solid #fde68a;border-left:4px solid var(--gold);padding:1.1rem 1.4rem;margin:2.4rem 0;border-radius:0 4px 4px 0;font-family:'Courier New',monospace;font-size:.8rem;color:#555;line-height:1.7;position:relative}
+.pb-prompt::before{content:"COPY PROMPT";display:block;font-size:.65rem;letter-spacing:.18em;color:var(--rule);margin-bottom:.5rem}
+.copy-btn{position:absolute;top:.8rem;right:.8rem;padding:.25rem .7rem;background:var(--navy);color:var(--gold);border:none;border-radius:3px;cursor:pointer;font-size:.72rem;font-family:sans-serif}
+
+.chapter-nav-bottom{background:var(--smoke);border-top:2px solid var(--light);padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-family:sans-serif;font-size:.82rem}
+.chapter-nav-bottom a{color:var(--mid);text-decoration:none;padding:.4rem 1rem;border:1px solid var(--light);background:white}
+.chapter-nav-bottom a:hover{background:var(--navy);color:var(--gold)}
+
+footer{background:#0f1a2e;color:#5a6582;padding:2rem;text-align:center;font-size:.78rem;line-height:1.85;font-family:sans-serif}
+footer a{color:#7a8298;text-decoration:none}
+footer a:hover{color:var(--gold)}
+footer .meta{margin-top:.6rem;font-size:.72rem;color:#3d4865;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">⚜ PRINCIPIA ORTHOGONA · BOOK 4 ⚜</a>
+  <ul class="nav-links">
+    <li><a href="ch00-student-edition.html">Ch 0</a></li>
+    <li><a href="ch01.html">Ch 1</a></li>
+    <li><a href="ch02.html" class="cur">Ch 2</a></li>
+  </ul>
+</nav>
+
+<div class="chapter-nav">
+  <a href="ch01.html">← Ch 1 · The ODE</a>
+  <span class="current">Chapter 2 · 2D+t · Extended Phase Space</span>
+  <a href="ch03.html">Ch 3 · Contact 3-Manifold →</a>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Book 4 · Chapter 2 · Dimension Ladder</div>
+    <div class="dim-badge">2D + t</div>
+    <h1>Extended Phase Space</h1>
+    <div class="hero-sub">Where time becomes a direction — and the contact form is born.</div>
+    <div class="gold-rule"></div>
+    <p class="hero-desc">Chapter 1 gave us one variable evolving in time: $\dot{x} = f(x)$. Now we have two — a state $(x, y)$ — and time $t$ running alongside. The moment we stop treating $t$ as a background clock and start treating it as a third coordinate axis, something remarkable happens: the geometry of the ODE crystallises into a single differential 1-form. That form is the contact form. Everything in Books 3 and 4 lives inside it.</p>
+  </div>
+</div>
+
+<div class="prose">
+  <div class="prose-inner">
+
+    <div class="section-label">§ 2.1</div>
+    <h2>From one variable to two</h2>
+
+    <p>In Chapter 1 the state of the system was a single number $x \in \mathbb{R}$. The ODE $\dot{x} = f(x)$ told us how that number changed. The phase portrait was a line — a 1-dimensional picture with arrows pointing left or right depending on the sign of $f$.</p>
+
+    <p>Now suppose the system requires <strong>two</strong> numbers to describe its state: $(x, y) \in \mathbb{R}^2$. Think of a pendulum: $x$ is the angle, $y$ is the angular velocity. Or an electrical circuit: $x$ is charge, $y$ is current. The ODE becomes a pair:</p>
+
+    <div class="eq-block">
+      <div class="eq-label">System (2.1) — planar ODE</div>
+      $$\dot{x} = f(x, y), \qquad \dot{y} = g(x, y).$$
+    </div>
+
+    <p>The phase portrait is now a 2-dimensional picture — the <strong>phase plane</strong>. Each point $(x, y)$ has an arrow attached to it, pointing in the direction $(f, g)$. A solution is a curve in this plane that is everywhere tangent to those arrows.</p>
+
+    <p>This is already richer than 1D. Limit cycles can exist. Spirals can wind in or out. Two fixed points can be connected by a special curve — a <em>heteroclinic orbit</em> — that takes infinite time to traverse.</p>
+
+    <p>But we are not stopping at the phase plane. We are adding $t$.</p>
+
+    <div class="section-label">§ 2.2</div>
+    <h2>Promoting time to a coordinate</h2>
+
+    <p>In System (2.1), time $t$ is invisible. It is the parameter along the solution curves, but it does not appear as an axis. The phase plane only shows where the system goes, not when.</p>
+
+    <p>The <strong>extended phase space</strong> makes time visible. We add a third axis and consider the space $\mathbb{R}^3$ with coordinates $(x, y, t)$. A solution of System (2.1) is now a curve in this 3-dimensional space — it traces out a path $(x(t), y(t), t)$ that moves upward in $t$ as time advances.</p>
+
+    <div class="keyidea">
+      <strong>Key idea</strong>
+      <p>The phase plane tells you the <em>shape</em> of the dynamics. The extended phase space tells you the <em>shape and the timing</em> simultaneously. Nothing is lost; everything is made explicit.</p>
+    </div>
+
+    <p>The projection of an extended-phase-space curve back onto the $(x, y)$ plane recovers the usual phase portrait. But the lift to $(x, y, t)$ space carries strictly more information: two solutions that pass through the same point $(x_0, y_0)$ in the phase plane but at different times are now <em>distinct curves</em> in the extended space.</p>
+
+    <div class="section-label">§ 2.3</div>
+    <h2>The contact form</h2>
+
+    <p>Here is where the geometry becomes beautiful. A first-order ODE $\dot{x} = f(x, y)$ — or equivalently $dy/dx = f(x, y)$ — defines, at every point of the extended space $(x, y, t)$, a <strong>preferred direction</strong>: the tangent to any solution through that point. A collection of preferred directions is called a <em>distribution</em>.</p>
+
+    <p>We can encode this distribution as the kernel of a differential 1-form. Specifically, define:</p>
+
+    <div class="eq-block">
+      <div class="eq-label">Definition — the contact form (prototype)</div>
+      $$\alpha = dy - f(x, y)\, dx.$$
+    </div>
+
+    <p>A curve $(x(t), y(t))$ is a solution of the ODE if and only if it is <em>tangent to the kernel of $\alpha$</em> — that is, if $\alpha(\dot{\gamma}) = 0$ along the curve $\gamma$.</p>
+
+    <p>The 1-form $\alpha$ is the <strong>contact form</strong>. It lives naturally on the 3-dimensional extended phase space $(x, y, t)$ — or, when the ODE depends on $t$, on the jet space $J^0(\mathbb{R}, \mathbb{R}) = \mathbb{R}^3_{(x, t, y)}$.</p>
+
+    <div class="env dfn">
+      <div class="env-head">Definition 2.1 — Contact structure</div>
+      <p>A <em>contact structure</em> on a 3-manifold $M$ is a maximally non-integrable smooth 2-plane field $\xi = \ker(\alpha)$, where $\alpha$ is a 1-form satisfying $\alpha \wedge d\alpha \neq 0$ everywhere.</p>
+      <p>The prototype: $M = \mathbb{R}^3_{(x, y, t)}$, $\alpha = dy - y'\, dx$, where $y' = dy/dx$ is the slope coordinate in the 1-jet space $J^1(\mathbb{R}, \mathbb{R})$.</p>
+    </div>
+
+    <p>The condition $\alpha \wedge d\alpha \neq 0$ is the <strong>non-integrability condition</strong>. It says the 2-plane field $\xi$ cannot be tangent to any surface — not even locally. This is what makes contact geometry different from foliation theory, and what makes it the right language for ODEs: a solution touching two points of the plane field cannot "rest" in a surface between them; it must twist. That twist is the geometry of the ODE.</p>
+
+    <div class="section-label">§ 2.4</div>
+    <h2>Why 2D+t is really 3D</h2>
+
+    <p>Let us be explicit about the dimension count. The state lives in $\mathbb{R}^2$ (two degrees of freedom: $x$ and $y$). Time is one additional dimension. So the extended phase space is $\mathbb{R}^2 \times \mathbb{R} = \mathbb{R}^3$.</p>
+
+    <p>This is precisely the 3-dimensional contact manifold where Book 3 was set. The helical attractor in Chapter 10 of Book 3 — with its three coordinates $(r, \theta, z)$ — is the same structure: a 2-dimensional state (radius $r$, angle $\theta$) evolving in a time-like direction $z$. Book 3 arrived at the contact 3-manifold from biology. Book 4 arrives at it from the ODE. Same room, two doors.</p>
+
+    <div class="env rem">
+      <div class="env-head">Remark 2.2 — The staircase</div>
+      <p>The dimensional ladder of this book is not an escalator — each step changes the geometry, not just the number of axes. Going from 2D to 2D+t (= 3D) introduces contact structure. Going from 3D to 4D (Chapter 3) introduces the symplectic leaf. Going from 4D to 5D (Chapter 4) enters jet space $J^1$. Adding $t$ again at 5D reaches the 6D arena where GTCT acts. Each transition has a name and a theorem.</p>
+    </div>
+
+    <div class="section-label">§ 2.5</div>
+    <h2>A worked example: the linear oscillator</h2>
+
+    <p>Take the simplest 2D system: the harmonic oscillator.</p>
+
+    <div class="eq-block">
+      <div class="eq-label">System (2.2) — harmonic oscillator</div>
+      $$\dot{x} = y, \qquad \dot{y} = -x.$$
+    </div>
+
+    <p>In the phase plane, the solutions are circles centred at the origin: $(x(t), y(t)) = (\cos t, -\sin t)$ (or any rotation thereof). Every solution is periodic; there are no fixed points except $(0,0)$, and it is a centre — neither attracting nor repelling.</p>
+
+    <p>In the extended phase space $(x, y, t)$, each circular orbit in the phase plane lifts to a <strong>helix</strong>: $(\cos t, -\sin t, t)$. The helix winds around the $t$-axis, advancing one full turn per period $2\pi$.</p>
+
+    <p>The contact form for this system is $\alpha = dy + x\, dx$ (since $f(x,y) = y$ gives $dy - y\, dx$, rewritten using the equation). The helical lift is tangent to $\ker(\alpha)$ at every point — you can verify: $\alpha(\dot{\gamma}) = \dot{y} + x\dot{x} = -x + x \cdot y$... which requires checking along the specific solution. The point is structural: the contact form is exactly the certificate that the curve is a solution.</p>
+
+    <div class="sim-wrap">
+      <canvas id="sim" width="800" height="380"></canvas>
+      <div class="sim-controls">
+        <label>Speed <input type="range" id="speed" min="0.2" max="3" step="0.1" value="1"></label>
+        <label>Trails <input type="range" id="trail" min="20" max="300" step="10" value="120"></label>
+        <button class="sim-btn" id="reset">Reset orbits</button>
+        <span id="siminfo" style="margin-left:auto;color:var(--mid)">Click canvas to seed a new orbit</span>
+      </div>
+      <p class="sim-caption">Fig 2.1 — Left: phase plane (circles). Right: extended phase space (helices). Colour encodes time $t$. Each orbit in the phase plane lifts to a helix in 3D.</p>
+    </div>
+
+    <div class="section-label">§ 2.6</div>
+    <h2>The G-chain in 2D+t</h2>
+
+    <p>The operator chain $G = U \circ F \circ K \circ C$ from Book 3 does not disappear when we add a time axis — it reappears in the geometry of the contact form.</p>
+
+    <p><strong>C (Compression)</strong> is the reduction to the 1-form $\alpha$: from the full ODE to the kernel distribution, discarding everything except the essential constraint.</p>
+
+    <p><strong>K (Threshold)</strong> is the non-integrability condition $\alpha \wedge d\alpha \neq 0$: the moment the distribution refuses to integrate into a surface. This is the critical curvature $\kappa^*$ of contact geometry.</p>
+
+    <p><strong>F (Fold)</strong> is the solution: the curve tangent to $\ker(\alpha)$. It builds the trajectory that respects the constraint.</p>
+
+    <p><strong>U (Unfolding)</strong> is the projection back: from the helix in extended phase space down to the orbit in the phase plane — the visible output of the dynamics.</p>
+
+    <p>The same four operations that describe how a circadian clock keeps time (Book 3, Chapter 3) describe how an ODE generates its solutions in extended phase space. The contact form is the single object that makes this correspondence precise.</p>
+
+    <div class="env thm">
+      <div class="env-head">Theorem 2.3 — Darboux's theorem (local form)</div>
+      <p>Near any point of a contact 3-manifold $(M, \ker\alpha)$, there exist local coordinates $(x, y, z)$ such that $\alpha = dz - y\, dx$.</p>
+      <p>Consequence: all contact 3-manifolds look the same locally. The only interesting geometry is global. This is why Chapter 3 (the helical attractor) is a genuinely 3-dimensional result — it is a global statement about the 3-manifold, not reducible to local coordinates.</p>
+    </div>
+
+    <div class="section-label">§ 2.7</div>
+    <h2>What Chapter 3 will add</h2>
+
+    <p>We have the extended phase space $\mathbb{R}^3$ with a contact structure. Chapter 3 makes the manifold <em>curved</em> — instead of flat $\mathbb{R}^3$, the state space wraps into a genuine 3-manifold (the one from Book 3). The contact form gains curvature. Fixed points become Reeb orbits. The ODE becomes a flow on the manifold — the Reeb flow — and the attractor theorem of Book 3 is now a theorem about that flow.</p>
+
+    <p>We are not repeating Book 3. We are re-entering it from below, having built the floor it stands on.</p>
+
+  </div><!-- /prose-inner -->
+</div><!-- /prose -->
+
+<!-- copy prompt -->
+<div class="prose" style="padding-top:0">
+  <div class="prose-inner">
+    <div class="pb-prompt" id="prompt-ch2">
+      You are reading Chapter 2 of <em>Principia Orthogona Book 4 — Higher Dimensions</em> by Pablo Nogueira Grossi.
+
+The chapter introduces the extended phase space (2D+t = 3D) and shows how promoting time to a coordinate gives rise to the contact form α = dy − f(x,y) dx. The harmonic oscillator ẋ = y, ẏ = −x is used as the worked example: its circular orbits in the phase plane lift to helices in extended phase space.
+
+Your task: Take a second 2D system of your choice (not the harmonic oscillator — try a damped oscillator, a predator-prey system, or a nonlinear pendulum). Write three paragraphs: (1) the system in the phase plane and its qualitative behaviour; (2) what its lift to extended phase space (x, y, t) looks like — describe the 3D curve geometrically; (3) what the contact form α is for this system, and verify that the lifted solution satisfies α(γ̇) = 0. Use the notation and language of this chapter.
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(this.parentElement.innerText.replace('COPY PROMPT','').trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1800)">Copy</button>
+    </div>
+  </div>
+</div>
+
+<div class="chapter-nav-bottom">
+  <a href="ch01.html">← Ch 1 · The ODE</a>
+  <a href="ch03.html">Ch 3 · Contact 3-Manifold →</a>
+</div>
+
+<footer>
+  <div>Principia Orthogona · Book 4 · Higher Dimensions · © 2026 Pablo Nogueira Grossi · G6 LLC</div>
+  <div>ORCID 0009-0000-6496-2186 · Zenodo DOI <a href="https://doi.org/10.5281/zenodo.19117400" target="_blank">10.5281/zenodo.19117400</a></div>
+  <div class="meta">CHAPTER 2 OF N · 2D+T · EXTENDED PHASE SPACE</div>
+</footer>
+
+<script>
+// Simple canvas simulation: left = phase plane, right = extended phase space (projected)
+const canvas = document.getElementById('sim');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const halfW = W / 2;
+
+let orbits = [];
+let t_global = 0;
+const TRAIL = () => parseInt(document.getElementById('trail').value);
+const SPEED = () => parseFloat(document.getElementById('speed').value);
+
+// default seeds
+const seeds = [[1.0, 0], [1.6, 0], [0.6, 0], [1.2, 0.4]];
+seeds.forEach(s => addOrbit(s[0], s[1]));
+
+function addOrbit(x0, y0) {
+  const hue = Math.random() * 360;
+  orbits.push({ x: x0, y: y0, t: 0, trail: [], hue });
+}
+
+function step(o, dt) {
+  // harmonic oscillator: dx/dt = y, dy/dt = -x
+  const dx = o.y;
+  const dy = -o.x;
+  o.x += dx * dt;
+  o.y += dy * dt;
+  o.t += dt;
+  o.trail.push({ x: o.x, y: o.y, t: o.t });
+  if (o.trail.length > TRAIL()) o.trail.shift();
+}
+
+function toPhase(x, y) {
+  // map phase plane coords to left half of canvas
+  const cx = halfW / 2, cy = H / 2;
+  const scale = Math.min(halfW, H) * 0.18;
+  return { px: cx + x * scale, py: cy - y * scale };
+}
+
+function toExtended(x, y, t) {
+  // isometric-ish projection of (x, y, t) onto right half
+  // x → rightward, y → leftward-down, t → upward
+  const cx = halfW + halfW / 2;
+  const cy = H / 2 + 40;
+  const sx = 38, sy = 22, st = 28;
+  const px = cx + x * sx - y * sy * 0.5;
+  const py = cy - y * sy * 0.5 - t * st * 0.18 + x * 0;
+  return { px, py };
+}
+
+function drawAxes() {
+  ctx.strokeStyle = '#334';
+  ctx.lineWidth = 1;
+
+  // phase plane axes
+  const c = toPhase(0, 0);
+  ctx.beginPath(); ctx.moveTo(c.px - 85, c.py); ctx.lineTo(c.px + 85, c.py);
+  ctx.moveTo(c.px, c.py + 85); ctx.lineTo(c.px, c.py - 85);
+  ctx.stroke();
+  ctx.fillStyle = '#556'; ctx.font = '11px sans-serif';
+  ctx.fillText('x', c.px + 88, c.py + 4);
+  ctx.fillText('y', c.px + 4, c.py - 88);
+  ctx.fillStyle = '#c9a84c'; ctx.font = 'bold 11px sans-serif';
+  ctx.fillText('Phase Plane', 10, 18);
+
+  // extended phase space axes
+  const e0 = toExtended(0,0,0);
+  const ex = toExtended(2.2,0,0);
+  const ey = toExtended(0,2.2,0);
+  const et = toExtended(0,0,14);
+  ctx.strokeStyle = '#334';
+  ctx.beginPath();
+  ctx.moveTo(e0.px,e0.py); ctx.lineTo(ex.px,ex.py);
+  ctx.moveTo(e0.px,e0.py); ctx.lineTo(ey.px,ey.py);
+  ctx.moveTo(e0.px,e0.py); ctx.lineTo(et.px,et.py);
+  ctx.stroke();
+  ctx.fillStyle = '#556'; ctx.font = '11px sans-serif';
+  ctx.fillText('x', ex.px+4, ex.py+4);
+  ctx.fillText('y', ey.px-12, ey.py+4);
+  ctx.fillText('t', et.px+4, et.py);
+  ctx.fillStyle = '#c9a84c'; ctx.font = 'bold 11px sans-serif';
+  ctx.fillText('Extended Phase Space', halfW + 8, 18);
+
+  // divider
+  ctx.strokeStyle = '#223'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(halfW, 0); ctx.lineTo(halfW, H); ctx.stroke();
+}
+
+function draw() {
+  ctx.fillStyle = '#09090f';
+  ctx.fillRect(0, 0, W, H);
+
+  drawAxes();
+
+  const dt = 0.012 * SPEED();
+
+  orbits.forEach(o => {
+    step(o, dt);
+
+    // phase plane trail
+    if (o.trail.length > 1) {
+      for (let i = 1; i < o.trail.length; i++) {
+        const alpha = i / o.trail.length;
+        ctx.strokeStyle = `hsla(${o.hue},80%,65%,${alpha * 0.85})`;
+        ctx.lineWidth = 1.5;
+        const a = toPhase(o.trail[i-1].x, o.trail[i-1].y);
+        const b = toPhase(o.trail[i].x, o.trail[i].y);
+        ctx.beginPath(); ctx.moveTo(a.px,a.py); ctx.lineTo(b.px,b.py); ctx.stroke();
+      }
+      // dot
+      const head = toPhase(o.x, o.y);
+      ctx.fillStyle = `hsl(${o.hue},90%,75%)`;
+      ctx.beginPath(); ctx.arc(head.px, head.py, 3, 0, Math.PI*2); ctx.fill();
+    }
+
+    // extended phase space trail (use last ~80 pts)
+    const ext_trail = o.trail.slice(-80);
+    if (ext_trail.length > 1) {
+      for (let i = 1; i < ext_trail.length; i++) {
+        const alpha = i / ext_trail.length;
+        ctx.strokeStyle = `hsla(${o.hue},70%,60%,${alpha * 0.75})`;
+        ctx.lineWidth = 1.5;
+        const a = toExtended(ext_trail[i-1].x, ext_trail[i-1].y, ext_trail[i-1].t);
+        const b = toExtended(ext_trail[i].x, ext_trail[i].y, ext_trail[i].t);
+        ctx.beginPath(); ctx.moveTo(a.px,a.py); ctx.lineTo(b.px,b.py); ctx.stroke();
+      }
+      const head = toExtended(o.x, o.y, o.t);
+      ctx.fillStyle = `hsl(${o.hue},90%,75%)`;
+      ctx.beginPath(); ctx.arc(head.px, head.py, 3, 0, Math.PI*2); ctx.fill();
+    }
+  });
+
+  requestAnimationFrame(draw);
+}
+
+canvas.addEventListener('click', e => {
+  const rect = canvas.getBoundingClientRect();
+  const cx = (e.clientX - rect.left) * (W / rect.width);
+  if (cx < halfW) {
+    // click in phase plane — seed from there
+    const c = toPhase(0, 0);
+    const scale = Math.min(halfW, H) * 0.18;
+    const x = (cx - c.px) / scale;
+    const y = -(((e.clientY - rect.top) * (H / rect.height)) - c.py) / scale;
+    addOrbit(x, y);
+  }
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+  orbits = [];
+  seeds.forEach(s => addOrbit(s[0], s[1]));
+});
+
+draw();
+</script>
+
+</body>
+</html>

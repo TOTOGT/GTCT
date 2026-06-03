@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch 1 · The Fermion Seed · Principia Orthogona Book 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;700&family=Cinzel:wght@400;600;900&display=swap" rel="stylesheet">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+:root {
+  --void:    #04040a;
+  --deep:    #07080f;
+  --surface: #0c0d16;
+  --card:    #0f1018;
+  --gold:    #c9a84c;
+  --gold2:   #e8c96a;
+  --teal:    #2dd4bf;
+  --crimson: #dc2626;
+  --text:    #e8e4d8;
+  --muted:   #6b6757;
+  --dim:     #3a3828;
+  --border:  rgba(201,168,76,0.12);
+  --border2: rgba(201,168,76,0.28);
+  --dim-color: #c084fc;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cormorant Garamond',serif;
+  background:var(--void);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  font-size:18px;
+  line-height:1.8;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:999;opacity:0.5;
+}
+/* NAV */
+nav{
+  position:fixed;top:0;width:100%;z-index:500;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 3rem;
+  border-bottom:1px solid var(--border);
+  background:rgba(4,4,10,0.92);
+  backdrop-filter:blur(16px);
+}
+.nav-mark{font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.25em;color:var(--gold);}
+.nav-links{display:flex;gap:2rem;flex-wrap:wrap;}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover,.nav-links a.cur{color:var(--gold);}
+
+.chapter-nav{
+  background:rgba(4,4,10,0.8);border-top:1px solid var(--border);
+  padding:0.9rem 3rem;display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+}
+.chapter-nav a{
+  color:var(--muted);text-decoration:none;padding:0.3rem 0.8rem;
+  border:1px solid var(--border);transition:all 0.2s;
+}
+.chapter-nav a:hover{color:var(--gold);border-color:var(--border2);}
+.chapter-nav .current{color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;padding:9rem 2rem 5rem;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(192,132,252,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 30% at 20% 80%, rgba(201,168,76,0.03) 0%, transparent 60%);
+}
+.dim-badge{
+  display:inline-block;
+  background:var(--dim-color);color:#1a0a2e;
+  font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;
+  padding:0.2rem 0.9rem;border-radius:3px;margin-bottom:1.2rem;
+  letter-spacing:0.08em;
+}
+.chapter-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.4em;text-transform:uppercase;
+  color:var(--teal);border:1px solid rgba(45,212,191,0.3);
+  padding:0.25rem 0.75rem;margin-bottom:2rem;display:inline-block;
+}
+h1{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.2rem,6vw,5rem);
+  font-weight:900;line-height:0.95;
+  color:var(--gold);
+  text-shadow:0 0 80px rgba(201,168,76,0.2);
+  margin-bottom:0.5rem;letter-spacing:-0.01em;
+}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,2.2vw,1.5rem);
+  font-style:italic;color:rgba(232,228,216,0.6);
+  margin-bottom:2.2rem;letter-spacing:0.04em;
+}
+.hero-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.15em;color:var(--muted);
+  margin-bottom:2.5rem;line-height:2.2;
+}
+/* opening statement — the centrepiece */
+.opening-stmt{
+  max-width:680px;margin:0 auto;
+  font-size:clamp(1.1rem,2.5vw,1.55rem);
+  font-style:italic;line-height:1.75;
+  color:rgba(232,228,216,0.82);
+  border-left:2px solid var(--border2);
+  padding-left:2rem;text-align:left;
+}
+.opening-stmt .math-inline{
+  font-style:normal;color:var(--dim-color);
+  font-family:'JetBrains Mono',monospace;font-size:0.88em;
+}
+.scroll-cue{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  font-family:'JetBrains Mono',monospace;font-size:0.55rem;
+  letter-spacing:0.2em;color:var(--dim);
+  animation:bob 2.2s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);}}
+
+/* PROSE */
+.prose{max-width:820px;margin:0 auto;padding:5rem 2rem;}
+.sec-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.56rem;letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.2rem;margin-top:4rem;display:block;
+}
+.sec-label:first-child{margin-top:0;}
+h2{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.4rem,3vw,2.2rem);
+  font-weight:600;color:var(--text);
+  margin-bottom:1.2rem;line-height:1.15;
+  border-bottom:1px solid var(--border);
+  padding-bottom:0.5rem;
+}
+p{
+  margin-bottom:1.2rem;
+  color:rgba(232,228,216,0.78);
+  font-size:1.05rem;line-height:1.9;
+}
+p strong{color:var(--gold);font-weight:400;}
+p em{color:rgba(232,228,216,0.9);font-style:italic;}
+
+/* equation block */
+.eq-block{
+  background:#050508;
+  border:1px solid var(--border);
+  border-left:3px solid var(--dim-color);
+  padding:1.6rem 2rem;margin:2rem 0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.82rem;line-height:2.2;overflow-x:auto;
+}
+.eq-label{
+  font-size:0.56rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--dim-color);margin-bottom:0.8rem;display:block;
+}
+.eq-block .mc{color:var(--muted);}
+.eq-block .ms{color:var(--gold);}
+.eq-block .mt{color:var(--teal);}
+
+/* environments */
+.env{
+  border:1px solid var(--border);padding:1.4rem 1.8rem;
+  margin:2rem 0;background:var(--card);
+}
+.env-head{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;
+  margin-bottom:0.7rem;
+}
+.env.thm .env-head{color:var(--gold);}
+.env.dfn .env-head{color:var(--teal);}
+.env.rem .env-head{color:var(--dim-color);}
+.env p{font-style:italic;margin-bottom:0;color:rgba(232,228,216,0.7);}
+.env p+p{margin-top:0.6rem;text-indent:0;}
+
+/* key idea */
+.keyidea{
+  border:1px solid rgba(201,168,76,0.25);
+  border-left:3px solid var(--gold);
+  background:rgba(201,168,76,0.03);
+  padding:1.4rem 1.8rem;margin:2rem 0;
+}
+.keyidea strong{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:0.6rem;
+}
+.keyidea p{margin-bottom:0;color:rgba(232,228,216,0.72);}
+
+/* the six-directions figure */
+.sixdir{
+  margin:3rem 0;border:1px solid var(--border);
+  background:var(--card);overflow:hidden;
+}
+.sixdir svg{display:block;width:100%;background:var(--deep);}
+.sixdir-cap{
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.08em;color:var(--muted);
+  padding:0.9rem 1.5rem;border-top:1px solid var(--border);
+  line-height:1.7;
+}
+
+/* interactive — the decision */
+.decision-wrap{margin:3rem 0;}
+.decision-wrap canvas{
+  display:block;width:100%;
+  background:var(--deep);border:1px solid var(--border);
+  cursor:pointer;
+}
+.decision-cap{
+  font-family:'JetBrains Mono',monospace;font-size:0.62rem;
+  color:var(--muted);margin-top:0.6rem;line-height:1.7;
+}
+.decision-btn{
+  font-family:'JetBrains Mono',monospace;font-size:0.62rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--teal);border:1px solid rgba(45,212,191,0.3);
+  background:none;padding:0.4rem 1rem;cursor:pointer;
+  margin-top:0.7rem;transition:all 0.2s;
+}
+.decision-btn:hover{background:rgba(45,212,191,0.06);color:var(--gold);}
+
+/* operator mapping */
+.op-map{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1px;background:var(--border);border:1px solid var(--border);
+  margin:2.5rem 0;
+}
+.op-map-cell{background:var(--card);padding:1.4rem 1.2rem;text-align:center;}
+.op-map-letter{
+  font-family:'Cinzel',serif;font-size:2rem;
+  color:var(--gold);display:block;margin-bottom:0.3rem;
+}
+.op-map-name{
+  font-family:'JetBrains Mono',monospace;font-size:0.56rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:0.5rem;
+}
+.op-map-fermion{font-size:0.88rem;color:rgba(232,228,216,0.55);line-height:1.5;}
+
+/* copy prompt */
+.pb-prompt{
+  background:rgba(201,168,76,0.04);
+  border:1px solid var(--border2);
+  border-left:3px solid var(--gold);
+  padding:1.2rem 1.5rem;margin:3rem 0;
+  font-family:'JetBrains Mono',monospace;font-size:0.75rem;
+  color:var(--muted);line-height:1.8;position:relative;
+}
+.pb-prompt::before{
+  content:"COPY PROMPT";display:block;
+  font-size:0.56rem;letter-spacing:0.22em;
+  color:var(--gold);margin-bottom:0.7rem;
+}
+.copy-btn{
+  position:absolute;top:0.9rem;right:0.9rem;
+  padding:0.22rem 0.65rem;background:var(--card);
+  color:var(--gold);border:1px solid var(--border2);
+  cursor:pointer;font-size:0.62rem;font-family:'JetBrains Mono',monospace;
+  transition:background 0.2s;
+}
+.copy-btn:hover{background:rgba(201,168,76,0.08);}
+
+.chapter-nav-bottom{
+  border-top:1px solid var(--border);
+  padding:1.2rem 3rem;display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:1rem;
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+}
+.chapter-nav-bottom a{
+  color:var(--muted);text-decoration:none;padding:0.35rem 0.9rem;
+  border:1px solid var(--border);transition:all 0.2s;
+}
+.chapter-nav-bottom a:hover{color:var(--gold);border-color:var(--border2);}
+
+footer{
+  border-top:1px solid var(--border);
+  padding:3rem 2rem;text-align:center;
+  max-width:820px;margin:0 auto;
+}
+footer p{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.56rem;letter-spacing:0.1em;
+  color:var(--muted);line-height:2.4;
+}
+footer a{color:var(--gold);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-mark">Principia Orthogona · Book 4</span>
+  <div class="nav-links">
+    <a href="index.html">Contents</a>
+    <a href="hub.html">Hub</a>
+    <a href="ch00-student-edition.html">Ch 0</a>
+    <a href="ch01.html" class="cur">Ch 1</a>
+    <a href="ch02.html">Ch 2</a>
+    <a href="ch03.html">Ch 3</a>
+  </div>
+</nav>
+
+<div class="chapter-nav">
+  <a href="ch00-student-edition.html">← Ch 0 · How to Read</a>
+  <span class="current">Chapter 1 · 1D · The Fermion Seed</span>
+  <a href="ch02.html">Ch 2 · 2D+t →</a>
+</div>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div style="position:relative;z-index:10;">
+    <div class="chapter-label">Book 4 · Chapter 1 · Dimension Ladder · 1D</div>
+    <div class="dim-badge">1D</div>
+    <h1>The Fermion<br>Seed</h1>
+    <div class="hero-sub">Before the braid. Before the path. Before the decision.</div>
+    <div class="hero-meta">
+      Grassmann algebra · $\psi^2 = 0$ · six unrealized directions<br>
+      the decision = operator C · the path = the braid
+    </div>
+    <div class="opening-stmt">
+      In one dimension, a fermion holds six directions of potential motion —
+      up, down, left, right, front, back —
+      and can express <em>none</em> of them.
+      The algebra forbids it.
+      <span class="math-inline">ψ² = 0</span>.
+      Everything this book contains is locked inside that constraint,
+      waiting for the dimension that lets it move.
+    </div>
+  </div>
+  <div class="scroll-cue">↓ scroll</div>
+</div>
+
+<div class="prose">
+
+  <span class="sec-label">§ 1.1</span>
+  <h2>What one dimension actually means</h2>
+
+  <p>A dimension is a degree of freedom — an independent direction in which a system can change. In one dimension, there is exactly one such direction. You can move forward or backward along a line. That is all.</p>
+
+  <p>This sounds trivial. It is not. The single dimension contains everything the system is and everything it can become — compressed into one number, one variable, one coordinate. The richness is there, but it cannot be expressed. Expression requires space. Space requires more than one dimension. To move in a direction other than the one you were given, you must first <em>have</em> that direction — which means climbing to a higher-dimensional manifold. The rest of this book is that climb.</p>
+
+  <p>But before the climb, we need to understand what exactly is locked. That requires Grassmann algebra.</p>
+
+  <span class="sec-label">§ 1.2</span>
+  <h2>The Grassmann variable: $\psi^2 = 0$</h2>
+
+  <p>Ordinary numbers commute: $ab = ba$. A <strong>Grassmann variable</strong> $\psi$ anti-commutes with itself:</p>
+
+  <div class="eq-block">
+    <span class="eq-label">Grassmann algebra — fundamental identity</span>
+    $$\psi\psi = -\psi\psi \quad \Longrightarrow \quad \psi^2 = 0.$$
+    <div class="mc">-- A Grassmann variable squares to zero.</div>
+    <div class="mc">-- It cannot compose with itself.</div>
+    <div class="mc">-- It cannot accumulate. It cannot iterate.</div>
+  </div>
+
+  <p>This is the <strong>Pauli exclusion principle</strong> stated as geometry, not as a rule. Two identical fermions cannot occupy the same state because the amplitude for that configuration is $\psi^2 = 0$ — not small, not suppressed, exactly zero. The algebra kills it before the physics can even ask the question.</p>
+
+  <p>A Grassmann variable has exactly two states: unoccupied ($\psi = 0$) and occupied ($\psi = 1$, or more precisely: the coefficient of $\psi$ in an expression is 0 or 1). There is no third state. There is no partial occupation. There is no superposition of the two — except at the moment of decision, before the state is read.</p>
+
+  <div class="env dfn">
+    <div class="env-head">Definition 1.1 — Grassmann algebra (1D)</div>
+    <p>The Grassmann algebra $\Lambda(\psi)$ over $\mathbb{R}$ generated by a single odd variable $\psi$ consists of elements $a + b\psi$ where $a, b \in \mathbb{R}$, with multiplication rule $\psi^2 = 0$. It is a two-dimensional vector space over $\mathbb{R}$, isomorphic as a vector space to $\mathbb{R}^2$, but with a fundamentally different algebraic structure.</p>
+  </div>
+
+  <p>The "two-dimensional" here is a red herring — it refers to the dimension of the algebra as a vector space, not to the physical dimension of the space in which $\psi$ lives. The fermion is still in 1D. What the algebra is telling you is that the fermion has exactly two fates: present or absent. Everything else is off the table.</p>
+
+  <span class="sec-label">§ 1.3</span>
+  <h2>Six directions, none available</h2>
+
+  <p>Here is the paradox. Our three-dimensional physical intuition says a particle can move in six directions: $\pm x$, $\pm y$, $\pm z$. But a 1D fermion has no $y$, no $z$. It has one direction — call it $x$ — and it can go forward ($+x$) or backward ($-x$). That is its entire kinematic vocabulary.</p>
+
+  <p>More than that: since $\psi^2 = 0$, the fermion cannot even compose two steps in the same direction. The ODE $\dot{\psi} = f(\psi)$ in a Grassmann algebra can only be linear — $f(\psi) = a\psi + b\psi^\dagger$ — because any term $\psi^2$ or higher vanishes identically. There are no fixed points that are not trivial. There are no oscillations. There is no chaos. There is not even a well-defined notion of "going somewhere twice" because the second application of $\psi$ annihilates.</p>
+
+  <div class="sixdir">
+    <svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow2">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="arrowG" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="rgba(192,132,252,0.5)"/>
+        </marker>
+        <marker id="arrowD" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="rgba(45,212,191,0.8)"/>
+        </marker>
+      </defs>
+
+      <!-- Left panel: 1D fermion — all potential directions shown, crossed out -->
+      <text x="200" y="28" fill="rgba(201,168,76,0.6)" font-family="JetBrains Mono" font-size="10" text-anchor="middle" letter-spacing="2">THE FERMION — 1D</text>
+      <!-- centre dot -->
+      <circle cx="200" cy="165" r="10" fill="rgba(192,132,252,0.15)" stroke="rgba(192,132,252,0.6)" stroke-width="1.5" filter="url(#glow2)"/>
+      <text x="200" y="169" fill="#c084fc" font-family="JetBrains Mono" font-size="9" text-anchor="middle">ψ</text>
+
+      <!-- Six potential directions — all dashed/ghosted because unavailable -->
+      <!-- +x -->
+      <line x1="213" y1="165" x2="270" y2="165" stroke="rgba(192,132,252,0.2)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowG)"/>
+      <text x="278" y="169" fill="rgba(192,132,252,0.25)" font-family="JetBrains Mono" font-size="9">+x</text>
+      <!-- -x -->
+      <line x1="187" y1="165" x2="130" y2="165" stroke="rgba(192,132,252,0.2)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowG)" transform="rotate(180 200 165) translate(-400 0)"/>
+      <line x1="187" y1="165" x2="125" y2="165" stroke="rgba(192,132,252,0.2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="110" y="169" fill="rgba(192,132,252,0.25)" font-family="JetBrains Mono" font-size="9" text-anchor="middle">−x</text>
+      <!-- +y -->
+      <line x1="200" y1="152" x2="200" y2="95" stroke="rgba(192,132,252,0.2)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowG)"/>
+      <text x="210" y="88" fill="rgba(192,132,252,0.25)" font-family="JetBrains Mono" font-size="9">+y</text>
+      <!-- -y -->
+      <line x1="200" y1="178" x2="200" y2="235" stroke="rgba(192,132,252,0.2)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowG)"/>
+      <text x="210" y="248" fill="rgba(192,132,252,0.25)" font-family="JetBrains Mono" font-size="9">−y</text>
+      <!-- +z diagonal -->
+      <line x1="208" y1="157" x2="252" y2="113" stroke="rgba(192,132,252,0.2)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowG)"/>
+      <text x="258" y="108" fill="rgba(192,132,252,0.25)" font-family="JetBrains Mono" font-size="9">+z</text>
+      <!-- -z diagonal -->
+      <line x1="192" y1="173" x2="148" y2="217" stroke="rgba(192,132,252,0.2)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowG)"/>
+      <text x="136" y="232" fill="rgba(192,132,252,0.25)" font-family="JetBrains Mono" font-size="9">−z</text>
+
+      <!-- "forbidden" cross overlaid on all directions -->
+      <text x="200" y="305" fill="rgba(192,132,252,0.35)" font-family="JetBrains Mono" font-size="9" text-anchor="middle" letter-spacing="1">ψ² = 0 · none available · pure potential</text>
+
+      <!-- Right panel: after the decision — one path taken -->
+      <line x1="400" y1="0" x2="400" y2="320" stroke="rgba(201,168,76,0.08)" stroke-width="1"/>
+      <text x="600" y="28" fill="rgba(201,168,76,0.6)" font-family="JetBrains Mono" font-size="10" text-anchor="middle" letter-spacing="2">AFTER THE DECISION</text>
+
+      <circle cx="520" cy="220" r="10" fill="rgba(201,168,76,0.1)" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+      <text x="520" y="224" fill="#c9a84c" font-family="JetBrains Mono" font-size="9" text-anchor="middle">C</text>
+
+      <!-- one solid path taken — becomes the braid -->
+      <path d="M530,220 Q570,190 610,175 Q650,160 680,145 Q710,130 740,118" stroke="#c9a84c" stroke-width="2" fill="none" marker-end="url(#arrowD)" opacity="0.7"/>
+      <!-- other directions still ghost -->
+      <line x1="530" y1="220" x2="600" y2="220" stroke="rgba(192,132,252,0.1)" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="520" y1="207" x2="520" y2="140" stroke="rgba(192,132,252,0.1)" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="512" y1="213" x2="458" y2="159" stroke="rgba(192,132,252,0.1)" stroke-width="1" stroke-dasharray="3,4"/>
+
+      <!-- braid label -->
+      <text x="748" y="114" fill="rgba(45,212,191,0.7)" font-family="JetBrains Mono" font-size="9">→ braid</text>
+      <text x="600" y="305" fill="rgba(201,168,76,0.4)" font-family="JetBrains Mono" font-size="9" text-anchor="middle" letter-spacing="1">C applied · one direction realised · chain reaction begins</text>
+    </svg>
+    <div class="sixdir-cap">
+      Fig 1.1 — Left: the 1D fermion $\psi$ with all six potential directions present but unavailable ($\psi^2 = 0$). Right: after the C operator applies — one direction is selected, the path is taken, the braid begins. The other five directions remain as ghost potential, never expressed in this trajectory.
+    </div>
+  </div>
+
+  <p>The six directions are not absent. They are <em>available as potential</em> but inaccessible as actual motion from within 1D. This is the precise meaning of "unrealized potential." The fermion carries the information that those directions exist — without that information, the higher-dimensional climb would have no map — but it cannot move in them until the manifold expands to contain them.</p>
+
+  <span class="sec-label">§ 1.4</span>
+  <h2>The decision: operator C</h2>
+
+  <p>At some moment, the fermion decides. Or rather: a constraint is imposed, an interaction occurs, a measurement is made. The state collapses from superposition of present/absent to one or the other. If it collapses to "present" — if the fermion is here — then a direction has been chosen, and a path begins.</p>
+
+  <p>This is the compression operator <strong>C</strong>.</p>
+
+  <p>C does not choose the direction arbitrarily. C <em>finds the most compressed statement</em> of what the system is: it reduces the full space of potential states to the single seed that contains all of them implicitly. In the fermion language: C takes the Grassmann superposition and returns the occupied state — the minimal configuration from which everything else unfolds.</p>
+
+  <div class="keyidea">
+    <strong>The Fermion as C</strong>
+    <p>The compression operator C is not imposed on the fermion from outside. The fermion <em>is</em> the C operator — it is pure compression. $\psi^2 = 0$ means the fermion cannot expand, cannot iterate, cannot unfold. It can only be the seed. C is the first operator in the chain precisely because the fermion is the first object in the dimension ladder: the most compressed thing that can exist, holding the entire braid as potential.</p>
+  </div>
+
+  <p>Before C acts, the state is superposition. The braid does not yet exist — there is no path, no strand, no crossing. After C acts, exactly one direction has been selected. The path is now real. The braid begins to write itself. And the chain reaction — <strong>C → K → F → U → T</strong> — becomes inevitable.</p>
+
+  <span class="sec-label">§ 1.5</span>
+  <h2>The chain reaction</h2>
+
+  <p>Once a direction is chosen, the system cannot stay in 1D. This is the deepest fact of the dimension ladder: the decision to move is also the decision to <em>need more room</em>. A fermion that has chosen a direction has committed to a path. A path has curvature. Curvature requires a second dimension to be measured in. The first step creates the need for the next.</p>
+
+  <p>This is not metaphor. In the mathematics:</p>
+
+  <div class="eq-block">
+    <span class="eq-label">The dimensional cascade</span>
+    <div style="color:var(--text);">$\psi \in 1D$</div>
+    <div style="color:var(--text);margin-top:0.4rem;">$\dot\psi = f(\psi)$ — the path exists only in 1D, trivially</div>
+    <div style="margin-top:0.8rem;color:var(--teal);">C acts → direction chosen → path begins</div>
+    <div style="margin-top:0.4rem;color:var(--text);">path has tangent vector → tangent vector lives in $T_\psi M$ → need 2D to describe curvature of path</div>
+    <div style="margin-top:0.4rem;color:var(--text);">curvature requires $\kappa$ → K threshold acts in 2D</div>
+    <div style="margin-top:0.4rem;color:var(--text);">crossing the threshold folds the path → F acts in 3D (the contact manifold)</div>
+    <div style="margin-top:0.4rem;color:var(--text);">the fold unfolds → U projects back → each step up one rung</div>
+    <br>
+    <div class="mc">-- Each operator creates the need for the next dimension.</div>
+    <div class="mc">-- The chain reaction is forced by the geometry, not by choice.</div>
+  </div>
+
+  <p>The dimensional ladder of this book is not a sequence of topics chosen for convenience. It is the sequence forced by the 1D fermion the moment it decides to move. Every chapter from here is a consequence of $\psi^2 = 0$ and the single decision to be present.</p>
+
+  <span class="sec-label">§ 1.6</span>
+  <h2>The G-chain before it exists</h2>
+
+  <p>In 1D, the G-chain $G = U \circ F \circ K \circ C$ does not yet operate — there is not enough space for F or U to act. But all five operators are present as <em>potential</em>, exactly as the six directions are present as potential in the fermion.</p>
+
+  <div class="op-map">
+    <div class="op-map-cell">
+      <span class="op-map-letter">C</span>
+      <span class="op-map-name">Compress</span>
+      <span class="op-map-fermion">The fermion itself. $\psi^2=0$. Present or absent. The seed before any path exists.</span>
+    </div>
+    <div class="op-map-cell">
+      <span class="op-map-letter">K</span>
+      <span class="op-map-name">Threshold</span>
+      <span class="op-map-fermion">The curvature $\kappa^*$ of the path. Cannot be defined in 1D. Requires 2D. Dormant until Chapter 2.</span>
+    </div>
+    <div class="op-map-cell">
+      <span class="op-map-letter" style="color:var(--crimson)">F</span>
+      <span class="op-map-name">Fold</span>
+      <span class="op-map-fermion">The Whitney $A_1$ singularity. Requires a surface to fold. Dormant until Chapter 3.</span>
+    </div>
+    <div class="op-map-cell">
+      <span class="op-map-letter">U</span>
+      <span class="op-map-name">Unfold</span>
+      <span class="op-map-fermion">The visible output. Cannot unfold what has not been folded. Dormant until Chapter 3.</span>
+    </div>
+    <div class="op-map-cell" style="background:rgba(45,212,191,0.04);">
+      <span class="op-map-letter" style="color:var(--teal)">T</span>
+      <span class="op-map-name">Time · Circuit</span>
+      <span class="op-map-fermion">The fifth operator closing the generative circuit. Requires the full 5D+t arena. Chapter 13 onward.</span>
+    </div>
+  </div>
+
+  <div class="env rem">
+    <div class="env-head">Remark 1.2 — Why the braid is not in 1D</div>
+    <p>The braid group $B_3$ requires at least three strands, each capable of independent motion. A single 1D fermion is one strand with no room to cross anything. The braid begins only after C acts and two things exist to be woven together — the path taken and the path not taken. The braid is the memory of a decision made in space. In 1D there is no space to remember in. This is why the hub page opens with the braid as the <em>result</em> of the theory, not its starting point.</p>
+  </div>
+
+  <span class="sec-label">§ 1.7</span>
+  <h2>The interactive decision</h2>
+
+  <p>The simulation below places the 1D fermion at the moment before decision. Click anywhere in the field to apply C — to choose a direction. Watch the chain reaction that follows as the path propagates into the dimensions above 1D.</p>
+
+  <div class="decision-wrap">
+    <canvas id="decCanvas" width="800" height="340"></canvas>
+    <div style="display:flex;gap:1rem;margin-top:0.7rem;align-items:center;flex-wrap:wrap;">
+      <button class="decision-btn" id="decReset">Reset — return to ψ² = 0</button>
+      <span id="decState" style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted);margin-left:auto;">State: superposition · awaiting decision</span>
+    </div>
+    <div class="decision-cap">
+      Fig 1.2 — Click to apply C. The fermion collapses from superposition (all directions equally ghosted) to one decided path (gold strand). The strand grows into the next dimension with each operator application. Reset returns to the pre-decision state, where $\psi^2 = 0$ holds and nothing has been committed.
+    </div>
+  </div>
+
+  <span class="sec-label">§ 1.8</span>
+  <h2>What Chapter 2 will unlock</h2>
+
+  <p>Chapter 2 adds one dimension to the time axis — the extended phase space $(x, y, t)$. The moment that second spatial coordinate appears, the fermion acquires curvature: the path can now bend. The threshold operator K becomes definable. The contact form $\alpha = dy - f(x,y)\,dx$ appears as the geometric fingerprint of the path.</p>
+
+  <p>Everything that will happen in Chapters 2 through 13 is already implicit in the single statement $\psi^2 = 0$. The rest is unfolding.</p>
+
+  <div class="pb-prompt">
+You are reading Chapter 1 of <em>Principia Orthogona Book 4 — Higher Dimensions</em> by Pablo Nogueira Grossi.
+
+The chapter introduces the 1D fermion as the seed of the dimensional ladder. Key claims: (1) $\psi^2 = 0$ (Grassmann algebra) encodes the Pauli exclusion principle as geometry; (2) the fermion holds six directions of potential motion but can express none from within 1D; (3) the compression operator C is the fermion's decision — the moment one direction is selected and the chain reaction begins; (4) the G-chain operators K, F, U, T are dormant in 1D, waiting for the dimensions that activate them.
+
+Your task: Write three paragraphs connecting the 1D fermion to a physical system you know. (1) Name the system and describe what its "1D seed" is — what is the minimally compressed thing that, once decided, drives the rest? (2) Identify what plays the role of $\psi^2 = 0$ in your system — what is the constraint that prevents the seed from composing with itself, that keeps it as pure potential? (3) What is the moment of C in your system — the decision that starts the chain reaction? Be precise: give names, numbers, and mechanisms, not metaphors.
+    <button class="copy-btn" onclick="navigator.clipboard.writeText(this.parentElement.innerText.replace('COPY PROMPT','').trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1800)">Copy</button>
+  </div>
+
+</div><!-- /prose -->
+
+<div class="chapter-nav-bottom">
+  <a href="ch00-student-edition.html">← Ch 0 · How to Read</a>
+  <a href="ch02.html">Ch 2 · 2D+t · Extended Phase Space →</a>
+</div>
+
+<footer>
+  <p>
+    Principia Orthogona · Book 4 · Higher Dimensions · © 2026 Pablo Nogueira Grossi · G6 LLC<br>
+    ORCID 0009-0000-6496-2186 · <a href="https://doi.org/10.5281/zenodo.19117400" target="_blank">Zenodo 10.5281/zenodo.19117400</a><br>
+    <span style="opacity:0.5">Chapter 1 · 1D · The Fermion Seed · ψ² = 0</span>
+  </p>
+</footer>
+
+<script>
+// ── Decision canvas ──────────────────────────────────────────────────────────
+const canvas = document.getElementById('decCanvas');
+const ctx    = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const cx = W / 2, cy = H / 2;
+
+let decided    = false;
+let decAngle   = 0;
+let paths      = [];      // chain-reaction strands
+let t_sim      = 0;
+let pulsePhase = 0;
+
+const GOLD    = '#c9a84c';
+const TEAL    = '#2dd4bf';
+const PURPLE  = '#c084fc';
+const MUTED   = 'rgba(107,103,87,0.35)';
+
+function resetDec() {
+  decided = false;
+  paths   = [];
+  t_sim   = 0;
+  document.getElementById('decState').textContent = 'State: superposition · awaiting decision';
+}
+
+function applyC(px, py) {
+  if (decided) return;
+  decided  = true;
+  decAngle = Math.atan2(py - cy, px - cx);
+  paths    = [{
+    x: cx, y: cy,
+    vx: Math.cos(decAngle) * 1.8,
+    vy: Math.sin(decAngle) * 1.8,
+    trail: [{x: cx, y: cy}],
+    op: 'C', hue: 45, age: 0, spawned: false
+  }];
+  document.getElementById('decState').textContent =
+    'C applied · direction chosen · chain reaction in progress';
+}
+
+canvas.addEventListener('click', e => {
+  const r = canvas.getBoundingClientRect();
+  applyC(
+    (e.clientX - r.left) * (W / r.width),
+    (e.clientY - r.top)  * (H / r.height)
+  );
+});
+
+document.getElementById('decReset').addEventListener('click', resetDec);
+
+function drawPre() {
+  // pre-decision: glowing fermion with ghost directions
+  pulsePhase += 0.025;
+  const glow = 0.4 + 0.3 * Math.sin(pulsePhase);
+
+  // ghost directions
+  const dirs6 = [0, Math.PI/3, 2*Math.PI/3, Math.PI, 4*Math.PI/3, 5*Math.PI/3];
+  dirs6.forEach(a => {
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a)*18, cy + Math.sin(a)*18);
+    ctx.lineTo(cx + Math.cos(a)*90, cy + Math.sin(a)*90);
+    ctx.strokeStyle = `rgba(192,132,252,${0.08 + 0.05*Math.sin(pulsePhase+a)})`;
+    ctx.lineWidth   = 1.2;
+    ctx.setLineDash([4, 5]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+
+  // fermion dot
+  const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 20);
+  grad.addColorStop(0, `rgba(192,132,252,${glow})`);
+  grad.addColorStop(1, 'rgba(192,132,252,0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath(); ctx.arc(cx, cy, 20, 0, Math.PI*2); ctx.fill();
+
+  ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI*2);
+  ctx.strokeStyle = `rgba(192,132,252,${0.6 + 0.3*Math.sin(pulsePhase)})`;
+  ctx.lineWidth = 1.5; ctx.stroke();
+
+  // label
+  ctx.fillStyle = `rgba(192,132,252,${0.5 + 0.2*Math.sin(pulsePhase)})`;
+  ctx.font = 'bold 13px JetBrains Mono, monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('ψ', cx, cy + 5);
+
+  // annotation
+  ctx.fillStyle = 'rgba(107,103,87,0.5)';
+  ctx.font      = '10px JetBrains Mono, monospace';
+  ctx.fillText('ψ² = 0  ·  click to apply C', cx, H - 20);
+}
+
+function drawPost() {
+  t_sim += 0.6;
+
+  paths.forEach(p => {
+    p.age++;
+    p.x += p.vx;
+    p.y += p.vy;
+
+    // gentle curve: add small perpendicular component
+    const perp = { x: -p.vy, y: p.vx };
+    const len  = Math.sqrt(perp.x*perp.x + perp.y*perp.y) || 1;
+    p.vx += (perp.x / len) * 0.015;
+    p.vy += (perp.y / len) * 0.015;
+    // slight damping keeps it from flying off
+    p.vx *= 0.998; p.vy *= 0.998;
+
+    p.trail.push({x: p.x, y: p.y});
+    if (p.trail.length > 160) p.trail.shift();
+
+    // draw trail
+    for (let i = 1; i < p.trail.length; i++) {
+      const a = i / p.trail.length;
+      const col = p.op === 'C' ? `hsla(45,70%,55%,${a*0.8})` :
+                  p.op === 'K' ? `hsla(185,65%,58%,${a*0.7})` :
+                                 `hsla(270,60%,65%,${a*0.6})`;
+      ctx.beginPath();
+      ctx.moveTo(p.trail[i-1].x, p.trail[i-1].y);
+      ctx.lineTo(p.trail[i].x,   p.trail[i].y);
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+    }
+
+    // head dot
+    ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI*2);
+    ctx.fillStyle = p.op === 'C' ? GOLD : p.op === 'K' ? TEAL : PURPLE;
+    ctx.fill();
+
+    // op label near head
+    ctx.fillStyle = p.op === 'C' ? 'rgba(201,168,76,0.7)' :
+                    p.op === 'K' ? 'rgba(45,212,191,0.6)' :
+                                   'rgba(192,132,252,0.5)';
+    ctx.font = '9px JetBrains Mono, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(p.op, p.x + 6, p.y - 4);
+
+    // spawn K after C travels far enough
+    if (!p.spawned && p.op === 'C' && p.age === 55) {
+      p.spawned = true;
+      const angle = Math.atan2(p.vy, p.vx) + 0.4;
+      paths.push({
+        x: p.x, y: p.y,
+        vx: Math.cos(angle) * 1.4,
+        vy: Math.sin(angle) * 1.4,
+        trail: [{x: p.x, y: p.y}],
+        op: 'K', hue: 185, age: 0, spawned: false
+      });
+    }
+    if (!p.spawned && p.op === 'K' && p.age === 55) {
+      p.spawned = true;
+      const angle = Math.atan2(p.vy, p.vx) - 0.35;
+      paths.push({
+        x: p.x, y: p.y,
+        vx: Math.cos(angle) * 1.2,
+        vy: Math.sin(angle) * 1.2,
+        trail: [{x: p.x, y: p.y}],
+        op: 'F', hue: 270, age: 0, spawned: true
+      });
+    }
+  });
+
+  // origin dot
+  ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(201,168,76,0.2)';
+  ctx.strokeStyle = 'rgba(201,168,76,0.5)';
+  ctx.lineWidth = 1; ctx.fill(); ctx.stroke();
+
+  ctx.fillStyle = 'rgba(201,168,76,0.6)';
+  ctx.font = '9px JetBrains Mono, monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('C', cx, cy + 3);
+}
+
+function frame() {
+  ctx.fillStyle = '#07080f';
+  ctx.fillRect(0, 0, W, H);
+
+  if (!decided) drawPre();
+  else          drawPost();
+
+  requestAnimationFrame(frame);
+}
+
+frame();
+</script>
+
+</body>
+</html>
