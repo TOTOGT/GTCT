@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1 · The Seven Axioms · GTCT Vol IV · Principia Orthogona</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;700&family=Cinzel:wght@400;600;900&display=swap" rel="stylesheet">
+<script>MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre']}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+:root{--void:#04040a;--deep:#07080f;--surface:#0c0d16;--card:#0f1018;--gold:#c9a84c;--gold2:#e8c96a;--teal:#2dd4bf;--text:#e8e4d8;--muted:#6b6757;--dim:#3a3828;--border:rgba(201,168,76,0.12);--border2:rgba(201,168,76,0.28);--violet:#c084fc;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cormorant Garamond',serif;background:var(--void);color:var(--text);min-height:100vh;font-size:18px;line-height:1.8;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.5;}
+nav{position:fixed;top:0;width:100%;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:0.8rem 3rem;border-bottom:1px solid var(--border);background:rgba(4,4,10,0.92);backdrop-filter:blur(16px);}
+.nav-mark{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);text-decoration:none;}
+.nav-links{display:flex;gap:1.5rem;}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--gold);}
+.chapter-hero{padding:7rem 3rem 3rem;max-width:900px;margin:0 auto;}
+.ch-vol{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:0.8rem;}
+.ch-num{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--muted);margin-bottom:0.4rem;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.8rem);font-weight:600;line-height:1.05;color:var(--gold);margin-bottom:0.5rem;}
+.ch-pt{font-style:italic;color:var(--muted);font-size:1.05rem;margin-bottom:1.2rem;}
+.ch-lead{font-size:1rem;color:rgba(232,228,216,0.7);max-width:660px;line-height:1.85;border-left:2px solid var(--border2);padding-left:1.5rem;}
+.gold-rule{width:40px;height:2px;background:var(--gold);margin:2rem 0;}
+.chapter-body{max-width:820px;margin:0 auto;padding:0 3rem 6rem;}
+.sec{margin-bottom:3rem;}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+p{margin-bottom:1rem;color:rgba(232,228,216,0.82);}
+.axiom-block{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.4rem 1.8rem;margin:1.5rem 0;}
+.axiom-block.lean{border-left-color:var(--teal);}
+.axiom-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;display:block;}
+.axiom-block.lean .axiom-tag{color:var(--teal);}
+.axiom-title{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--gold2);margin-bottom:0.6rem;}
+.axiom-en{color:var(--text);margin-bottom:0.4rem;}
+.axiom-pt{font-style:italic;color:var(--muted);font-size:0.9rem;margin-bottom:0.7rem;}
+.axiom-formal{font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:rgba(0,0,0,0.35);padding:0.5rem 1rem;color:var(--teal);margin-top:0.6rem;display:block;overflow-x:auto;line-height:1.7;}
+.lean-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:#22c55e;border:1px solid rgba(34,197,94,0.3);padding:0.1rem 0.45rem;margin-left:0.5rem;}
+.remark{background:rgba(201,168,76,0.04);border:1px solid var(--border);padding:1.2rem 1.5rem;margin:2rem 0;}
+.remark-tag{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.5rem;display:block;text-transform:uppercase;}
+.dep-chain{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--text);background:rgba(0,0,0,0.3);padding:1rem 1.4rem;margin:1.5rem 0;line-height:2;overflow-x:auto;}
+.dep-chain .hl{color:var(--gold);}
+.dep-chain .arr{color:var(--muted);}
+.ch-nav{display:flex;justify-content:space-between;padding:2rem 3rem;border-top:1px solid var(--border);}
+.ch-nav a{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.ch-nav a:hover{color:var(--gold);}
+.ch-nav .next{text-align:right;}
+footer{text-align:center;padding:2rem;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;color:var(--dim);border-top:1px solid var(--border);}
+footer a{color:var(--gold);text-decoration:none;}
+@media(max-width:700px){nav{padding:0.8rem 1.2rem;}.chapter-hero,.chapter-body{padding-left:1.2rem;padding-right:1.2rem;}.ch-nav{padding:1.5rem 1.2rem;}}
+
+/* ── Overflow: wide equations scroll inside boxes ── */
+.proof, .block, .axiom-block, .remark, .dep-chain, .time-sec {
+  overflow-x: auto;
+}
+mjx-container {
+  overflow-x: auto;
+  max-width: 100%;
+  display: block !important;
+}
+.MJX-TEX { max-width: 100%; }
+.block-math, .formal, .axiom-formal {
+  overflow-x: auto;
+  white-space: pre;
+  word-break: normal;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-mark">Principia Orthogona · Vol IV</a>
+  <div class="nav-links">
+    <a href="chIV-preface.html">Preface</a>
+    <a href="chIV-axioms.html" style="color:var(--gold)">Ch 1 · Axioms</a>
+    <a href="chIV-field.html">Ch 2 · Field</a>
+    <a href="chIV-operators.html">Ch 3 · Operators</a>
+    <a href="chIV-correspondence.html">Ch 4</a>
+    <a href="chIV-orthogonality.html">Ch 5</a>
+    <a href="chIV-recursion.html">Ch 6</a>
+    <a href="chIV-emergence.html">Ch 7</a>
+    <a href="chIV-time.html">Ch 8 · Time</a>
+  </div>
+</nav>
+
+<div class="chapter-hero">
+  <div class="ch-vol">Vol IV · Generative Temporal Contact Theory</div>
+  <div class="ch-num">Chapter 1 — Capítulo 1</div>
+  <h1 class="ch-title">The Seven Axioms</h1>
+  <div class="ch-pt">Os Sete Axiomas</div>
+  <div class="gold-rule"></div>
+  <div class="ch-lead">
+    Seven irreducible axioms. None is derivable from the others. All are machine-verified
+    in Lean 4 via the AXLE proof environment. The logical dependency chain runs:
+    Axioms → Field → Operators → Correspondence → Orthogonality → Recursion → Emergence.
+  </div>
+</div>
+
+<div class="chapter-body">
+
+  <div class="dep-chain">
+    <span class="hl">Ch 1</span> Axioms <span class="arr">→</span>
+    <span class="hl">Ch 2</span> Dimensional Field <span class="arr">→</span>
+    <span class="hl">Ch 3</span> Operators <span class="arr">→</span>
+    <span class="hl">Ch 4</span> Correspondence <span class="arr">→</span>
+    <span class="hl">Ch 5</span> Orthogonality <span class="arr">→</span>
+    <span class="hl">Ch 6</span> Recursion <span class="arr">→</span>
+    <span class="hl">Ch 7</span> Emergence <span class="arr">→</span>
+    <span class="hl">Ch 8</span> Time
+  </div>
+
+  <!-- AXIOM 1 -->
+  <div class="sec">
+    <div class="sec-label">Axiom 1</div>
+    <div class="axiom-block lean">
+      <span class="axiom-tag">Axiom 1 (Contact Structure) / Axioma 1 (Estrutura de Contato) <span class="lean-badge">✓ Lean 4</span></span>
+      <div class="axiom-title">Contact Structure</div>
+      <div class="axiom-en">There exists a smooth contact manifold $M$ with contact form $\alpha$ such that $d\alpha$ is non-degenerate on $\ker \alpha$.</div>
+      <div class="axiom-pt">Existe uma variedade suave de contato $M$ com forma de contato $\alpha$ tal que $d\alpha$ é não-degenerada em $\ker \alpha$.</div>
+      <code class="axiom-formal">(M, α) contact manifold,  dα|_{ker α} non-degenerate  ✓(Lean 4)</code>
+    </div>
+    <p>The contact manifold is the geometric stage on which all GTCT dynamics unfold. The non-degeneracy of $d\alpha$ on $\ker\alpha$ is precisely what distinguishes contact geometry from foliation theory: the kernel of $\alpha$ cannot be integrated to a surface. This is the irreducibility that forces the dynamics to keep moving.</p>
+    <p>In the dm³ toy model, $M = \mathbb{R}^2_+ \times \mathbb{R}$ with cylindrical coordinates $(r,\theta,z)$ and $\alpha = dz - r^2 d\theta$. The Reeb vector field satisfies $\iota_R d\alpha = 0$ and $\alpha(R) = 1$, giving the flow $\dot\theta = 1$, $\dot r = \dot z = 0$ — pure angular motion at constant radius and height.</p>
+  </div>
+
+  <!-- AXIOM 2 -->
+  <div class="sec">
+    <div class="sec-label">Axiom 2</div>
+    <div class="axiom-block lean">
+      <span class="axiom-tag">Axiom 2 (Generative Operator Chain) / Axioma 2 (Cadeia de Operadores Generativos) <span class="lean-badge">✓ Lean 4</span></span>
+      <div class="axiom-title">G = U ∘ F ∘ K ∘ C</div>
+      <div class="axiom-en">There exists $G = U \circ F \circ K \circ C : M \to M$. $C$ is injective and contractive; $K$ decreases potential $\Phi$; $F$ is non-injective with finite branch set; $U$ decreases $\Phi$ and drives orbits toward a fixed point.</div>
+      <div class="axiom-pt">Existe $G = U \circ F \circ K \circ C : M \to M$. $C$ é injetora e contrativa; $K$ decresce $\Phi$; $F$ é não-injetora com ramo finito; $U$ decresce $\Phi$ e dirige órbitas a ponto fixo.</div>
+      <code class="axiom-formal">G = U ∘ F ∘ K ∘ C : M → M  ✓(Lean 4)
+C: injective + contractive  |  K: decreases Φ
+F: non-injective, finite branch set  |  U: drives to fixed point</code>
+    </div>
+    <p>The operator chain is non-commutative by construction — this is the geometric origin of time's irreversibility. $C$ (Compress) is the wholesale operator: acquire at the source. $K$ (Threshold) is curvature at the critical point $\kappa^*$. $F$ (Fold) is the Whitney $A_1$ singularity, the commitment point from which there is no return. $U$ (Unfold) is the retail operator: transmit at value.</p>
+    <p>Non-commutativity: $G' = F \circ U \circ C \circ K$ produces a distinct orbit. The order is not a convention — it is what the topology demands.</p>
+  </div>
+
+  <!-- AXIOM 3 -->
+  <div class="sec">
+    <div class="sec-label">Axiom 3</div>
+    <div class="axiom-block lean">
+      <span class="axiom-tag">Axiom 3 (Temporal Field) / Axioma 3 (Campo Temporal) <span class="lean-badge">✓ Lean 4</span></span>
+      <div class="axiom-title">Non-Vanishing Temporal Vector Field</div>
+      <div class="axiom-en">A non-vanishing vector field $T$ on $M$ with flow $\varphi_t$ satisfying $\varphi_t^*\alpha = e^{f(t)}\alpha$ for some smooth $f$.</div>
+      <div class="axiom-pt">Campo vetorial $T$ não-nulo em $M$ com fluxo $\varphi_t$ satisfazendo $\varphi_t^* \alpha = e^{f(t)} \alpha$ para alguma $f$ suave.</div>
+      <code class="axiom-formal">φ_t* α = e^{f(t)} α,  T ≠ 0  ✓(Lean 4)</code>
+    </div>
+    <p>The temporal field $T$ is not a parameter added to the geometry — it is a geometric object on $M$ with its own dynamics. The conformal reparametrization $\varphi_t^*\alpha = e^{f(t)}\alpha$ means time scales the contact structure without destroying it. This is the fifth operator: $T$ completes the circuit $C \to K \to F \to U \to T \to$ (return).</p>
+  </div>
+
+  <!-- AXIOM 4 -->
+  <div class="sec">
+    <div class="sec-label">Axiom 4</div>
+    <div class="axiom-block lean">
+      <span class="axiom-tag">Axiom 4 (Triad of Invariants) / Axioma 4 (Tríade de Invariantes) <span class="lean-badge">✓ Lean 4</span></span>
+      <div class="axiom-title">Three Global Invariants</div>
+      <div class="axiom-en">Three global invariants: $I_1$ (Orthogonality) — consecutive phase vectors are orthogonal in $\mathbb{R}^{12}$; $I_2$ (Nilpotency) — critical exponent $\varepsilon^* = 1/3$; $I_3$ (Spectral Collapse) — eigenvalue spectrum collapses at resonance.</div>
+      <div class="axiom-pt">Três invariantes globais: $I_1$ (Ortogonalidade); $I_2$ (Nilpotência) — $\varepsilon^* = 1/3$; $I_3$ (Colapso Espectral).</div>
+      <code class="axiom-formal">I₁: ⟨δᵢ, δᵢ₊₁⟩ = 0  (orthogonality of consecutive phases)
+I₂: ε* = 1/3         (nilpotency / stability radius)
+I₃: spectral collapse at resonance  ✓(Lean 4)</code>
+    </div>
+    <p>The stability radius $\varepsilon_0 = 1/3$ is the outer basin boundary: within $\|x - x^*\| \leq \varepsilon_0$, the G-orbit contracts to the fixed point. This value derives from $\mu_{\max} = -2$ and $\sup\|\text{Hess}\,V\| = 2$ at the limit cycle: $\varepsilon_0 = |\mu_{\max}|/(2(1 + \sup\|\text{Hess}\,V\|)) = 2/6 = 1/3$. The number $1/3$ is not tunable.</p>
+  </div>
+
+  <!-- AXIOM 5 -->
+  <div class="sec">
+    <div class="sec-label">Axiom 5</div>
+    <div class="axiom-block lean">
+      <span class="axiom-tag">Axiom 5 (Twelve-Phase Cycle) / Axioma 5 (Ciclo de Doze Fases) <span class="lean-badge">✓ Lean 4</span></span>
+      <div class="axiom-title">$D_1 \to D_2 \to \cdots \to D_{12} \to D_1$</div>
+      <div class="axiom-en">Dimensional evolution proceeds through 12 phases $D_1, \ldots, D_{12}$ with cyclic indexing $D_{i+12} \equiv D_i$ and period $T^* = 2\pi$.</div>
+      <div class="axiom-pt">A evolução dimensional procede por 12 fases $D_1, \ldots, D_{12}$ com $D_{i+12} \equiv D_i$ e período $T^* = 2\pi$.</div>
+      <code class="axiom-formal">D₁ → D₂ → ⋯ → D₁₂ → D₁,  T* = 2π  ✓(Lean 4)</code>
+    </div>
+    <p>The 12-phase structure arises from the four base operators ($C$, $K$, $F$, $U$) each contributing three dimensional operators (one per invariant: $I_1$, $I_2$, $I_3$). $4 \times 3 = 12$. The period $T^* = 2\pi$ is the Reeb period of the contact structure — it is not chosen, it is the only value compatible with the non-degeneracy of $d\alpha$.</p>
+    <p>The g-series: $g^0$ (quiescent, 0 cycles), $g^6$ (stable, 6 cycles), $g^{33}$ (threshold, 33 independent orthogonality constraints from $\binom{12}{2} - 33 = 33$), $g^{64}$ (saturation, $64 = 2^6$ — six binary bits index the 64-state operator space).</p>
+  </div>
+
+  <!-- AXIOM 6 -->
+  <div class="sec">
+    <div class="sec-label">Axiom 6</div>
+    <div class="axiom-block lean">
+      <span class="axiom-tag">Axiom 6 (Phase–Operator Correspondence) / Axioma 6 (Correspondência Fase–Operador) <span class="lean-badge">✓ Lean 4</span></span>
+      <div class="axiom-title">Bijection $\Phi : \{D_1,\ldots,D_{12}\} \to \{O_1,\ldots,O_{12}\}$</div>
+      <div class="axiom-en">There is a bijection $\Phi : \{D_1,\ldots,D_{12}\} \to \{O_1,\ldots,O_{12}\}$ with $\Phi(D_i) = O_i$.</div>
+      <div class="axiom-pt">Bijeção $\Phi : \{D_1,\ldots,D_{12}\} \to \{O_1,\ldots,O_{12}\}$ com $\Phi(D_i) = O_i$.</div>
+      <code class="axiom-formal">Φ(D_i) = O_i  ✓(Lean 4)</code>
+    </div>
+    <p>Every phase has exactly one operator and every operator has exactly one phase. The cycle is rigid. This is the existence claim for Theorem 4.1 (Correspondence) — Axiom 6 asserts it; Chapter 4 proves uniqueness, injectivity, and surjectivity.</p>
+  </div>
+
+  <!-- AXIOM 7 -->
+  <div class="sec">
+    <div class="sec-label">Axiom 7</div>
+    <div class="axiom-block lean">
+      <span class="axiom-tag">Axiom 7 (Recursive Evolution) / Axioma 7 (Evolução Recursiva) <span class="lean-badge">✓ Lean 4</span></span>
+      <div class="axiom-title">The Circuit is Generative, Not Periodic</div>
+      <div class="axiom-en">$R = O_{12} \circ \cdots \circ O_1$ generates the sequence $x_0, x_{12}, x_{24}, \ldots$ converging to a fixed point. $g_{33} = 33$, $g_{64} = 64 = 2^6$.</div>
+      <div class="axiom-pt">$R = O_{12} \circ \cdots \circ O_1$ gera sequência $x_0, x_{12}, \ldots$ convergindo a ponto fixo. $g_{33} = 33$, $g_{64} = 64 = 2^6$.</div>
+      <code class="axiom-formal">R = O₁₂ ∘ ⋯ ∘ O₁,  x_{12k} → x*,  g₃₃ = 33,  g₆₄ = 64  ✓(Lean 4)
+Theorem T1 (Spiral Return): G⁶⁴(x₀) ≠ x₀  — circuit is generative</code>
+    </div>
+    <p>Theorem T1 (Spiral Return, proved in AXLE): $G^{64}(x_0) \neq x_0$ and $G^{128}(x_0) \neq x_0$. The 64-step orbit does not return to its origin. This is the geometric meaning of generativity: each complete circuit moves the system to a structurally identical but distinct configuration. The seed does not repeat — it transforms.</p>
+  </div>
+
+  <!-- AXIOMS 8–9 (dimensional field) -->
+  <div class="sec">
+    <div class="sec-label">Axioms 8–9 (introduced in Ch 2)</div>
+    <div class="axiom-block">
+      <span class="axiom-tag">Axiom 8 (Existence of the Dimensional Field) / Axioma 8</span>
+      <div class="axiom-title">$\Delta : M \to \mathbb{R}^{12}$</div>
+      <div class="axiom-en">There exists a smooth $\Delta : M \to \mathbb{R}^{12}$ with linearly independent components and $|\Delta(x)| = 1$.</div>
+      <code class="axiom-formal">Δ : M → ℝ¹²,  δ₁,…,δ₁₂ linearly independent,  |Δ(x)| = 1</code>
+    </div>
+    <div class="axiom-block">
+      <span class="axiom-tag">Axiom 9 (Temporal Compatibility) / Axioma 9</span>
+      <div class="axiom-title">$\Delta(\varphi_t(x)) = e^{iT^*t}\Delta(x)$</div>
+      <div class="axiom-en">$\Delta(\varphi_t(x)) = e^{iT^*t}\Delta(x)$ in the complexified representation, $T^* = 2\pi$.</div>
+      <code class="axiom-formal">Δ(φ_t(x)) = e^{iT*t} Δ(x),  T* = 2π</code>
+    </div>
+    <p>Axioms 8–9 are stated here for completeness; they are formally introduced in Chapter 2 (The Dimensional Field) and are required for Chapters 3–7.</p>
+  </div>
+
+  <!-- REMARK on g33 / g64 -->
+  <div class="sec">
+    <div class="remark">
+      <span class="remark-tag">Remark — Role of g₃₃ and g₆₄</span>
+      <p>$g_{33} = 33$ counts the independent quadratic constraints on the rank-1 corrections $u_i w_i^T$ arising from the 12-phase cycle: $\binom{12}{2} = 66$ pairs minus 33 sign-symmetric duplicates, leaving 33 independent orthogonality constraints (SH1). $g_{64} = 64 = 2^6$ encodes the binary dimension of the operator-index space (6 bits index 64 states), fixing the ambient representation dimension in the Lean 4 formalization.</p>
+      <p>Neither constant appears directly in the contraction constant $\kappa$ or the orthogonality proof — those depend only on $\varepsilon^* = 1/3$ and $T^* = 2\pi$. Their detailed role in the higher-dimensional formalization is developed in Volume VI.</p>
+    </div>
+  </div>
+
+</div><!-- /chapter-body -->
+
+<div class="ch-nav">
+  <a href="chIV-preface.html">← Ch 0 · Preface</a>
+  <a href="chIV-field.html" class="next">Ch 2 · Dimensional Field →</a>
+</div>
+
+<footer>
+  Chapter 1 · The Seven Axioms &nbsp;·&nbsp; Principia Orthogona Vol IV · GTCT &nbsp;·&nbsp;
+  <a href="https://github.com/TOTOGT/AXLE">AXLE</a> &nbsp;·&nbsp;
+  <a href="https://doi.org/10.5281/zenodo.19117400">doi:10.5281/zenodo.19117400</a> &nbsp;·&nbsp;
+  G6 LLC · Pablo Nogueira Grossi · Newark NJ · 2026
+</footer>
+
+</body>
+</html>

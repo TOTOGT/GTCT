@@ -1,57 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Higher Dimensions</title>
-  <script>
-    MathJax = {
-      tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] },
-      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
-  <style>
-    body { font-family: Georgia, serif; max-width: 760px; margin: 3rem auto; padding: 0 1.5rem; color: #1a1a1a; line-height: 1.7; }
-    h1 { font-size: 2rem; border-bottom: 2px solid #333; padding-bottom: .4rem; }
-    h2 { font-size: 1.1rem; color: #555; font-weight: normal; margin-top: -.5rem; }
-    nav ol { padding-left: 1.4rem; }
-    nav li { margin: .5rem 0; }
-    nav a { color: #2a5fa8; text-decoration: none; }
-    nav a:hover { text-decoration: underline; }
-    .status { font-size: .85rem; color: #888; margin-left: .4rem; }
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Principia Orthogona · Vol IV — GTCT · Table of Contents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;700&family=Cinzel:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{--void:#04040a;--gold:#c9a84c;--gold2:#e8c96a;--teal:#2dd4bf;--text:#e8e4d8;--muted:#6b6757;--dim:#3a3828;--border:rgba(201,168,76,0.12);--border2:rgba(201,168,76,0.28);--violet:#c084fc;--green:#22c55e;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Cormorant Garamond',serif;background:var(--void);color:var(--text);min-height:100vh;font-size:17px;line-height:1.8;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:999;}
+nav.top{position:fixed;top:0;width:100%;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:0.8rem 3rem;border-bottom:1px solid var(--border);background:rgba(4,4,10,0.94);backdrop-filter:blur(16px);}
+.nav-mark{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);text-decoration:none;}
+.nav-r{display:flex;gap:1.5rem;}.nav-r a{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}.nav-r a:hover{color:var(--gold);}
+.hero{padding:7rem 3rem 3rem;max-width:960px;margin:0 auto;text-align:center;}
+.vol-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;}
+.series-title{font-family:'Cinzel',serif;font-size:clamp(1.6rem,4vw,3rem);font-weight:600;color:var(--gold);margin-bottom:0.4rem;letter-spacing:0.05em;}
+.vol-sub{font-style:italic;color:var(--muted);font-size:1rem;margin-bottom:0.5rem;}
+.isbn-line{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--dim);margin-bottom:1.5rem;}
+.gold-rule{width:40px;height:2px;background:var(--gold);margin:1.5rem auto;}
+.tagline{max-width:600px;margin:0 auto;font-size:1rem;color:rgba(232,228,216,0.65);line-height:1.85;font-style:italic;}
+.main{max-width:960px;margin:0 auto;padding:2rem 3rem 6rem;}
+.vol-section{margin-bottom:3.5rem;}
+.sec-header{display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--border);padding-bottom:0.6rem;margin-bottom:1.2rem;}
+.sec-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold2);font-weight:400;}
+.sec-sub{font-family:'JetBrains Mono',monospace;font-size:0.56rem;color:var(--muted);letter-spacing:0.08em;}
+.ch-list{display:flex;flex-direction:column;gap:2px;}
+.ch-row{display:flex;align-items:center;gap:1.2rem;text-decoration:none;color:inherit;padding:0.75rem 1rem;background:rgba(13,14,22,0.5);border:1px solid transparent;transition:border-color 0.2s,background 0.2s;}
+.ch-row:hover{border-color:var(--border2);background:rgba(201,168,76,0.04);}
+.ch-n{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--muted);min-width:60px;flex-shrink:0;}
+.ch-info{flex:1;}
+.ch-info strong{display:block;font-size:0.96rem;color:var(--text);font-weight:400;}
+.ch-info .sub{font-size:0.76rem;color:var(--muted);font-style:italic;margin-top:1px;}
+.badge{font-family:'JetBrains Mono',monospace;font-size:0.56rem;padding:0.12rem 0.45rem;border-radius:2px;white-space:nowrap;flex-shrink:0;}
+.b-lean{color:var(--green);border:1px solid rgba(34,197,94,0.25);}
+.b-sh{color:var(--violet);border:1px solid rgba(192,132,252,0.25);}
+.b-prose{color:var(--teal);border:1px solid rgba(45,212,191,0.25);}
+.b-ref{color:var(--muted);border:1px solid var(--border);}
+.b-pdf{color:var(--gold);border:1px solid var(--border2);}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:2.5rem 0;}
+.stat{background:rgba(13,14,22,0.8);padding:1.2rem;text-align:center;}
+.stat-n{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--gold);display:block;line-height:1;}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:0.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;display:block;}
+.series-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1px;background:var(--border);margin:1.5rem 0;}
+.series-card{background:rgba(13,14,22,0.8);padding:1rem 1.2rem;}
+.s-label{font-family:'JetBrains Mono',monospace;font-size:0.54rem;letter-spacing:0.12em;color:var(--teal);text-transform:uppercase;display:block;margin-bottom:0.3rem;}
+.s-title{font-family:'Cinzel',serif;font-size:0.88rem;color:var(--gold2);margin-bottom:0.2rem;}
+.s-sub{font-size:0.76rem;color:var(--muted);}
+.s-current{background:rgba(201,168,76,0.06);}
+footer{text-align:center;padding:2rem;font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.08em;color:var(--dim);border-top:1px solid var(--border);}footer a{color:var(--gold);text-decoration:none;}
+@media(max-width:700px){nav.top{padding:0.8rem 1rem;}.hero,.main{padding-left:1.2rem;padding-right:1.2rem;}.stats{grid-template-columns:repeat(2,1fr);}.sec-sub{display:none;}}
+</style>
 </head>
 <body>
-
-<h1>Higher Dimensions</h1>
-<h2>From the ODE upward — through 3D, 4D, 5D, and into 5D + <em>t</em></h2>
-
-<nav>
-  <ol start="0">
-    <li><a href="ch00-student-edition.html">Chapter 0 — Student Edition: How to Read This Book</a></li>
-    <li><a href="ch01.html">Chapter 1 — 1D: The Fermion Seed ($\psi^2 = 0$)</a></li>
-    <li><a href="ch02.html">Chapter 2 — 2D+t: Extended Phase Space</a></li>
-    <li><a href="ch03.html">Chapter 3 — 3D: The Contact 3-Manifold</a></li>
-    <li><a href="ch04.html">Chapter 4 — 4D: The Hypercube / Tesseract</a></li>
-    <li><a href="ch05.html">Chapter 5 — 5D: OPERA SATOR / Jet Space</a></li>
-    <li><a href="ch06.html">Chapter 6 — 5D+t: 666 · The 111 Square / GTCT</a></li>
-    <li><a href="ch07.html">Chapter 7 — The Crystalline Return</a></li>
-    <li><a href="ch08.html">Chapter 8 — The Axiomatic Turn</a></li>
-    <li><a href="ch09.html">Chapter 9 — φ · The Subcritical Approach</a></li>
-    <li><a href="ch10.html">Chapter 10 — Helical Attractors on Contact 3-Manifolds</a></li>
-    <li><a href="ch11-catgt.html">Chapter 11 — CatGT: The Helical Selectivity Principle</a></li>
-    <li><a href="chTau-tartaruga.html">Chapter τ — The Cosmic Tortoise / A Tartaruga Cósmica</a></li>
-    <li><a href="gomc-opus.html">GOMC Opus — CatGT + Plasma Companion (complete pack)</a></li>
-    <li><a href="chE-gtct.html">Chapter E — GTCT for Everyone (9 axioms · 12 operators · 4 theorems)</a></li>
-    <li><a href="ch-faraday.html">Chapter — Faraday: The Hidden Geometry of EM Forces</a></li>
-    <li><a href="GTCT_2026_v3.pdf">GTCT 2026 v3 — SBM Bienal paper (PDF)</a></li>
-    <li><a href="Faraday_EM_dm3_Grossi2026.pdf">Faraday EM + dm³ — Grossi 2026 (PDF)</a></li>
-    <li><a href="knacci_spine_v4.pdf">k-nacci Spine v4 (PDF)</a></li>
-    <li><a href="zeolite_selectivity_final_v2_1.pdf">Zeolite Selectivity (PDF)</a></li>
-    <!-- chapters added here as written -->
-  </ol>
+<nav class="top">
+  <a href="hub.html" class="nav-mark">Principia Orthogona</a>
+  <div class="nav-r">
+    <a href="hub.html">Hub</a>
+    <a href="chIV-axioms.html">Vol IV Theory</a>
+    <a href="ch01.html">Higher Dim.</a>
+    <a href="https://github.com/TOTOGT/AXLE" target="_blank">AXLE ↗</a>
+  </div>
 </nav>
 
+<div class="hero">
+  <div class="vol-label">Principia Orthogona · Book 4</div>
+  <h1 class="series-title">GTCT</h1>
+  <div class="vol-sub">Generative Temporal Contact Theory · Teoria de Contato Temporal Generativa</div>
+  <div class="isbn-line">Vol IV ISBN 979-8-9954416-8-7 · Vol V ISBN 979-8-9954416-6-3 · doi:10.5281/zenodo.19117400</div>
+  <div class="gold-rule"></div>
+  <div class="tagline">"The lemniscata is the analemma and the analemma is the lemniscata." — Newark, NJ, 2000</div>
+</div>
+
+<div class="main">
+  <div class="stats">
+    <div class="stat"><span class="stat-n">9</span><span class="stat-l">Axioms · Lean 4</span></div>
+    <div class="stat"><span class="stat-n">12</span><span class="stat-l">Operators</span></div>
+    <div class="stat"><span class="stat-n">0</span><span class="stat-l">Sorry in Chain.lean</span></div>
+    <div class="stat"><span class="stat-n">x*</span><span class="stat-l">Unique Fixed Point</span></div>
+  </div>
+
+  <!-- FORMAL THEORY -->
+  <div class="vol-section">
+    <div class="sec-header">
+      <span class="sec-title">Vol IV · Formal Theory</span>
+      <span class="sec-sub">G = U∘F∘K∘C · Contact geometry · 34 pp · Bilingual EN/PT · ISBN 979-8-9954416-8-7</span>
+    </div>
+    <div class="ch-list">
+      <a href="chIV-preface.html" class="ch-row"><span class="ch-n">Ch 0</span><div class="ch-info"><strong>Preface — Lemniscata &amp; Analemma</strong><span class="sub">Origin story · two parental lessons · 26 years of ESL in Newark</span></div><span class="badge b-prose">Prose</span></a>
+      <a href="chIV-axioms.html" class="ch-row"><span class="ch-n">Ch 1</span><div class="ch-info"><strong>The Seven Axioms</strong><span class="sub">Contact structure · G-chain · Temporal field · I₁I₂I₃ triad · 12-phase · Correspondence · Recursion</span></div><span class="badge b-lean">✓ Lean 4</span></a>
+      <a href="chIV-field.html" class="ch-row"><span class="ch-n">Ch 2</span><div class="ch-info"><strong>The Dimensional Field Δ : M → ℝ¹²</strong><span class="sub">Axioms 8–9 · unit sphere S¹¹ · temporal compatibility T* = 2π · 12 phase subspaces</span></div><span class="badge b-lean">✓ Lean 4</span></a>
+      <a href="chIV-operators.html" class="ch-row"><span class="ch-n">Ch 3</span><div class="ch-info"><strong>Dimensional Operators</strong><span class="sub">Aᵢ = Pⁱ + uᵢwᵢᵀ · rank-1 corrections bounded by ε*=1/3 · σ_min ≥ 2/3 · full 12-operator table</span></div><span class="badge b-lean">✓ Lean 4</span></a>
+      <a href="chIV-correspondence.html" class="ch-row"><span class="ch-n">Ch 4</span><div class="ch-info"><strong>The Correspondence Theorem</strong><span class="sub">Unique bijection Φ : {D₁…D₁₂} ↔ {O₁…O₁₂} · the cycle is rigid · four-step proof</span></div><span class="badge b-lean">✓ Lean 4</span></a>
+      <a href="chIV-orthogonality.html" class="ch-row"><span class="ch-n">Ch 5</span><div class="ch-info"><strong>The Orthogonality Theorem [v2]</strong><span class="sub">⟨Δ_⊥(Oᵢ), Δ_⊥(Oⱼ)⟩ = 0 for i≠j · Structural Hypothesis SH · v3 proof</span></div><span class="badge b-sh">✓ Lean 4 · SH</span></a>
+      <a href="chIV-recursion.html" class="ch-row"><span class="ch-n">Ch 6</span><div class="ch-info"><strong>The Recursion Theorem [v2]</strong><span class="sub">Pythagorean contraction κ &lt; 1 · Banach fixed point · Spiral Return T1 · 0 sorry</span></div><span class="badge b-sh">✓ Lean 4 · SH</span></a>
+      <a href="chIV-emergence.html" class="ch-row"><span class="ch-n">Ch 7</span><div class="ch-info"><strong>Emergence as Fixed Point [v2]</strong><span class="sub">E(x*)=x* unique · Eⁿ(x₀)→x* geometrically · identity as dynamic invariant · g₃₃ g₆₄</span></div><span class="badge b-sh">✓ Lean 4 · SH</span></a>
+      <a href="chIV-time.html" class="ch-row"><span class="ch-n">Ch 8</span><div class="ch-info"><strong>The Nature of Time in GTCT</strong><span class="sub">9 readings: constraint · generator · memory · resolver · identity · irreversibility · bridge · present · emergence</span></div><span class="badge b-prose">Interpretive</span></a>
+      <a href="chIV-appendices.html" class="ch-row"><span class="ch-n">App A–F</span><div class="ch-info"><strong>Appendices</strong><span class="sub">Notation · Operator tables · 12-phase diagram · Brouwer &amp; Banach · Glossary EN/PT · Correspondence table</span></div><span class="badge b-ref">Reference</span></a>
+    </div>
+  </div>
+
+  <!-- HIGHER DIMENSIONS -->
+  <div class="vol-section">
+    <div class="sec-header">
+      <span class="sec-title">Higher Dimensions Arc</span>
+      <span class="sec-sub">1D ψ²=0 → 2D+t → 3D contact → 4D tesseract → 5D jet space → 5D+t GTCT closes</span>
+    </div>
+    <div class="ch-list">
+      <a href="ch00-student-edition.html" class="ch-row"><span class="ch-n">Ch 0</span><div class="ch-info"><strong>Student Edition — How to Read</strong><span class="sub">Bilingual EN/PT · mathematical reading guide · three-pass structure</span></div></a>
+      <a href="ch01.html" class="ch-row"><span class="ch-n">Ch 1</span><div class="ch-info"><strong>The Fermion Seed — ψ² = 0</strong><span class="sub">1D · six directions of potential · the decision as C · pre-braid</span></div></a>
+      <a href="ch02.html" class="ch-row"><span class="ch-n">Ch 2</span><div class="ch-info"><strong>2D+t — Extended Phase Space</strong><span class="sub">α = dy − f dx · Darboux · phase plane lifts to helix in 3D</span></div></a>
+      <a href="ch03.html" class="ch-row"><span class="ch-n">Ch 3</span><div class="ch-info"><strong>Contact 3-Manifold + S³</strong><span class="sub">dm³ ODE · Theorem 3.2 · Hopf fibration · §3.9 T*=2π forced</span></div></a>
+      <a href="ch04.html" class="ch-row"><span class="ch-n">Ch 4</span><div class="ch-info"><strong>The Tesseract</strong><span class="sub">4D · S³ as hypersurface in ℝ⁴ · symplectisation · holomorphic curves</span></div></a>
+      <a href="ch05.html" class="ch-row"><span class="ch-n">Ch 5</span><div class="ch-info"><strong>OPERA SATOR — Jet Space J¹(ℝ,ℝ²)</strong><span class="sub">5D · palindrome square as operator map · five coordinates = GTCT operators</span></div></a>
+      <a href="ch06.html" class="ch-row"><span class="ch-n">Ch 6</span><div class="ch-info"><strong>666 · The 111 Square</strong><span class="sub">5D+t · 6×6 magic square · time as sixth slot · 666 = T(36)</span></div></a>
+      <a href="ch07.html" class="ch-row"><span class="ch-n">Ch 7</span><div class="ch-info"><strong>The Crystalline Return</strong><span class="sub">Wigner crystal · moiré · E = kT·ln(Ω)</span></div></a>
+      <a href="ch08.html" class="ch-row"><span class="ch-n">Ch 8</span><div class="ch-info"><strong>The Axiomatic Turn</strong><span class="sub">Γ ⊢ φ · formal proof as U · Lean 4 and the sorry-free paper</span></div></a>
+      <a href="ch09.html" class="ch-row"><span class="ch-n">Ch 9</span><div class="ch-info"><strong>φ — The Subcritical Approach</strong><span class="sub">Golden ratio · Fibonacci · fold frozen at q* &lt; 1</span></div></a>
+      <a href="ch10.html" class="ch-row"><span class="ch-n">Ch 10</span><div class="ch-info"><strong>Helical Attractors on Contact 3-Manifolds</strong><span class="sub">dm³ ODE · r*≈0.773 basin · SBM Bienal paper</span></div></a>
+    </div>
+  </div>
+
+  <!-- EXTENDED -->
+  <div class="vol-section">
+    <div class="sec-header">
+      <span class="sec-title">Extended Chapters &amp; PDFs</span>
+    </div>
+    <div class="ch-list">
+      <a href="ch11-catgt.html" class="ch-row"><span class="ch-n">Ch 11</span><div class="ch-info"><strong>CatGT — Catalytic Generative Theory</strong></div></a>
+      <a href="chTau-tartaruga.html" class="ch-row"><span class="ch-n">Ch τ</span><div class="ch-info"><strong>The Cosmic Tortoise / Tartaruga Cósmica</strong><span class="sub">τ=2 · embodiment threshold · bilingual</span></div></a>
+      <a href="ch-faraday.html" class="ch-row"><span class="ch-n">Faraday</span><div class="ch-info"><strong>Hidden Geometry of EM Forces</strong></div></a>
+      <a href="chE-gtct.html" class="ch-row"><span class="ch-n">Ch E</span><div class="ch-info"><strong>GTCT for Everyone</strong><span class="sub">9 axioms · 12 operators · 4 theorems · time as 5 properties</span></div></a>
+      <a href="gomc-opus.html" class="ch-row"><span class="ch-n">GOMC</span><div class="ch-info"><strong>GOMC Opus — CatGT + Plasma + Coherence Bridge</strong></div></a>
+      <a href="GTCT_2026_v3.pdf" class="ch-row"><span class="ch-n">PDF</span><div class="ch-info"><strong>GTCT 2026 v3 — SBM Bienal paper</strong></div><span class="badge b-pdf">PDF</span></a>
+      <a href="Faraday_EM_dm3_Grossi2026.pdf" class="ch-row"><span class="ch-n">PDF</span><div class="ch-info"><strong>Faraday EM + dm³ — Grossi 2026</strong></div><span class="badge b-pdf">PDF</span></a>
+      <a href="knacci_spine_v4.pdf" class="ch-row"><span class="ch-n">PDF</span><div class="ch-info"><strong>k-nacci Spine v4</strong></div><span class="badge b-pdf">PDF</span></a>
+      <a href="zeolite_selectivity_final_v2_1.pdf" class="ch-row"><span class="ch-n">PDF</span><div class="ch-info"><strong>Zeolite Selectivity</strong></div><span class="badge b-pdf">PDF</span></a>
+    </div>
+  </div>
+
+  <!-- SERIES -->
+  <div class="vol-section">
+    <div class="sec-header"><span class="sec-title">The Principia Orthogona Series</span></div>
+    <div class="series-row">
+      <div class="series-card"><span class="s-label">Vol I</span><div class="s-title">GOMC</div><div class="s-sub">Operator algebra · published</div></div>
+      <div class="series-card"><span class="s-label">Vol II</span><div class="s-title">TOGT</div><div class="s-sub">Contact geometry · published</div></div>
+      <div class="series-card"><span class="s-label">Vol III</span><div class="s-title">The Mini-Beast</div><div class="s-sub">dm³ · 121 HTML chapters</div></div>
+      <div class="series-card s-current"><span class="s-label">Vol IV ← here</span><div class="s-title">GTCT</div><div class="s-sub">Dimensional theory · this repo</div></div>
+      <div class="series-card"><span class="s-label">Vol V</span><div class="s-title">Dimensional Theory</div><div class="s-sub">Revised · v8 final submission</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Principia Orthogona · Vol IV · GTCT &nbsp;·&nbsp;
+  <a href="https://github.com/TOTOGT/AXLE" target="_blank">AXLE on GitHub</a> &nbsp;·&nbsp;
+  <a href="https://doi.org/10.5281/zenodo.19117400" target="_blank">doi:10.5281/zenodo.19117400</a> &nbsp;·&nbsp;
+  ISBN 979-8-9954416-8-7 (Print) · -9-4 (eBook) &nbsp;·&nbsp;
+  G6 LLC · Pablo Nogueira Grossi · Newark NJ · 2026
+</footer>
 </body>
 </html>

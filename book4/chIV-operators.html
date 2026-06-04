@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 3 · Dimensional Operators · GTCT Vol IV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;700&family=Cinzel:wght@400;600;900&display=swap" rel="stylesheet">
+<script>MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]]},options:{skipHtmlTags:["script","noscript","style","textarea","pre"]}};</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+:root{--void:#04040a;--gold:#c9a84c;--gold2:#e8c96a;--teal:#2dd4bf;--text:#e8e4d8;--muted:#6b6757;--dim:#3a3828;--border:rgba(201,168,76,0.12);--border2:rgba(201,168,76,0.28);--violet:#c084fc;--green:#22c55e;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{font-family:'Cormorant Garamond',serif;background:var(--void);color:var(--text);min-height:100vh;font-size:18px;line-height:1.85;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:999;}
+nav{position:fixed;top:0;width:100%;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:0.8rem 3rem;border-bottom:1px solid var(--border);background:rgba(4,4,10,0.92);backdrop-filter:blur(16px);}
+.nav-mark{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.25em;color:var(--gold);text-decoration:none;}
+.nav-links{display:flex;gap:1.2rem;flex-wrap:wrap;}.nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.chapter-hero{padding:7rem 3rem 3rem;max-width:900px;margin:0 auto;}
+.ch-vol{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:0.8rem;}
+.ch-num{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--muted);margin-bottom:0.4rem;}
+.ch-title{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.8rem);font-weight:600;line-height:1.05;color:var(--gold);margin-bottom:0.5rem;}
+.ch-pt{font-style:italic;color:var(--muted);font-size:1.05rem;margin-bottom:1.2rem;}
+.ch-lead{font-size:1rem;color:rgba(232,228,216,0.7);max-width:660px;line-height:1.85;border-left:2px solid var(--border2);padding-left:1.5rem;}
+.gold-rule{width:40px;height:2px;background:var(--gold);margin:2rem 0;}
+.chapter-body{max-width:820px;margin:0 auto;padding:0 3rem 6rem;}
+.sec{margin-bottom:3rem;}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+p{margin-bottom:1rem;color:rgba(232,228,216,0.82);}
+.block{background:rgba(13,14,22,0.8);border:1px solid var(--border);border-left:3px solid var(--gold);padding:1.4rem 1.8rem;margin:1.5rem 0;}
+.block.teal{border-left-color:var(--teal);}.block.violet{border-left-color:var(--violet);}.block.green{border-left-color:var(--green);}
+.block-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;}
+.block.teal .block-tag{color:var(--teal);}.block.violet .block-tag{color:var(--violet);}.block.green .block-tag{color:var(--green);}
+.block-title{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--gold2);margin-bottom:0.6rem;}
+.block.violet .block-title{color:var(--violet);}
+.block-en{color:var(--text);margin-bottom:0.4rem;}
+.block-pt{font-style:italic;color:var(--muted);font-size:0.9rem;margin-bottom:0.7rem;}
+.formal{font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:rgba(0,0,0,0.35);padding:0.5rem 1rem;color:var(--teal);margin-top:0.6rem;display:block;overflow-x:auto;line-height:1.7;}
+.lean-badge{font-family:'JetBrains Mono',monospace;font-size:0.56rem;color:var(--green);border:1px solid rgba(34,197,94,0.3);padding:0.1rem 0.4rem;}
+.proof{background:rgba(192,132,252,0.04);border:1px solid rgba(192,132,252,0.15);padding:1.2rem 1.5rem;margin:1rem 0;}
+.proof-tag{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--violet);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.6rem;display:block;}
+.qed{display:block;text-align:right;color:var(--gold);font-size:1.1rem;margin-top:0.5rem;}
+.remark{background:rgba(201,168,76,0.04);border:1px solid var(--border);padding:1.2rem 1.5rem;margin:1.5rem 0;}
+.remark-tag{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.5rem;display:block;text-transform:uppercase;}
+.time-sec{border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem;}
+.time-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;color:var(--teal);margin-bottom:0.6rem;display:block;text-transform:uppercase;}
+.time-title{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--gold2);margin-bottom:0.8rem;}
+.time-title-pt{font-style:italic;color:var(--muted);font-size:0.95rem;margin-bottom:0.8rem;}
+.table-wrap{overflow-x:auto;margin:1.5rem 0;}
+table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:0.72rem;}
+th{background:rgba(13,14,22,0.9);color:var(--gold);padding:0.5rem 0.7rem;border:1px solid var(--border);text-align:left;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;}
+td{padding:0.45rem 0.7rem;border:1px solid var(--border);color:rgba(232,228,216,0.75);vertical-align:top;}
+.ch-nav{display:flex;justify-content:space-between;padding:2rem 3rem;border-top:1px solid var(--border);}
+.ch-nav a{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;color:var(--muted);text-decoration:none;transition:color 0.2s;}.ch-nav a:hover{color:var(--gold);}
+.ch-nav .next{text-align:right;}
+footer{text-align:center;padding:2rem;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.08em;color:var(--dim);border-top:1px solid var(--border);}footer a{color:var(--gold);text-decoration:none;}
+@media(max-width:700px){nav{padding:0.8rem 1rem;}.chapter-hero,.chapter-body{padding-left:1.2rem;padding-right:1.2rem;}.ch-nav{padding:1.5rem 1.2rem;}}
+
+/* ── Overflow: wide equations scroll inside boxes ── */
+.proof, .block, .axiom-block, .remark, .dep-chain, .time-sec {
+  overflow-x: auto;
+}
+mjx-container {
+  overflow-x: auto;
+  max-width: 100%;
+  display: block !important;
+}
+.MJX-TEX { max-width: 100%; }
+.block-math, .formal, .axiom-formal {
+  overflow-x: auto;
+  white-space: pre;
+  word-break: normal;
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-mark">Principia Orthogona · Vol IV</a>
+  <div class="nav-links">
+    <a href="chIV-preface.html">Ch 0</a>
+    <a href="chIV-axioms.html">Ch 1</a>
+    <a href="chIV-field.html">Ch 2</a>
+    <a href="chIV-operators.html" class="active">Ch 3</a>
+    <a href="chIV-correspondence.html">Ch 4</a>
+    <a href="chIV-orthogonality.html">Ch 5</a>
+    <a href="chIV-recursion.html">Ch 6</a>
+    <a href="chIV-emergence.html">Ch 7</a>
+    <a href="chIV-time.html">Ch 8 · Time</a>
+    <a href="chIV-appendices.html">App</a></div>
+</nav>
+<div class="chapter-hero">
+  <div class="ch-vol">Vol IV · Generative Temporal Contact Theory</div>
+  <div class="ch-num">Chapter 3 — Capítulo 3</div>
+  <h1 class="ch-title">Dimensional Operators</h1>
+  <div class="ch-pt">Operadores Dimensionais</div>
+  <div class="gold-rule"></div>
+  <div class="ch-lead">Formal properties of the twelve operators $O_i$: smoothness, phase advance, operator matrices $A_i = P^i + u_i w_i^T$, and the cycle map $R$. The rank-1 corrections are the mechanism; the permutation is the skeleton.</div>
+</div>
+<div class="chapter-body">
+
+  <div class="sec">
+    <div class="sec-label">Overview</div>
+    <p>Each dimensional operator $O_i$ is a smooth map that advances the system from phase $D_i$ to $D_{i+1 mod 12}$. Its action on the dimensional field is given by a $12	imes12$ matrix $A_i = P^i + u_i w_i^T$: a permutation matrix (the base structure) plus a rank-1 correction (the phase-specific adjustment). The rank-1 correction is what allows each operator to be distinct while sharing the permutation skeleton.</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">Definitions 3.1–3.6</div>
+    <div class="block">
+      <span class="block-tag">Definition 3.1 — Dimensional Operator</span>
+      <div class="block-title">$O_i : D_i 	o D_{i+1 mod 12}$</div>
+      <div class="block-en">(i) $O_i$ maps $D_i$ into $D_{i+1 mod 12}$; (ii) $\Delta(O_i(x)) = A_i \Delta(x)$; (iii) $|\Delta(O_i(x))| = |\Delta(x)|$.</div>
+      <div class="block-pt">(i) $O_i$ mapeia $D_i$ em $D_{i+1 mod 12}$; (ii) $\Delta(O_i(x)) = A_i \Delta(x)$; (iii) norm-preserving.</div>
+      <code class="formal">O_i(D_i) ⊆ D_{i+1 mod 12}   Δ(O_i(x)) = A_i Δ(x)   |A_i Δ(x)| = |Δ(x)|</code>
+    </div>
+    <div class="block">
+      <span class="block-tag">Definition 3.2 — Phase Advance</span>
+      <div class="block-en">$O_i(D_i) \subseteq D_{i+1 mod 12}$. Each operator advances the phase by exactly one step.</div>
+      <code class="formal">O_i(D_i) ⊆ D_{i+1 mod 12}</code>
+    </div>
+    <div class="block">
+      <span class="block-tag">Definition 3.3 — Operator Matrix</span>
+      <div class="block-en">$A_i = P^i + u_i w_i^T$ where $P$ is the $12	imes12$ cyclic permutation matrix, $u_i, w_i \in \mathbb{R}^{12}$ with $\|u_i w_i^T\| \leq arepsilon^* = 1/3$. The bound on the rank-1 correction is the stability radius in matrix form.</div>
+      <code class="formal">A_i = P^i + u_i w_i^T,   ‖u_i w_i^T‖ ≤ ε* = 1/3</code>
+    </div>
+    <div class="block">
+      <span class="block-tag">Definitions 3.4–3.6 — Cycle, Cycle Map, Cumulative Matrix</span>
+      <div class="block-en">A <em>cycle</em> is a sequence $(x, O_1(x), O_2(O_1(x)), \ldots)$ of 12 steps returning to phase $D_1$. The <em>cycle map</em> $R = O_{12} \circ \cdots \circ O_1$. The <em>cumulative matrix</em> $A^{(n)} = A_n \cdots A_1$ tracks the composed linear action over $n$ steps.</div>
+      <code class="formal">R = O₁₂ ∘ ⋯ ∘ O₁   (12-step cycle map = Emergence operator E)
+A^(n) = Aₙ ⋯ A₁   (cumulative matrix action)</code>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">The 12 Operators — Full Table</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Idx</th><th>Name</th><th>Base</th><th>Invariant</th><th>Source → Target</th><th>‖u_i w_i^T‖</th><th>σ_min(A_i⊥)</th></tr></thead>
+        <tbody>
+          <tr><td>O₁</td><td>Compression–Orthogonality</td><td>C</td><td>I₁</td><td>D₁ → D₂</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₂</td><td>Compression–Nilpotency</td><td>C</td><td>I₂</td><td>D₂ → D₃</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₃</td><td>Compression–Spectral</td><td>C</td><td>I₃</td><td>D₃ → D₄</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₄</td><td>Curvature–Orthogonality</td><td>K</td><td>I₁</td><td>D₄ → D₅</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₅</td><td>Curvature–Nilpotency</td><td>K</td><td>I₂</td><td>D₅ → D₆</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₆</td><td>Curvature–Spectral</td><td>K</td><td>I₃</td><td>D₆ → D₇</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₇</td><td>Fold–Orthogonality</td><td>F</td><td>I₁</td><td>D₇ → D₈</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₈</td><td>Fold–Nilpotency</td><td>F</td><td>I₂</td><td>D₈ → D₉</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₉</td><td>Fold–Spectral</td><td>F</td><td>I₃</td><td>D₉ → D₁₀</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₁₀</td><td>Unfold–Orthogonality</td><td>U</td><td>I₁</td><td>D₁₀ → D₁₁</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₁₁</td><td>Unfold–Nilpotency</td><td>U</td><td>I₂</td><td>D₁₁ → D₁₂</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+          <tr><td>O₁₂</td><td>Unfold–Spectral</td><td>U</td><td>I₃</td><td>D₁₂ → D₁</td><td>≤ ε*</td><td>≥ 2/3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The bound $\sigma_{\min}(A_i^\perp) \geq 2/3$ is the minimum singular value of $A_i$ restricted to the perpendicular complement. This lower bound, together with the rank-1 norm bound $\|u_i w_i^T\| \leq arepsilon^* = 1/3$, is the key quantitative input for the Orthogonality Theorem (Chapter 5) and the Pythagorean contraction estimate (Chapter 6).</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-label">Why Rank-1 Corrections</div>
+    <p>The permutation matrix $P^i$ alone would make all twelve operators identical up to relabelling — the system would be purely cyclic with no ability to distinguish phases. The rank-1 correction $u_i w_i^T$ is the minimal perturbation that breaks this symmetry while preserving norm: $\|A_i \Delta(x)\| = \|\Delta(x)\|$ for all $x$. Rank-1 means one degree of freedom per operator — the simplest possible non-trivial perturbation. This is why GTCT has a constructive realization: the corrections are explicit, computable, and bounded by $arepsilon^* = 1/3$.</p>
+  </div>
+
+</div>
+<div class="ch-nav">
+  <a href="chIV-field.html">← Ch 2 · Dimensional Field</a>
+  <a href="chIV-correspondence.html" class="next">Ch 4 · Correspondence →</a>
+</div>
+<footer>
+  Chapter 3 — Capítulo 3 · Dimensional Operators &nbsp;·&nbsp; Principia Orthogona Vol IV &nbsp;·&nbsp;
+  <a href="https://github.com/TOTOGT/AXLE">AXLE</a> &nbsp;·&nbsp;
+  <a href="https://doi.org/10.5281/zenodo.19117400">doi:10.5281/zenodo.19117400</a> &nbsp;·&nbsp;
+  G6 LLC · Pablo Nogueira Grossi · 2026
+</footer>
+</body>
+</html>
