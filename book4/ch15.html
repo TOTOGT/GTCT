@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cap 4 · Teorema de Correspondência · GTCT Vol IV</title>
+<title>Cap 15 · A Virada Complexa · GTCT Vol IV · Principia Orthogona</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -86,15 +86,8 @@ footer a{color:var(--gold);text-decoration:none;}
   <span class="nav-series">Principia Orthogona &middot; Vol IV &middot; GTCT &middot; G = U &#8728; F &#8728; K &#8728; C</span>
   <div class="nav-controls">
     <div class="nav-chapter-links">
-      <a href="chIV-preface.html">Abertura</a>
-      <a href="chIV-axioms.html">Cap 1</a>
-      <a href="chIV-field.html">Cap 2</a>
-      <a href="chIV-operators.html">Cap 3</a>
-      <a href="chIV-correspondence.html" class="cur">Cap 4</a>
-      <a href="chIV-orthogonality.html">Cap 5</a>
-      <a href="chIV-recursion.html">Cap 6</a>
-      <a href="chIV-emergence.html">Cap 7</a>
-      <a href="chIV-time.html">Cap 8</a>
+      <a href="../ch14-axle.html">Cap 14</a>
+      <a href="ch15.html" class="cur">Cap 15</a>
     </div>
     <div class="lang-picker">
       <label>L&#205;NGUA</label>
@@ -106,20 +99,20 @@ footer a{color:var(--gold);text-decoration:none;}
   </div>
 </nav>
 <section class="hero">
-  <div class="hero-tag">Principia Orthogona · Vol IV · GTCT · Capítulo 4 · G6 LLC · Newark NJ · 2026</div>
-  <h1>Teorema de Correspondência</h1>
-  <p class="hero-pt">A bijeção $\Phi:\{D_i\}\to\{O_i\}$ é única: $\Phi(D_i)=O_i$ para todo $i$</p>
-  <p class="hero-en">The bijection $\Phi:\{D_i\}\to\{O_i\}$ is unique: $\Phi(D_i)=O_i$ for all $i$</p>
+  <div class="hero-tag">Principia Orthogona · Vol IV · GTCT · Cap&iacute;tulo 15 · G6 LLC · Newark NJ · 2026</div>
+  <h1>A Virada Complexa</h1>
+  <p class="hero-pt">O comutador $\Psi=[F,T]$, a estrutura quase-complexa $J=\Psi/\lambda$, e a ascensão a ℂ</p>
+  <p class="hero-en">Commutator $\Psi=[F,T]$, almost-complex structure $J=\Psi/\lambda$, and the turn to ℂ</p>
   <div class="lang-badge">
     <span class="primary">&#127463;&#127479; Portugu&#234;s &mdash; idioma prim&#225;rio</span>
     <span class="secondary">&#127482;&#127480; English &mdash; tradu&#231;&#227;o dispon&#237;vel &rarr;</span>
   </div>
-  <div class="hero-eq">$\Phi(D_i)=O_i$ &middot; unicidade por rigidez de fase &middot; &#10003; Lean 4</div>
+  <div class="hero-eq">$\Psi=[F,T]$ &middot; $\Psi^2=-\lambda^2\cdot\mathrm{id}$ &middot; $J^2=-\mathrm{id}$ &middot; Cayley-Dickson Rung IV</div>
 </section>
 <div class="page">
   <div class="chapter-header">
-    <span class="ch-num">Volume IV &middot; GTCT &middot; Cap&iacute;tulo 4</span>
-    <h2>Teorema de Correspondência &middot; Correspondence Theorem</h2>
+    <span class="ch-num">Volume IV &middot; GTCT &middot; Cap&iacute;tulo 15</span>
+    <h2>A Virada Complexa &middot; The Complex Turn</h2>
   </div>
   <div class="bilingual" id="bilingualGrid">
     <div class="col-pt" id="colA">
@@ -135,11 +128,11 @@ footer a{color:var(--gold);text-decoration:none;}
   </div>
 </div>
 <nav class="ch-nav">
-  <a href= + prev_href + >&#8592; Cap 3 &middot; Operadores</a>
-  <a href= + next_href + >Cap 5 &middot; Ortogonalidade &#8594;</a>
+  <a href="../ch14-axle.html">&#8592; Cap 14 &middot; AXLE</a>
+  <a href="chIV-preface.html">Vol IV &middot; Abertura &#8594;</a>
 </nav>
 <footer>
-  Volume IV &middot; GTCT &middot; Cap&iacute;tulo 4 &middot; Principia Orthogona Vol IV &middot;
+  Volume IV &middot; GTCT &middot; Cap&iacute;tulo 15 &middot; Principia Orthogona Vol IV &middot;
   <a href="https://github.com/TOTOGT/AXLE">AXLE</a> &middot;
   <a href="https://github.com/TOTOGT/GTCT">GTCT</a> &middot;
   <a href="https://doi.org/10.5281/zenodo.19117400">doi:10.5281/zenodo.19117400</a> &middot;
@@ -148,63 +141,77 @@ footer a{color:var(--gold);text-decoration:none;}
 <script>
 const PT = [
   {type:"nota",label:"Visão Geral",
-   text:"O Teorema de Correspondência estabelece que a bijeção $\\Phi:\\{D_i\\}\\to\\{O_i\\}$ é única: $\\Phi(D_i)=O_i$ para todo $i$. Existência foi postulada no Axioma 6; aqui provamos unicidade via rigidez da estrutura de fase."},
-  {type:"section",text:"&sect; 4.1 &mdash; Teorema 4.1"},
-  {type:"theorem",anchor:"thm41",label:"Teorema 4.1 · Bijeção Única",lean:true,
-   title:"$\\Phi(D_i) = O_i$ para todo $i = 1,\\ldots,12$",
-   body:"Existe uma única bijeção $\\Phi:\\{D_1,\\ldots,D_{12}\\}\\to\\{O_1,\\ldots,O_{12}\\}$ satisfazendo $O_i(D_i)\\subseteq D_{i+1\\bmod12}$. Unicidade: qualquer permutação alternativa violaria a monotonicidade de fase imposta por $\\Delta$.",
-   code:"\\u03a6(D_i) = O_i   for all i = 1, ..., 12\nO_i(D_i) ⊆ D_{i+1 mod 12}   (unique)"},
-  {type:"section",text:"&sect; 4.2 &mdash; Prova"},
-  {type:"proof",label:"Prova",
-   text:"<strong>Existência:</strong> Axioma 6 garante existência de alguma bijeção $\\Phi$ com $\\Phi(D_i)(D_i)\\subseteq D_{i+1}$.<br><br><strong>Injetividade:</strong> Se $\\Phi(D_i)=\\Phi(D_j)=O_k$, então $O_k$ mapearia tanto $D_i$ quanto $D_j$ em $D_{k+1}$. Como $\\Delta$ é não-degenerado e as fases são distintas, isso viola a condição de avanço. Logo $i=j$.<br><br><strong>Sobrjetividade:</strong> Temos 12 fases e 12 operadores; injetividade de um conjunto finito para si mesmo implica bijetividade.<br><br><strong>Unicidade:</strong> Suponha $\\Psi\\neq\\Phi$ também bijeção válida. Existe $D_i$ com $\\Psi(D_i)=O_j$, $j\\neq i$. Mas $O_j(D_i)\\subseteq D_{j+1}$, enquanto a monotonicidade de $\\Delta$ exige $O_j(D_i)\\subseteq D_{i+1}$; como $D_{i+1}\\neq D_{j+1}$ para $j\\neq i$, contradição. Logo $\\Phi=\\Psi$."},
-  {type:"section",text:"&sect; 4.3 &mdash; Tabela de Correspondência"},
-  {type:"table",html:TABLE_CORR},
-  {type:"nota",label:"Rigidez",
-   text:"A correspondência $\\Phi(D_i)=O_i$ não é uma convenção — é uma consequência da estrutura de $\\Delta$ e da monotonicidade de fase. Trocar qualquer par $(D_i,O_i)\\leftrightarrow(D_j,O_j)$ produziria uma sequência que viola $\\Delta(O(x))=A\\cdot\\Delta(x)$ para algum $x\\in M$."},
+   text:"Este capítulo marca a virada para a álgebra complexa ℂ — Rung IV da escada de Cayley-Dickson. Revisamos F e T, definimos o comutador $\\Psi=[F,T]$, e anunciamos o Teorema 15.1 ($\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$) e o Teorema 15.2 ($J=\\Psi/\\lambda$ é uma estrutura quase-complexa integrável, $J^2=-\\mathrm{id}$). A cadeia G = U∘F∘K∘C é a mesma de todos os volumes; apenas a álgebra subjacente muda."},
+  {type:"section",text:"&sect; 1 &mdash; A Escada de Álgebras"},
+  {type:"nota",label:"Escada de Cayley-Dickson",
+   text:"Cada volume corresponde a um degrau da sequência de Cayley-Dickson, perdendo uma propriedade algébrica: ℝ (ordenado) → ℂ (perde ordenação) → ℍ (perde comutatividade) → 𝕆 (perde associatividade) → sêdenions (perde divisão) → E₈/excepcionais. Vol IV (GTCT) corresponde a ℂ — a primeira perda: a perda de ordenação."},
+  {type:"section",text:"&sect; 2 &mdash; Revisão dos Operadores F e T"},
+  {type:"definition",num:"15.1",label:"Operadores de Dobra e Temporal",lean:true,
+   title:"$F$ e $T$ sobre a variedade de contato $M$",
+   body:"$F:M\\to M$ é o operador de Dobra (Fold) — um dos quatro operadores base de G. $T$ é o campo temporal com fluxo $\\varphi_t$ satisfazendo $\\varphi_t^*\\alpha=e^{f(t)}\\alpha$ (Axioma 3). Juntos definem o comutador $\\Psi=[F,T]=F\\circ T-T\\circ F$.",
+   code:"F : M → M   (Fold operator)\nT : M → M   (temporal vector field, Axiom 3)"},
+  {type:"section",text:"&sect; 3 &mdash; O Comutador $\\Psi=[F,T]$"},
+  {type:"definition",num:"15.2",label:"Comutador",lean:true,
+   title:"$\\Psi = [F,T] = F\\circ T - T\\circ F$",
+   body:"O comutador mede a falha de comutatividade entre a dinâmica de dobra e o fluxo temporal. A não-comutatividade de F e T é a assinatura algébrica da virada para ℂ — é precisamente a propriedade que se perde ao subir de ℝ para ℂ e que o comutador quantifica.",
+   code:"\\u03a8 = [F,T] = F∘T - T∘F"},
+  {type:"section",text:"&sect; 4 &mdash; Teorema 15.1 (Anunciado)"},
+  {type:"theorem",anchor:"thm151",label:"Teorema 15.1",sorry:true,
+   title:"$\\Psi^2 = -\\lambda^2\\cdot\\mathrm{id}$",
+   body:"Existe $\\lambda>0$ tal que $\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$. O comutador ao quadrado é menos um múltiplo escalar da identidade. Anunciado aqui; prova construtiva reservada para o Volume VI.",
+   code:"-- AXLE/Main_v6.lean\ntheorem spiral_return_exists\n    (G : GChain X) (x\u2080 : X)\n    (h\u03ba : G.contraction_const \u2264 Real.sqrt (5/9)) :\n    \u2203 (x_star : X), \u2200 n, dist (G.iter n x\u2080) x_star \u2264\n      (Real.sqrt (5/9))^n * dist x\u2080 x_star := by\n  exact banach_fixed_point G h\u03ba x\u2080\n\ntheorem non_return (G : GChain X) (x\u2080 : X) :\n    G.iter 64 x\u2080 \u2260 x\u2080 := by\n  -- 0 sorry in AXLE\n  exact G.non_periodic_64 x\u2080"},
+  {type:"section",text:"&sect; 5 &mdash; Estrutura Quase-Complexa"},
+  {type:"definition",num:"15.3",label:"Estrutura Quase-Complexa $J$",lean:true,
+   title:"$J = \\Psi/\\lambda$",
+   body:"Definimos $J=\\Psi/\\lambda=(F\\circ T-T\\circ F)/\\lambda$. Pelo Teorema 15.1, $J^2=\\Psi^2/\\lambda^2=-\\mathrm{id}$. Assim $J$ é uma estrutura quase-complexa — o análogo de multiplicação por $\\sqrt{-1}$ no contexto geométrico de contato.",
+   code:"J = \\u03a8/\\u03bb   J\\u00b2 = -id"},
+  {type:"theorem",anchor:"thm152",label:"Teorema 15.2",sorry:true,
+   title:"$J$ é Integrável · $J^2=-\\mathrm{id}$",
+   body:"A estrutura quase-complexa $J=\\Psi/\\lambda$ é integrável: satisfaz $J^2=-\\mathrm{id}$ e o tensor de Nijenhuis $N_J$ se anula. Anunciado aqui; prova completa reservada para o Volume VI juntamente com a realização explícita de $\\lambda$.",
+   code:"J\\u00b2 = -id   N_J = 0   (integrability)"},
+  {type:"section",text:"&sect; 6 &mdash; A Cadeia Complexificada"},
+  {type:"nota",label:"G Complexificado",
+   text:"A cadeia $G=U\\circ F\\circ K\\circ C$ estendida a ℂ: cada operador base age sobre a variedade de contato com coeficientes em ℂ. A estrutura $J$ fornece a multiplicação por $i$ que transforma a álgebra real em álgebra complexa. O campo dimensional $\\Delta:M\\to\\mathbb{C}^6$ (ou equivalentemente $\\Delta:M\\to\\mathbb{R}^{12}$ com estrutura $J$) é a realização complexa do campo de fases."},
+  {type:"nota",label:"Estado: sorry-marcado",
+   text:"Os Teoremas 15.1 e 15.2 estão sorry-marcados no AXLE — anunciados sem prova no estado atual de formalização. A realização construtiva das matrizes $A_i$ em ℂ e a verificação de $N_J=0$ são reservadas para o Volume VI."},
 ];
-const TABLE_CORR = `<table><thead><tr><th>Fase</th><th>Operador</th><th>Base</th><th>Invariante</th><th>Bijeção Φ</th></tr></thead><tbody>
-<tr><td>D&#x2081;</td><td>O&#x2081;</td><td>C</td><td>I&#x2081;</td><td>Φ(D&#x2081;)=O&#x2081;</td></tr>
-<tr><td>D&#x2082;</td><td>O&#x2082;</td><td>C</td><td>I&#x2082;</td><td>Φ(D&#x2082;)=O&#x2082;</td></tr>
-<tr><td>D&#x2083;</td><td>O&#x2083;</td><td>C</td><td>I&#x2083;</td><td>Φ(D&#x2083;)=O&#x2083;</td></tr>
-<tr><td>D&#x2084;&ndash;D&#x2086;</td><td>O&#x2084;&ndash;O&#x2086;</td><td>K</td><td>I&#x2081;&ndash;I&#x2083;</td><td>Φ(D&#x1d4d8;)=O&#x1d4d8;</td></tr>
-<tr><td>D&#x2087;&ndash;D&#x2089;</td><td>O&#x2087;&ndash;O&#x2089;</td><td>F</td><td>I&#x2081;&ndash;I&#x2083;</td><td>Φ(D&#x1d4d8;)=O&#x1d4d8;</td></tr>
-<tr><td>D&#x2081;&#x2080;&ndash;D&#x2081;&#x2082;</td><td>O&#x2081;&#x2080;&ndash;O&#x2081;&#x2082;</td><td>U</td><td>I&#x2081;&ndash;I&#x2083;</td><td>Φ(D&#x1d4d8;)=O&#x1d4d8;</td></tr>
-</tbody></table>`;
 const TR = {
   EN:{flag:"🇺🇸",native:"English",note:"English",blocks:[
-    {type:"nota",label:"Overview",text:"Theorem 4.1 proves the bijection $\\Phi:\\{D_i\\}\\to\\{O_i\\}$ is unique: $\\Phi(D_i)=O_i$ for all $i$. Existence was postulated in Axiom 6; here we prove uniqueness via phase-structure rigidity."},
-    {type:"section",text:"&sect; 4.1 &mdash; Theorem 4.1"},
-    {type:"theorem",anchor:"thm41",label:"Theorem 4.1 · Unique Bijection",lean:true,
-     title:"$\\Phi(D_i)=O_i$ for all $i=1,\\ldots,12$",
-     body:"There exists a unique bijection $\\Phi:\\{D_1,\\ldots,D_{12}\\}\\to\\{O_1,\\ldots,O_{12}\\}$ satisfying $O_i(D_i)\\subseteq D_{i+1\\bmod12}$. Any alternative permutation would violate the phase monotonicity imposed by $\\Delta$.",
-     code:"\\u03a6(D_i) = O_i   for all i = 1,...,12\nO_i(D_i) ⊆ D_{i+1 mod 12}   (unique)"},
-    {type:"section",text:"&sect; 4.2 &mdash; Proof"},
-    {type:"proof",label:"Proof",
-     text:"<strong>Existence:</strong> Axiom 6 guarantees some bijection $\\Phi$ with $\\Phi(D_i)(D_i)\\subseteq D_{i+1}$.<br><br><strong>Injectivity:</strong> If $\\Phi(D_i)=\\Phi(D_j)=O_k$, then $O_k$ maps both $D_i$ and $D_j$ into $D_{k+1}$; non-degeneracy of $\\Delta$ forces $i=j$.<br><br><strong>Surjectivity:</strong> 12 phases, 12 operators; injectivity on a finite set implies bijectivity.<br><br><strong>Uniqueness:</strong> Suppose $\\Psi\\neq\\Phi$ also valid. Then $\\exists D_i$: $\\Psi(D_i)=O_j$, $j\\neq i$. Phase monotonicity requires $O_j(D_i)\\subseteq D_{i+1}$ but also $O_j(D_i)\\subseteq D_{j+1}$; since $D_{i+1}\\neq D_{j+1}$ for $j\\neq i$, contradiction. Hence $\\Phi=\\Psi$. $\\square$"},
-    {type:"section",text:"&sect; 4.3 &mdash; Correspondence Table"},
-    {type:"table",html:TABLE_CORR},
-    {type:"nota",label:"Rigidity",text:"The correspondence $\\Phi(D_i)=O_i$ is not a convention — it is a consequence of the $\\Delta$-structure and phase monotonicity. Swapping any pair $(D_i,O_i)\\leftrightarrow(D_j,O_j)$ would produce a sequence violating $\\Delta(O(x))=A\\cdot\\Delta(x)$ for some $x\\in M$."},
+    {type:"nota",label:"Overview",text:"This chapter marks the turn to complex algebra ℂ — Rung IV of the Cayley-Dickson ladder. We review F and T, define commutator $\\Psi=[F,T]$, and announce Theorem 15.1 ($\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$) and Theorem 15.2 ($J=\\Psi/\\lambda$ is an integrable almost-complex structure). The chain G=U∘F∘K∘C is the same in every volume; only the underlying algebra changes."},
+    {type:"section",text:"&sect; 1 &mdash; The Algebra Ladder"},
+    {type:"nota",label:"Cayley-Dickson Ladder",text:"Each volume loses one algebraic property: ℝ (ordered) → ℂ (lose ordering) → ℍ (lose commutativity) → 𝕆 (lose associativity) → sedenions (lose division) → E₈. Vol IV corresponds to ℂ — the first loss: ordering."},
+    {type:"section",text:"&sect; 2 &mdash; Operators F and T"},
+    {type:"definition",num:"15.1",label:"Fold and Temporal Operators",lean:true,title:"$F$ and $T$ on the contact manifold $M$",body:"$F$ is the Fold base operator; $T$ is the temporal vector field (Axiom 3) with flow $\\varphi_t$. Together they define $\\Psi=[F,T]$.",code:"F,T : M → M   \\u03a8=[F,T]=F∘T-T∘F"},
+    {type:"section",text:"&sect; 3 &mdash; Commutator $\\Psi=[F,T]$"},
+    {type:"definition",num:"15.2",label:"Commutator",lean:true,title:"$\\Psi=[F,T]=F\\circ T-T\\circ F$",body:"Measures failure of commutativity between fold dynamics and temporal flow. Non-commutativity of F and T is the algebraic signature of the turn to ℂ.",code:"\\u03a8=[F,T]=F∘T-T∘F"},
+    {type:"section",text:"&sect; 4 &mdash; Theorem 15.1 (Announced)"},
+    {type:"theorem",anchor:"thm151",label:"Theorem 15.1",sorry:true,title:"$\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$",body:"There exists $\\lambda>0$ such that $\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$. Announced; constructive proof reserved for Volume VI.",code:"-- AXLE/Main_v6.lean\ntheorem spiral_return_exists\n    (G : GChain X) (x\u2080 : X)\n    (h\u03ba : G.contraction_const \u2264 Real.sqrt (5/9)) :\n    \u2203 (x_star : X), \u2200 n, dist (G.iter n x\u2080) x_star \u2264\n      (Real.sqrt (5/9))^n * dist x\u2080 x_star := by\n  exact banach_fixed_point G h\u03ba x\u2080\n\ntheorem non_return (G : GChain X) (x\u2080 : X) :\n    G.iter 64 x\u2080 \u2260 x\u2080 := by\n  -- 0 sorry in AXLE\n  exact G.non_periodic_64 x\u2080"},
+    {type:"section",text:"&sect; 5 &mdash; Almost-Complex Structure"},
+    {type:"definition",num:"15.3",label:"Almost-Complex Structure $J$",lean:true,title:"$J=\\Psi/\\lambda$",body:"$J=\\Psi/\\lambda$, so $J^2=-\\mathrm{id}$ by Theorem 15.1. $J$ is the contact-geometric analogue of multiplication by $\\sqrt{-1}$.",code:"J=\\u03a8/\\u03bb   J\\u00b2=-id"},
+    {type:"theorem",anchor:"thm152",label:"Theorem 15.2",sorry:true,title:"$J$ integrable · $J^2=-\\mathrm{id}$",body:"$J=\\Psi/\\lambda$ is integrable: $J^2=-\\mathrm{id}$ and Nijenhuis tensor $N_J=0$. Announced; full proof reserved for Volume VI.",code:"J\\u00b2=-id   N_J=0"},
+    {type:"section",text:"&sect; 6 &mdash; The Complexified Chain"},
+    {type:"nota",label:"Complexified G",text:"$G=U\\circ F\\circ K\\circ C$ extended to ℂ: each base operator acts on the contact manifold with ℂ coefficients. The $J$ structure provides multiplication by $i$. The dimensional field $\\Delta:M\\to\\mathbb{C}^6$ (equivalently $\\Delta:M\\to\\mathbb{R}^{12}$ with $J$-structure) is the complex realisation of the phase field."},
+    {type:"nota",label:"Status: sorry-marked",text:"Theorems 15.1 and 15.2 are sorry-marked in AXLE — announced without proof in the current formalisation state. Constructive realisation of $A_i$ over ℂ and verification of $N_J=0$ are reserved for Volume VI."},
   ]},
   ES:{flag:"🇪🇸",native:"Español",note:"Spanish",blocks:[
-    {type:"nota",label:"Resumen",text:"El Teorema 4.1 prueba que la biyección $\\Phi:\\{D_i\\}\\to\\{O_i\\}$ es única: $\\Phi(D_i)=O_i$."},
-    {type:"theorem",label:"Teorema 4.1",lean:true,title:"Biyección Única",body:"Existe una única biyección $\\Phi$ con $\\Phi(D_i)=O_i$. La unicidad sigue de la monotonicidad de fase.",code:"\\u03a6(D_i)=O_i   única"},
+    {type:"nota",label:"Resumen",text:"Capítulo 15: el giro a ℂ. $\\Psi=[F,T]$, $\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$ (Teo 15.1, anunciado), $J=\\Psi/\\lambda$ estructura casi-compleja integrable (Teo 15.2, anunciado)."},
+    {type:"definition",num:"15.2",label:"Conmutador",lean:true,title:"$\\Psi=[F,T]$",body:"Mide la no-conmutatividad de F y T — firma algebraica del giro a ℂ.",code:"\\u03a8=[F,T]"},
+    {type:"theorem",label:"Teorema 15.1",sorry:true,title:"$\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$",body:"Anunciado; demostración en Volumen VI.",code:"\\u03a8\\u00b2=-\\u03bb\\u00b2·id"},
   ]},
   FR:{flag:"🇫🇷",native:"Français",note:"French",blocks:[
-    {type:"nota",label:"Vue d’ensemble",text:"Le Théorème 4.1 établit que la bijection $\\Phi(D_i)=O_i$ est unique."},
-    {type:"theorem",label:"Théorème 4.1",lean:true,title:"Bijection unique",body:"Il existe une unique bijection $\\Phi:\\{D_i\\}\\to\\{O_i\\}$ avec $\\Phi(D_i)=O_i$.",code:"\\u03a6(D_i)=O_i   (unique)"},
+    {type:"nota",label:"Vue d'ensemble",text:"Chapitre 15 : le tournant vers ℂ. $\\Psi=[F,T]$, $\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$ (Thm 15.1, annoncé), $J=\\Psi/\\lambda$ structure presque-complexe intégrable (Thm 15.2, annoncé)."},
   ]},
   DE:{flag:"🇩🇪",native:"Deutsch",note:"German",blocks:[
-    {type:"nota",label:"Überblick",text:"Satz 4.1: Die Bijektion $\\Phi(D_i)=O_i$ ist eindeutig bestimmt."},
-    {type:"theorem",label:"Satz 4.1",lean:true,title:"Eindeutige Bijektion",body:"Es gibt genau eine Bijektion $\\Phi:\\{D_i\\}\\to\\{O_i\\}$ mit $\\Phi(D_i)=O_i$.",code:"\\u03a6(D_i)=O_i"},
+    {type:"nota",label:"Überblick",text:"Kapitel 15: der Übergang zu ℂ. $\\Psi=[F,T]$, $\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$ (Satz 15.1, angekündigt), $J=\\Psi/\\lambda$ fast-komplexe Struktur."},
   ]},
   ZH:{flag:"🇨🇳",native:"中文",note:"Chinese",blocks:[
-    {type:"nota",label:"概述",text:"定理1: 全射 $\\Phi(D_i)=O_i$ 是唯一的。"},
+    {type:"nota",label:"概述",text:"第15章: 转向复数代数ℂ。$\\Psi=[F,T]$，$\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$（定理15.1，已宣布），$J=\\Psi/\\lambda$ 可积近复结构（定理15.2，已宣布）。"},
   ]},
   JA:{flag:"🇯🇵",native:"日本語",note:"Japanese",blocks:[
-    {type:"nota",label:"概要",text:"定理1: 全射 $\\Phi(D_i)=O_i$ は一意である。"},
+    {type:"nota",label:"概要",text:"第15章: ℂへの転換。$\\Psi=[F,T]$、$\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$（定理15.1、予告済み）、$J=\\Psi/\\lambda$ 可積分概複素構造（定理15.2、予告済み）。"},
   ]},
   AR:{flag:"🇸🇦",native:"العربية",note:"Arabic",rtl:true,blocks:[
-    {type:"nota",label:"نظرة عامة",rtl:true,text:"النظرية 4.1: التقابل $\\Phi(D_i)=O_i$ وحيد."},
+    {type:"nota",label:"نظرة عامة",rtl:true,text:"الفصل 15: التحول إلى ℂ. $\\Psi=[F,T]$، $\\Psi^2=-\\lambda^2\\cdot\\mathrm{id}$ (النظرية 15.1، معلنة)، $J=\\Psi/\\lambda$ بنية شبه-مركبة قابلة للتكامل."},
   ]},
 };
 
