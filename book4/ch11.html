@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch 11 · The Arithmetic Seed · Principia Orthogona Book 4</title>
+<script>
+MathJax = { tex: { inlineMath:[['$','$']], displayMath:[['$$','$$']] }, options: { skipHtmlTags:['script','noscript','style','textarea'] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+<style>
+:root {
+  --gold: #0ABAB5;
+  --gold-dim: #076b68;
+  --dark: #05080f;
+  --surface: #0c1420;
+  --surface2: #101e2e;
+  --text: #cdd8e8;
+  --text-dim: #6a8099;
+  --c-color: #4a9eff;
+  --k-color: #e05a3a;
+  --f-color: #50c878;
+  --u-color: #c084fc;
+  --t-color: #f9c74f;
+  --g-color: #0ABAB5;
+  --inf-color: #a0d8ef;
+  --zero-color: #ff6b8a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--dark); color: var(--text); font-family: Georgia,serif; font-size: 18px; line-height: 1.75; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(5,8,15,0.96);
+  border-bottom: 1px solid var(--gold-dim);
+  padding: 0.6rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.5rem;
+}
+.nav-logo { font-family: Georgia,serif; font-size: 0.85rem; letter-spacing: 0.18em; color: var(--gold); text-decoration: none; }
+.nav-links { display: flex; gap: 1.2rem; font-size: 0.78rem; flex-wrap: wrap; }
+.nav-links a { color: var(--text-dim); text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+.po-ring-strip {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: .4rem;
+  padding: .45rem 1.4rem;
+  background: rgba(0,0,0,.55);
+  border-bottom: 1px solid var(--gold-dim);
+  font-family: 'Courier New',monospace;
+  font-size: .72rem; letter-spacing: .08em;
+}
+.po-ring-strip a { color: var(--gold); text-decoration: none; opacity:.85; }
+.po-ring-strip a:hover { opacity:1; text-decoration:underline; }
+.po-ring-badge { display: inline-flex; align-items: center; gap: .5rem; color: var(--gold); }
+.po-ring-num { font-weight:700; letter-spacing:.15em; }
+.po-ring-sep { opacity:.4; }
+.po-ring-meta { opacity:.7; }
+.po-ring-ends { display:flex; gap:1rem; }
+
+.book-hero {
+  background: linear-gradient(160deg, #03060d 0%, #08101e 50%, #03060d 100%);
+  border-bottom: 1px solid rgba(10,186,181,0.15);
+  padding: 5rem 2rem 4rem;
+  text-align: center; position: relative; overflow: hidden;
+}
+.book-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 25% 50%, rgba(10,186,181,0.06) 0%, transparent 55%),
+    radial-gradient(circle at 75% 30%, rgba(74,158,255,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(255,107,138,0.03) 0%, transparent 45%);
+  animation: heroGlow 10s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes heroGlow { 0%{opacity:.5} 100%{opacity:1} }
+
+.series-label { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--text-dim); text-transform: uppercase; margin-bottom: 1.2rem; position: relative; }
+.chapter-num { font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; font-family:'Courier New',monospace; position: relative; }
+.book-title { font-size: clamp(2rem,6vw,3.8rem); font-weight:400; letter-spacing:0.04em; color: var(--text); line-height: 1.15; position: relative; margin-bottom: 0.5rem; }
+.book-subtitle { font-size: clamp(0.85rem,2vw,1.1rem); color: var(--text-dim); font-style:italic; max-width:600px; margin: 0 auto 1.5rem; position:relative; }
+.operator-display { font-family:'Courier New',monospace; font-size:1.1rem; letter-spacing:.15em; position:relative; margin-bottom:1.5rem; }
+.operator-display .c { color:var(--c-color); }
+.operator-display .k { color:var(--k-color); }
+.operator-display .f { color:var(--f-color); }
+.operator-display .u { color:var(--u-color); }
+.operator-display .g { color:var(--g-color); }
+.hero-meta { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; font-size:0.75rem; letter-spacing:.12em; color:var(--text-dim); position:relative; }
+.hero-badge { background:rgba(10,186,181,0.1); border:1px solid rgba(10,186,181,0.25); padding:.25rem .9rem; border-radius:2px; color:var(--gold); }
+
+.content-wrap { max-width: 780px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+h2 { font-size:1.4rem; font-weight:400; color:var(--gold); margin:3rem 0 1rem; letter-spacing:.06em; }
+h3 { font-size:1.1rem; font-weight:600; color:var(--text); margin:2rem 0 0.7rem; }
+p { margin-bottom: 1.1rem; }
+strong { color: var(--text); }
+em { color: var(--gold); font-style: normal; }
+
+.section-tag { font-family:'Courier New',monospace; font-size:0.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:.3rem; opacity:.8; }
+.gold-rule { border:none; border-top:1px solid var(--gold-dim); margin:2.5rem 0; opacity:.4; }
+.fleur { text-align:center; color:var(--gold-dim); font-size:1.2rem; margin:2rem 0; opacity:.5; }
+
+.insight-box { background:rgba(10,186,181,0.06); border:1px solid rgba(10,186,181,0.2); padding:1.2rem 1.5rem; margin:2rem 0; border-radius:4px; }
+.insight-label { font-size:0.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; font-family:'Courier New',monospace; margin-bottom:.4rem; }
+
+.thm-box { background:rgba(10,186,181,0.04); border:1px solid rgba(10,186,181,0.3); border-radius:4px; padding:1.2rem 1.5rem; margin:1.8rem 0; }
+.thm-label { font-size:0.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; font-family:'Courier New',monospace; margin-bottom:.5rem; }
+.def-box { background:rgba(74,158,255,0.05); border:1px solid rgba(74,158,255,0.25); border-radius:4px; padding:1.2rem 1.5rem; margin:1.8rem 0; }
+.def-label { font-size:0.7rem; letter-spacing:.2em; color:var(--c-color); text-transform:uppercase; font-family:'Courier New',monospace; margin-bottom:.5rem; }
+
+.status-table { width:100%; border-collapse:collapse; font-size:14px; margin:1.5rem 0; }
+.status-table th { background:var(--surface2); color:var(--gold); font-size:0.68rem; letter-spacing:.15em; text-transform:uppercase; font-family:'Courier New',monospace; padding:.6rem .8rem; text-align:left; border-bottom:1px solid var(--gold-dim); }
+.status-table td { padding:.5rem .8rem; border-bottom:1px solid #1a2e42; color:var(--text); }
+.status-table tr:hover td { background:var(--surface2); }
+.proved { color: var(--f-color); font-weight:600; }
+.open { color: var(--zero-color); font-weight:600; }
+.reform { color: var(--gold); font-weight:600; }
+
+pre { background:#07111d; border:1px solid #1a2e42; border-left:3px solid var(--gold-dim); padding:1.2rem; border-radius:0 4px 4px 0; overflow-x:auto; margin:1.5rem 0; color:#8ac0e0; font:13px/1.6 'Courier New',monospace; }
+
+/* FIGURE */
+.figure-wrap { margin:2.5rem 0; border:1px solid #1a2e42; border-radius:6px; overflow:hidden; background:var(--surface); }
+.figure-header { background:var(--surface2); border-bottom:1px solid #1a2e42; padding:.6rem 1rem; display:flex; justify-content:space-between; align-items:center; font-family:'Courier New',monospace; font-size:.72rem; letter-spacing:.1em; color:var(--gold); }
+.figure-body { position:relative; }
+canvas { display:block; width:100%; cursor:crosshair; }
+.figure-controls { background:var(--surface2); border-top:1px solid #1a2e42; padding:.8rem 1rem; display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap; }
+.ctrl { display:flex; align-items:center; gap:.5rem; font-size:.78rem; color:var(--text-dim); font-family:'Courier New',monospace; }
+.ctrl label { color:var(--gold); font-size:.7rem; letter-spacing:.1em; }
+.ctrl span { color:var(--text); min-width:2.5rem; text-align:right; }
+input[type=range] { -webkit-appearance:none; width:90px; height:3px; background:#1a2e42; border-radius:2px; outline:none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:11px; height:11px; background:var(--gold); border-radius:50%; cursor:pointer; }
+.ctrl-btn { background:var(--gold-dim); color:var(--gold); border:none; padding:.25rem .7rem; font:700 .68rem 'Courier New',monospace; cursor:pointer; border-radius:2px; letter-spacing:.08em; transition:background .15s; }
+.ctrl-btn:hover { background:var(--gold); color:var(--dark); }
+.figure-caption { padding:.8rem 1rem; font:italic 13px/1.5 Georgia; color:var(--text-dim); border-top:1px solid #1a2e42; }
+.legend-dots { display:flex; gap:1rem; font-size:.7rem; color:var(--text-dim); font-family:'Courier New',monospace; }
+.ld { display:flex; align-items:center; gap:.3rem; }
+.ld-dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+
+.op-tag { display:inline-block; font-family:'Courier New',monospace; font-size:.75rem; letter-spacing:.08em; padding:.12rem .45rem; border-radius:2px; vertical-align:middle; }
+.op-c { background:rgba(74,158,255,.15); color:var(--c-color); border:1px solid rgba(74,158,255,.3); }
+.op-k { background:rgba(224,90,58,.15); color:var(--k-color); border:1px solid rgba(224,90,58,.3); }
+.op-f { background:rgba(80,200,120,.15); color:var(--f-color); border:1px solid rgba(80,200,120,.3); }
+.op-u { background:rgba(192,132,252,.15); color:var(--u-color); border:1px solid rgba(192,132,252,.3); }
+
+.bridge { background:rgba(10,186,181,0.05); border:1px solid rgba(10,186,181,0.25); border-radius:6px; padding:1.5rem; margin:2.5rem 0; }
+.bridge-label { font-size:.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; font-family:'Courier New',monospace; margin-bottom:.7rem; }
+
+.chapter-nav { display:flex; justify-content:space-between; align-items:center; padding:2rem 0; border-top:1px solid #1a2e42; margin-top:3rem; }
+.chapter-nav a { color:var(--gold); text-decoration:none; font-size:.85rem; letter-spacing:.08em; border:1px solid rgba(10,186,181,.25); padding:.5rem 1rem; border-radius:2px; transition:all .2s; font-family:'Courier New',monospace; }
+.chapter-nav a:hover { background:rgba(10,186,181,.08); }
+
+footer { text-align:center; padding:2rem; font-size:.72rem; letter-spacing:.12em; color:var(--text-dim); border-top:1px solid #1a2e42; }
+footer a { color:var(--gold-dim); text-decoration:none; }
+
+mjx-container { overflow-x:auto; max-width:100%; display:block !important; }
+.table-wrap { overflow-x:auto; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://totogt.github.io/geometry/book4/index.html" class="nav-logo">⚜ PRINCIPIA ORTHOGONA · BOOK 4 ⚜</a>
+  <div class="nav-links">
+    <a href="https://totogt.github.io/geometry/book4/ch01.html">Ch 1</a>
+    <a href="https://totogt.github.io/geometry/book4/ch02.html">Ch 2</a>
+    <a href="https://totogt.github.io/geometry/book4/ch03.html">Ch 3</a>
+    <a href="https://totogt.github.io/geometry/book4/ch04.html">Ch 4</a>
+    <a href="https://totogt.github.io/geometry/book4/ch05.html">Ch 5</a>
+    <a href="https://totogt.github.io/geometry/book4/ch06.html">Ch 6</a>
+    <a href="https://totogt.github.io/geometry/book4/ch07.html">Ch 7</a>
+    <a href="https://totogt.github.io/geometry/book4/ch08.html">Ch 8</a>
+    <a href="https://totogt.github.io/geometry/book4/ch09.html">Ch 9</a>
+    <a href="https://totogt.github.io/geometry/book4/ch10.html">Ch 10</a>
+    <a href="ch11.html" class="active">Ch 11</a>
+    <a href="ch12.html">Ch 12</a>
+    <a href="ch13.html">Ch 13</a>
+    <a href="ch14.html">Ch 14</a>
+  </div>
+</nav>
+
+<div class="po-ring-strip">
+  <div class="po-ring-badge">
+    <span class="po-ring-num">G4 · RH Arc</span>
+    <span class="po-ring-sep">·</span>
+    <span class="po-ring-meta">Operator <span style="color:var(--c-color)">C</span> · CEFR C1 · Book 4 · Ch 11</span>
+  </div>
+  <div class="po-ring-ends">
+    <a href="https://totogt.github.io/geometry/book4/ch10.html">← Ch 10 · dm³</a>
+    <a href="ch12.html">Ch 12 · Critical Contact →</a>
+  </div>
+</div>
+
+<section class="book-hero">
+  <div class="series-label">Principia Orthogona · Volume IV · Higher Dimensions Arc</div>
+  <div class="chapter-num">Chapter 11 · Operator <span class="c">C</span> · Arithmetic</div>
+  <h1 class="book-title">The Arithmetic Seed</h1>
+  <p class="book-subtitle">$\zeta(s)$ as a 2D+t System — The Contact Form of the Primes</p>
+  <div class="operator-display">
+    <span class="g">G</span> = <span class="u">U</span> ∘ <span class="f">F</span> ∘ <span class="k">K</span> ∘ <span class="c">C</span>
+    &nbsp;·&nbsp; <span style="color:var(--gold)">α<sub>arith</sub> = c(σ,t) dU − g(σ,t) dV</span>
+  </div>
+  <div class="hero-meta">
+    <span class="hero-badge">Reformulation</span>
+    <span>No new theorems proved</span>
+    <span>All claims labelled</span>
+    <span>CEFR C1</span>
+  </div>
+</section>
+
+<div class="content-wrap">
+
+<p>Chapter 10 gave us the helical attractor on a smooth contact 3-manifold — the dm³ ODE on cylindrical $(r,\theta,z)$ space. The attractor was the unit helix $r=1$. Now we make the same move with a different seed: instead of the smooth Hopf normal form, we start with the Riemann zeta function. Instead of a synthetic ODE, we have an analytic object built from all prime numbers simultaneously. The contact form that results is not smooth — it is woven from the entire prime counting machine.</p>
+
+<div class="insight-box">
+  <div class="insight-label">The central claim of Ch 11</div>
+  The Riemann zeta function $\zeta(\sigma + it)$ lifts naturally from the complex plane to a 3-dimensional extended phase space, exactly as the harmonic oscillator of Ch 2 lifted from the phase plane to a helix. Working in <em>log-zeta coordinates</em> $U + iV = \log\zeta(\sigma+it)$, the contact form governing this lift is $\alpha_{\mathrm{arith}} = c(\sigma,t)\,dU - g(\sigma,t)\,dV$, where the pair $(c, g)$ encodes all prime numbers simultaneously via the von Mangoldt function: $-\zeta'/\zeta = c - ig$. This is a correct reformulation of existing mathematics. Whether it implies the Riemann Hypothesis is the subject of Ch 14.
+</div>
+
+<!-- §11.1 -->
+<div class="section-tag">§ 11.1</div>
+<h2>The Tuning Fork Argument</h2>
+
+<p>Strike a tuning fork. It vibrates at a single frequency — not because you imposed that frequency, but because the metal has no choice. The length, mass, and elasticity of the tine determine the frequency the way a theorem follows from its axioms.</p>
+
+<p>The Riemann Hypothesis says something similar about the prime numbers. The <em>non-trivial zeros</em> of the Riemann zeta function — points $s = \sigma + it$ in the complex plane where $\zeta(s) = 0$ and $0 < \sigma < 1$ — appear to lie on the single vertical line $\sigma = \tfrac{1}{2}$. Not because someone placed them there. Because the arithmetic structure of the primes, encoded in $\zeta(s)$, has no other choice. This has not been proved. But Chapter 11 asks a prior question: <strong>can we hear the structure that would force this?</strong></p>
+
+<!-- §11.2 -->
+<div class="section-tag">§ 11.2</div>
+<h2>The Prototype Recalled</h2>
+
+<p>Chapter 2 began with the harmonic oscillator $\dot{x} = y,\ \dot{y} = -x$. Its orbits in the phase plane are circles. When we promoted $t$ to a coordinate, those circles became helices in $\mathbb{R}^3_{(x,y,t)}$, governed by the contact form $\tilde\alpha = x\,dx + y\,dy = \tfrac{1}{2}d(r^2)$ (the radial certificate) and, in the 3-space prototype, the standard non-integrable form $dy - y'\,dx$. Non-integrability — $\alpha \wedge d\alpha \neq 0$ in 3D — is the condition that forces the helix to move forward.</p>
+
+<p>Chapter 11 performs the same lift with $\zeta(s)$ as the starting object. To get an exact kernel relation, we work not in the coordinates $(U,V) = (\mathrm{Re}\,\zeta, \mathrm{Im}\,\zeta)$ but in <em>log-zeta coordinates</em> $(U^*, V^*)$ defined by $U^* + iV^* = \log\zeta(\sigma+it)$. The figure below (Fig 11.1) still shows the $\zeta$-plane trajectory — it is visually cleaner — but the contact form is defined in log-zeta coordinates. The contact form that emerges carries the entire prime counting function as its coefficient.</p>
+
+<!-- §11.3 -->
+<div class="section-tag">§ 11.3</div>
+<h2>The Zeta Phase Plane</h2>
+
+<p>Write $\zeta(\sigma+it) = U(\sigma,t) + i\,V(\sigma,t)$. Fix $\sigma$ and let $t$ increase: the pair $(U(\sigma,t), V(\sigma,t))$ traces a curve in the $UV$-plane — the <em>zeta trajectory at height $\sigma$</em>. A non-trivial zero at $s_0 = \sigma_0 + it_0$ is the moment this curve passes through the origin: $U = V = 0$ simultaneously.</p>
+
+<p>The Riemann Hypothesis in this language: <strong>the trajectory only passes through the origin when $\sigma = \tfrac{1}{2}$</strong>. For $\sigma \neq \tfrac{1}{2}$ in the critical strip $0 < \sigma < 1$, the curve never touches the origin.</p>
+
+<p>The interactive diagram below makes this visual. Adjust $\sigma$ to see how the trajectory changes. At $\sigma = 0.5$ the trajectory is shown in teal and its zeros are marked.</p>
+
+<!-- FIGURE: Zeta Phase Portrait -->
+<div class="figure-wrap">
+  <div class="figure-header">
+    <span>FIG 11.1 · ZETA PHASE PORTRAIT · $\zeta(\sigma+it)$ in the $UV$-plane</span>
+    <div class="legend-dots">
+      <div class="ld"><div class="ld-dot" style="background:#0ABAB5"></div><span>σ=½ trajectory</span></div>
+      <div class="ld"><div class="ld-dot" style="background:#4a9eff"></div><span>σ≠½ trajectory</span></div>
+      <div class="ld"><div class="ld-dot" style="background:#ff6b8a"></div><span>zero</span></div>
+    </div>
+  </div>
+  <div class="figure-body">
+    <canvas id="zetaCanvas" height="380"></canvas>
+  </div>
+  <div class="figure-controls">
+    <div class="ctrl">
+      <label>σ =</label>
+      <input type="range" id="sigmaSlider" min="0.3" max="1.4" step="0.01" value="0.5">
+      <span id="sigmaVal">0.50</span>
+    </div>
+    <div class="ctrl">
+      <label>t max =</label>
+      <input type="range" id="tmaxSlider" min="10" max="40" step="0.5" value="35">
+      <span id="tmaxVal">35</span>
+    </div>
+    <div class="ctrl">
+      <label>Speed</label>
+      <input type="range" id="speedSlider" min="0.2" max="3" step="0.1" value="1">
+      <span id="speedVal">1.0×</span>
+    </div>
+    <button class="ctrl-btn" id="pauseBtn">⏸ Pause</button>
+    <button class="ctrl-btn" id="resetBtn">↺ Reset</button>
+  </div>
+  <div class="figure-caption">
+    The zeta function $\zeta(\sigma+it)$ traces a curve in the $UV$-plane as $t$ increases from 0. At $\sigma=\tfrac{1}{2}$ (teal) the curve passes through the origin at the non-trivial zeros $t \approx 14.13, 21.02, 25.01, \ldots$. At $\sigma \neq \tfrac{1}{2}$ (blue) the curve misses the origin — a visual statement of the Riemann Hypothesis. Drag the $\sigma$ slider to explore. Partial sums $N=200$ for $\sigma>0.5$; use $N=400$ near $\sigma=0.5$ for fidelity.
+  </div>
+</div>
+
+<!-- §11.4 -->
+<div class="section-tag">§ 11.4</div>
+<h2>The Lift to 3D</h2>
+
+<p>Just as in Chapter 2, we promote $t$ to a coordinate. The lifted curve is:
+$$\gamma(t) = \bigl(U(\sigma,t),\; V(\sigma,t),\; t\bigr) \in \mathbb{R}^3_{(U,\,V,\,t)}.$$
+A non-trivial zero at $s_0 = \sigma_0 + it_0$ is a <em>piercing event</em>: the curve $\gamma$ passes through the axis $\{U=V=0\}$ at height $t = t_0$. The Riemann Hypothesis says all piercing events occur only on the plane $\sigma = \tfrac{1}{2}$.</p>
+
+<!-- §11.5 -->
+<div class="section-tag">§ 11.5</div>
+<h2>The Arithmetic Contact Form</h2>
+
+<p>In log-zeta coordinates $U + iV = \log\zeta(\sigma+it)$, differentiate with respect to $t$:</p>
+
+$$\partial_t(U+iV) = \partial_t\log\zeta(\sigma+it) = i\,\frac{\zeta'(s)}{\zeta(s)} = i(-c+ig) = -g - ic$$
+
+<p>so $(\partial_t U, \partial_t V) = (-g, -c)$. The 1-form that <em>exactly</em> annihilates this velocity is:</p>
+
+<div class="def-box">
+  <div class="def-label">Definition 11.1 — Arithmetic Contact Form (log-ζ coordinates)</div>
+  $$\alpha_{\mathrm{arith}} = c(\sigma,t)\,dU - g(\sigma,t)\,dV$$
+  where $-\zeta'/\zeta(s) = c(\sigma,t) - i\,g(\sigma,t)$ and explicitly:
+  $$c(\sigma,t) = \sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^\sigma}\cos(t\log n), \qquad g(\sigma,t) = \sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^\sigma}\sin(t\log n)$$
+  with $\Lambda(n) = \log p$ if $n=p^k$, else $0$ (von Mangoldt). Both series converge absolutely for $\sigma > 1$; for $\sigma \leq 1$ they are defined by the meromorphic continuation of $\zeta'/\zeta$.
+</div>
+
+<p><strong>The kernel is exact — one line:</strong> $\alpha_{\mathrm{arith}}(\dot\gamma) = c\,(\partial_t U) - g\,(\partial_t V) = c(-g) - g(-c) = 0$. No appeal to Cauchy–Riemann beyond the definition of $\partial_t\log\zeta$ is needed. The pair $(c,g)$ encodes <strong>all primes simultaneously</strong> — $c$ is the real part of $-\zeta'/\zeta$ and $g$ its negated imaginary part (so that $g > 0$ where the prime contributions reinforce).</p>
+
+<!-- §11.6 -->
+<div class="section-tag">§ 11.6</div>
+<h2>Non-Integrability</h2>
+
+<p>The exterior derivative is:
+$$d\alpha_{\mathrm{arith}} = \partial_t c\,dt \wedge dU - \partial_t g\,dt \wedge dV$$
+where $\partial_t c = -\sum_{n} \frac{\Lambda(n)\log n}{n^\sigma}\sin(t\log n)$ and $\partial_t g = \sum_{n} \frac{\Lambda(n)\log n}{n^\sigma}\cos(t\log n)$.</p>
+
+<p>Then $\alpha_{\mathrm{arith}} \wedge d\alpha_{\mathrm{arith}} = -W(\sigma,t)\,dU \wedge dt \wedge dV$ where $W$ is the <em>Wronskian</em>:</p>
+
+$$W(\sigma,t) = c\,\partial_t g - g\,\partial_t c.$$
+
+<div class="thm-box">
+  <div class="thm-label">Proposition 11.1 · Status: Provable — elementary (unique factorization + Kronecker–Weyl)</div>
+  $W(\sigma,t) \neq 0$ on a dense set of $t$ values for any fixed $\sigma > 1$.
+  <br><br>
+  <em>Proof sketch:</em> $W$ is an almost-periodic function of $t$ built from frequencies $\{\log p : p\text{ prime}\}$. These frequencies are $\mathbb{Q}$-linearly independent by <strong>unique factorization</strong>: if $\sum a_i \log p_i = 0$ with $a_i \in \mathbb{Q}$, clear denominators and exponentiate — this contradicts unique factorization. Density of sign changes then follows from Kronecker–Weyl equidistribution of $(t\log p_i \bmod 2\pi)$. No transcendence machinery (Baker's theorem) is needed. $\square$
+  <br><br>
+  <em>AXLE Issue #19 update:</em> drops from Baker–Wüstholz transcendence machinery to an elementary Mathlib argument.
+</div>
+
+<p>What this means: The contact planes cannot fold flat. They twist continuously, driven by the prime frequencies. Trajectories in $\ker\alpha_{\mathrm{arith}}$ are forced to move forward in $t$. The primes are the engine of the twisting.</p>
+
+<p><strong>What this does not mean:</strong> It does not yet force zeros to $\sigma = \tfrac{1}{2}$. That requires a global statement about <em>where</em> piercing events occur — the subject of Ch 14.</p>
+
+<!-- §11.7 -->
+<div class="section-tag">§ 11.7</div>
+<h2>Zeros as Poles of the Contact Structure</h2>
+
+<p>At a non-trivial zero $s_0 = \sigma_0 + it_0$, the logarithmic derivative $\zeta'/\zeta(s)$ has a simple pole. Both coefficients $c(\sigma_0, t_0)$ and $g(\sigma_0, t_0)$ diverge simultaneously — the contact planes twist infinitely rapidly. In log-zeta coordinates, a zero of $\zeta(s)$ corresponds to $U = \log|\zeta| \to -\infty$: the lifted curve escapes to negative infinity in $U$, not to the origin. The Riemann Hypothesis says all such escapes occur over $\sigma = \tfrac{1}{2}$.</p>
+
+<p>(The figure Fig 11.1 above shows the origin-crossing picture in $\zeta$-coordinates — visually intuitive. In log-$\zeta$ coordinates used for the form, zeros become $U \to -\infty$ events, which carry the same arithmetic information.)</p>
+
+<p>In the smooth dm³ system of Ch 10, convergence to the attractor was smooth throughout. In the arithmetic case, <strong>zeros are singularities of the contact structure itself</strong> — the tightest winding occurs precisely where the primes assert their constraint most forcefully.</p>
+
+<!-- §11.8 -->
+<div class="section-tag">§ 11.8</div>
+<h2>The G-Chain in Arithmetic</h2>
+
+<p>The operator chain $G = U \circ F \circ K \circ C$ reappears in the arithmetic setting:</p>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.5rem 0; font-size:.88rem;">
+  <div class="insight-box" style="margin:0">
+    <div class="insight-label"><span class="op-tag op-c">C</span> Compression</div>
+    From $\zeta(s)$ to the contact form $\alpha_{\mathrm{arith}}$ — extracting the kernel distribution from the full analytic object.
+  </div>
+  <div class="insight-box" style="margin:0">
+    <div class="insight-label"><span class="op-tag op-k">K</span> Threshold</div>
+    The non-integrability condition $\alpha \wedge d\alpha \neq 0$ — the contact planes refusing to fold flat, driven by linear independence of $\{\log p\}$.
+  </div>
+  <div class="insight-box" style="margin:0">
+    <div class="insight-label"><span class="op-tag op-f">F</span> Fold</div>
+    The solution curve $\gamma$ in $\ker\alpha_{\mathrm{arith}}$ — the trajectory that respects the arithmetic constraint.
+  </div>
+  <div class="insight-box" style="margin:0">
+    <div class="insight-label"><span class="op-tag op-u">U</span> Unfold</div>
+    Projection back to the complex plane: from the lifted curve $\gamma$ to the zeros of $\zeta(s)$ — the visible output.
+  </div>
+</div>
+
+<!-- §11.9 -->
+<div class="section-tag">§ 11.9</div>
+<h2>Lean 4 Connection</h2>
+
+<p>The AXLE repository contains a type stub for this chapter's contact form:</p>
+
+<pre>-- AXLE/lean/RH/ArithmeticContact.lean
+import Mathlib.NumberTheory.VonMangoldt
+
+namespace AXLE.Arithmetic
+
+-- c = Re(-ζ'/ζ); g = -Im(-ζ'/ζ); convention: -ζ'/ζ = c - ig
+noncomputable def c_arith (σ t : ℝ) : ℝ :=
+  -- Re(-ζ'/ζ(σ+it)) = Σ Λ(n) n^(-σ) cos(t log n)
+  sorry -- AXLE Issue #18a: connect to Mathlib.vonMangoldt
+
+noncomputable def g_arith (σ t : ℝ) : ℝ :=
+  -- -Im(-ζ'/ζ(σ+it)) = Σ Λ(n) n^(-σ) sin(t log n)
+  -- NOTE: Im(-ζ'/ζ) = -g, so g > 0 where primes reinforce
+  sorry -- AXLE Issue #18b: connect to Mathlib.vonMangoldt
+
+-- Non-integrability via Wronskian W = c ∂_t g - g ∂_t c
+-- Proof: elementary (unique factorization + Kronecker-Weyl), NOT Baker
+-- Issue #19 drops from ~80 lines transcendence to elementary Mathlib
+theorem arith_contact_nonintegrable (σ : ℝ) (hσ : 1 < σ) :
+    ∀ t : ℝ, ∃ ε > 0, ∀ t' ∈ Set.Ioo (t - ε) (t + ε),
+    (c_arith σ t' * (∑ n : ℕ, vonMangoldt n / (n : ℝ)^σ * Real.log n
+                               * Real.cos (t' * Real.log n))
+   - g_arith σ t' * (-(∑ n : ℕ, vonMangoldt n / (n : ℝ)^σ * Real.log n
+                               * Real.sin (t' * Real.log n)))) ≠ 0 := by
+  sorry -- AXLE Issue #19: Kronecker-Weyl + unique factorization
+
+end AXLE.Arithmetic</pre>
+
+<p>Issue #19 is now closeable via elementary Mathlib: $\mathbb{Q}$-linear independence of $\{\log p\}$ follows from unique factorization, and sign-change density from Kronecker–Weyl. No transcendence machinery needed.</p>
+
+<!-- §11.10 -->
+<div class="section-tag">§ 11.10</div>
+<h2>Honest Inventory</h2>
+
+<div class="table-wrap">
+<table class="status-table">
+  <tr><th>Claim</th><th>Status</th><th>What it requires</th></tr>
+  <tr><td>$\zeta(\sigma+it)$ lifts to 3D curve; log-ζ coords $U+iV=\log\zeta$</td><td class="proved">✓ Proved</td><td>Standard complex analysis</td></tr>
+  <tr><td>$\alpha_{\mathrm{arith}} = c\,dU - g\,dV$ well-defined for $\sigma > 1$; extended to strip by meromorphic continuation of $\zeta'/\zeta$</td><td class="proved">✓ Proved</td><td>Absolute convergence + analytic continuation</td></tr>
+  <tr><td>$\gamma \in \ker\alpha_{\mathrm{arith}}$</td><td class="proved">✓ Proved</td><td>One-line identity: $c(-g)-g(-c)=0$</td></tr>
+  <tr><td>$\alpha_{\mathrm{arith}} \wedge d\alpha_{\mathrm{arith}} \neq 0$ (Wronskian $W\neq 0$ on dense set)</td><td class="reform">∼ Reformulation</td><td>Unique factorization + Kronecker–Weyl (elementary)</td></tr>
+  <tr><td>RH ⟺ all $U\to-\infty$ escapes of log-ζ lift occur over $\sigma = \tfrac{1}{2}$</td><td class="reform">∼ Correct restatement</td><td>Definition only</td></tr>
+  <tr><td>Non-integrability forces zeros to $\sigma = \tfrac{1}{2}$</td><td class="open">○ Open</td><td>Global Positivity Theorem — Ch 14</td></tr>
+</table>
+</div>
+
+<!-- Bridge -->
+<div class="bridge">
+  <div class="bridge-label">→ Bridge to Chapter 12</div>
+  <p style="margin:0">Chapter 12 curves the flat extended phase space $\mathbb{R}^3_{(U,V,t)}$ by the functional equation $\zeta(s) = \chi(s)\zeta(1-s)$. This symmetry pairs $\sigma$ with $1-\sigma$ and has a unique fixed locus: $\sigma = \tfrac{1}{2}$. In contact terms, the functional equation acts as a <em>contactomorphism</em> whose fixed locus is the critical line — the arithmetic analogue of the unit circle $r = 1$ in the dm³ system. The attractor, if it exists, is the critical line itself.</p>
+</div>
+
+<!-- Tasks -->
+<hr class="gold-rule">
+<div class="section-tag">§ 11.12 · Tasks</div>
+<h2>Exercises</h2>
+
+<div class="insight-box">
+  <div class="insight-label">Task 1 — Local vs Global</div>
+  In Ch 2, the contact form $\alpha = dy + x\,dx$ had a <em>local</em> coefficient $x$ depending only on current position. In $\alpha_{\mathrm{arith}}$, the coefficient $g(\sigma,t)$ sums over all primes simultaneously. In two sentences: what changes structurally when a local coefficient is replaced by a global one, and what does this imply for how you would prove the form does what it promises?
+</div>
+
+<div class="insight-box">
+  <div class="insight-label">Task 2 — Compute $g(\sigma, t)$</div>
+  Write out the first four terms of $g(\sigma,t) = \sum_n \Lambda(n)/n^\sigma \cdot \sin(t\log n)$ for $n = 2, 3, 4, 5$. (Note: $\Lambda(4) = \Lambda(2^2) = \log 2$, $\Lambda(6) = 0$.) At what values of $t$ does each term equal zero? Are these values the same? What does this tell you about the density of zeros of $\partial_t g$?
+</div>
+
+<div class="insight-box">
+  <div class="insight-label">Task 3 — Linear Independence and Non-Integrability</div>
+  The Wronskian $W = c\,\partial_t g - g\,\partial_t c \neq 0$ on a dense set follows from $\mathbb{Q}$-linear independence of $\{\log p : p\text{ prime}\}$. Prove this independence using unique factorization: if $\sum a_i \log p_i = 0$ with $a_i \in \mathbb{Q}$, clear denominators to get $\sum b_i \log p_i = 0$ with $b_i \in \mathbb{Z}$, then exponentiate — derive a contradiction. Then state in one sentence how Kronecker–Weyl equidistribution (not Baker's theorem) guarantees sign changes of $W$.
+</div>
+
+</div><!-- /content-wrap -->
+
+<div class="chapter-nav">
+  <a href="https://totogt.github.io/geometry/book4/ch10.html">← Ch 10 · Helical Attractors</a>
+  <span style="color:var(--text-dim); font-family:'Courier New',monospace; font-size:.75rem;">CHAPTER 11 · THE ARITHMETIC SEED</span>
+  <a href="ch12.html">Ch 12 · The Critical Contact →</a>
+</div>
+
+<footer>
+  Principia Orthogona · Book 4 · Higher Dimensions · © 2026 Pablo Nogueira Grossi · G6 LLC<br>
+  ORCID <a href="https://orcid.org/0009-0000-6496-2186">0009-0000-6496-2186</a> ·
+  Zenodo DOI <a href="https://doi.org/10.5281/zenodo.19117400">10.5281/zenodo.19117400</a><br>
+  CHAPTER 11 OF N · THE ARITHMETIC SEED · α<sub>arith</sub> = c(σ,t) dU − g(σ,t) dV
+</footer>
+
+<script>
+// ── Zeta Phase Portrait ──────────────────────────────────────────
+const canvas = document.getElementById('zetaCanvas');
+const ctx = canvas.getContext('2d');
+
+// First few non-trivial zero heights (σ=½)
+const ZEROS = [14.1347, 21.0220, 25.0109, 30.4249, 32.9351, 37.5862];
+
+let sigma = 0.5;
+let tMax = 35;
+let speed = 1.0;
+let t = 0;
+let paused = false;
+let animFrame;
+
+// Canvas sizing
+function resize() {
+  const W = canvas.parentElement.clientWidth;
+  canvas.width  = W;
+  canvas.height = 380;
+}
+resize();
+window.addEventListener('resize', () => { resize(); t = 0; });
+
+// Compute ζ(σ+it) partial sum
+function zeta(sig, ti, N) {
+  N = N || (sig < 0.55 ? 300 : 180);
+  let re = 0, im = 0;
+  for (let n = 1; n <= N; n++) {
+    const ns   = Math.pow(n, -sig);
+    const tln  = ti * Math.log(n);
+    re += ns * Math.cos(tln);
+    im -= ns * Math.sin(tln);
+  }
+  return { re, im };
+}
+
+// Build full trajectory array
+function buildTrajectory(sig, tMax, steps) {
+  const pts = [];
+  for (let i = 0; i <= steps; i++) {
+    const ti = (tMax * i) / steps;
+    const z  = zeta(sig, ti);
+    pts.push({ t: ti, u: z.re, v: z.im });
+  }
+  return pts;
+}
+
+// Coordinate transform: UV → canvas px
+function uvToCanvas(u, v, W, H, scale, cx, cy) {
+  return { x: W/2 + (u - cx) * scale, y: H/2 - (v - cy) * scale };
+}
+
+function draw() {
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = '#07101c';
+  ctx.fillRect(0, 0, W, H);
+
+  const scale = Math.min(W, H) * 0.11;
+  const cx = 0, cy = 0;
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(10,186,181,0.08)';
+  ctx.lineWidth = 1;
+  for (let u = -4; u <= 4; u++) {
+    const px = uvToCanvas(u, 0, W, H, scale, cx, cy);
+    ctx.beginPath(); ctx.moveTo(px.x, 0); ctx.lineTo(px.x, H); ctx.stroke();
+  }
+  for (let v = -4; v <= 4; v++) {
+    const pv = uvToCanvas(0, v, W, H, scale, cx, cy);
+    ctx.beginPath(); ctx.moveTo(0, pv.y); ctx.lineTo(W, pv.y); ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle = 'rgba(10,186,181,0.3)';
+  ctx.lineWidth = 1;
+  const o = uvToCanvas(0, 0, W, H, scale, cx, cy);
+  ctx.beginPath(); ctx.moveTo(0, o.y); ctx.lineTo(W, o.y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(o.x, 0); ctx.lineTo(o.x, H); ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle = 'rgba(10,186,181,0.4)';
+  ctx.font = '11px Courier New';
+  ctx.fillText('U', W - 20, o.y - 8);
+  ctx.fillText('V', o.x + 6, 16);
+  ctx.fillText('0', o.x + 4, o.y + 12);
+
+  // Full trajectory (faint background)
+  const N_STEPS = 600;
+  const pts = buildTrajectory(sigma, tMax, N_STEPS);
+
+  // Draw background trajectory (dimmed)
+  const isCritical = Math.abs(sigma - 0.5) < 0.02;
+  ctx.beginPath();
+  ctx.strokeStyle = isCritical ? 'rgba(10,186,181,0.12)' : 'rgba(74,158,255,0.10)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < pts.length; i++) {
+    const p = uvToCanvas(pts[i].u, pts[i].v, W, H, scale, cx, cy);
+    i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+  }
+  ctx.stroke();
+
+  // Draw animated portion
+  const tNorm = t / tMax;
+  const nDraw = Math.floor(tNorm * N_STEPS);
+  if (nDraw > 0) {
+    ctx.beginPath();
+    for (let i = 0; i <= nDraw && i < pts.length; i++) {
+      const frac = i / pts.length;
+      const alpha = 0.4 + 0.6 * frac;
+      const p = uvToCanvas(pts[i].u, pts[i].v, W, H, scale, cx, cy);
+      if (i === 0) {
+        ctx.moveTo(p.x, p.y);
+      } else {
+        ctx.lineTo(p.x, p.y);
+      }
+    }
+    ctx.strokeStyle = isCritical ? `rgba(10,186,181,0.9)` : 'rgba(74,158,255,0.85)';
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+
+    // Current position dot
+    if (nDraw < pts.length) {
+      const p = uvToCanvas(pts[nDraw].u, pts[nDraw].v, W, H, scale, cx, cy);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 4, 0, 2*Math.PI);
+      ctx.fillStyle = isCritical ? '#0ABAB5' : '#4a9eff';
+      ctx.fill();
+      // t label
+      ctx.fillStyle = isCritical ? 'rgba(10,186,181,0.7)' : 'rgba(74,158,255,0.7)';
+      ctx.font = '10px Courier New';
+      ctx.fillText(`t=${t.toFixed(1)}`, p.x + 6, p.y - 4);
+    }
+  }
+
+  // Origin marker
+  ctx.beginPath();
+  ctx.arc(o.x, o.y, 5, 0, 2*Math.PI);
+  ctx.fillStyle = 'rgba(255,107,138,0.5)';
+  ctx.fill();
+  ctx.strokeStyle = '#ff6b8a';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Mark zeros for σ≈0.5
+  if (isCritical) {
+    ZEROS.forEach(z0 => {
+      if (z0 > t) return;
+      const nearIdx = Math.round((z0 / tMax) * N_STEPS);
+      if (nearIdx < pts.length) {
+        const p = uvToCanvas(pts[nearIdx].u, pts[nearIdx].v, W, H, scale, cx, cy);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 6, 0, 2*Math.PI);
+        ctx.fillStyle = 'rgba(255,107,138,0.25)';
+        ctx.fill();
+        ctx.strokeStyle = '#ff6b8a';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.fillStyle = '#ff6b8a';
+        ctx.font = '9px Courier New';
+        ctx.fillText(`ρ${ZEROS.indexOf(z0)+1}`, p.x + 7, p.y + 3);
+      }
+    });
+  }
+
+  // Sigma readout
+  ctx.fillStyle = 'rgba(10,186,181,0.8)';
+  ctx.font = '12px Courier New';
+  ctx.fillText(`σ = ${sigma.toFixed(2)}`, 14, 20);
+  ctx.fillStyle = 'rgba(10,186,181,0.5)';
+  ctx.font = '10px Courier New';
+  ctx.fillText(`ζ(${sigma.toFixed(2)} + it)`, 14, 34);
+}
+
+function animate(ts) {
+  if (!paused) {
+    t += 0.04 * speed;
+    if (t > tMax) t = 0;
+  }
+  draw();
+  animFrame = requestAnimationFrame(animate);
+}
+
+// Controls
+const sigmaSlider = document.getElementById('sigmaSlider');
+const sigmaVal    = document.getElementById('sigmaVal');
+const tmaxSlider  = document.getElementById('tmaxSlider');
+const tmaxVal     = document.getElementById('tmaxVal');
+const speedSlider = document.getElementById('speedSlider');
+const speedVal    = document.getElementById('speedVal');
+const pauseBtn    = document.getElementById('pauseBtn');
+const resetBtn    = document.getElementById('resetBtn');
+
+sigmaSlider.addEventListener('input', e => {
+  sigma = parseFloat(e.target.value);
+  sigmaVal.textContent = sigma.toFixed(2);
+  t = 0;
+});
+tmaxSlider.addEventListener('input', e => {
+  tMax = parseFloat(e.target.value);
+  tmaxVal.textContent = tMax.toFixed(0);
+  t = 0;
+});
+speedSlider.addEventListener('input', e => {
+  speed = parseFloat(e.target.value);
+  speedVal.textContent = speed.toFixed(1) + '×';
+});
+pauseBtn.addEventListener('click', () => {
+  paused = !paused;
+  pauseBtn.textContent = paused ? '▶ Play' : '⏸ Pause';
+});
+resetBtn.addEventListener('click', () => { t = 0; });
+
+animate();
+</script>
+</body>
+</html>

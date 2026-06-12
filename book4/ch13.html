@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch 13 · The Adelic Tesseract · Principia Orthogona Book 4</title>
+<script>
+MathJax = { tex: { inlineMath:[['$','$']], displayMath:[['$$','$$']] }, options: { skipHtmlTags:['script','noscript','style','textarea'] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+<style>
+:root {
+  --gold:#0ABAB5; --gold-dim:#076b68;
+  --dark:#05080f; --surface:#0c1420; --surface2:#101e2e;
+  --text:#cdd8e8; --text-dim:#6a8099;
+  --c-color:#4a9eff; --k-color:#e05a3a; --f-color:#50c878;
+  --u-color:#c084fc; --t-color:#f9c74f; --g-color:#0ABAB5;
+  --zero-color:#ff6b8a;
+  --p2:#ff6b8a; --p3:#f9c74f; --p5:#50c878; --p7:#c084fc;
+  --p11:#4a9eff; --p13:#ff9f43; --p17:#0ABAB5;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--dark); color:var(--text); font-family:Georgia,serif; font-size:18px; line-height:1.75; }
+nav { position:sticky; top:0; z-index:100; background:rgba(5,8,15,.96); border-bottom:1px solid var(--gold-dim); padding:.6rem 2rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.5rem; }
+.nav-logo { font-family:Georgia,serif; font-size:.85rem; letter-spacing:.18em; color:var(--gold); text-decoration:none; }
+.nav-links { display:flex; gap:1.2rem; font-size:.78rem; flex-wrap:wrap; }
+.nav-links a { color:var(--text-dim); text-decoration:none; letter-spacing:.08em; transition:color .2s; }
+.nav-links a:hover, .nav-links a.active { color:var(--gold); }
+.po-ring-strip { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.4rem; padding:.45rem 1.4rem; background:rgba(0,0,0,.55); border-bottom:1px solid var(--gold-dim); font-family:'Courier New',monospace; font-size:.72rem; letter-spacing:.08em; }
+.po-ring-strip a { color:var(--gold); text-decoration:none; opacity:.85; }
+.po-ring-strip a:hover { opacity:1; text-decoration:underline; }
+.po-ring-badge { display:inline-flex; align-items:center; gap:.5rem; color:var(--gold); }
+.po-ring-num { font-weight:700; letter-spacing:.15em; }
+.po-ring-sep { opacity:.4; }
+.po-ring-meta { opacity:.7; }
+.po-ring-ends { display:flex; gap:1rem; }
+.book-hero { background:linear-gradient(160deg,#030610 0%,#061018 50%,#030610 100%); border-bottom:1px solid rgba(10,186,181,.15); padding:5rem 2rem 4rem; text-align:center; position:relative; overflow:hidden; }
+.book-hero::before { content:''; position:absolute; inset:0; background-image: radial-gradient(circle at 20% 40%,rgba(80,200,120,.05) 0%,transparent 50%), radial-gradient(circle at 80% 60%,rgba(10,186,181,.06) 0%,transparent 55%), radial-gradient(circle at 50% 20%,rgba(192,132,252,.04) 0%,transparent 45%); animation:heroGlow 10s ease-in-out infinite alternate; pointer-events:none; }
+@keyframes heroGlow { 0%{opacity:.5} 100%{opacity:1} }
+.series-label { font-size:.7rem; letter-spacing:.3em; color:var(--text-dim); text-transform:uppercase; margin-bottom:1.2rem; position:relative; }
+.chapter-num { font-size:.75rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:.5rem; font-family:'Courier New',monospace; position:relative; }
+.book-title { font-size:clamp(2rem,6vw,3.8rem); font-weight:400; letter-spacing:.04em; color:var(--text); line-height:1.15; position:relative; margin-bottom:.5rem; }
+.book-subtitle { font-size:clamp(.85rem,2vw,1.1rem); color:var(--text-dim); font-style:italic; max-width:600px; margin:0 auto 1.5rem; position:relative; }
+.operator-display { font-family:'Courier New',monospace; font-size:1.1rem; letter-spacing:.15em; position:relative; margin-bottom:1.5rem; }
+.operator-display .c{color:var(--c-color)} .operator-display .k{color:var(--k-color)} .operator-display .f{color:var(--f-color)} .operator-display .u{color:var(--u-color)} .operator-display .g{color:var(--g-color)}
+.hero-meta { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; font-size:.75rem; letter-spacing:.12em; color:var(--text-dim); position:relative; }
+.hero-badge { background:rgba(10,186,181,.1); border:1px solid rgba(10,186,181,.25); padding:.25rem .9rem; border-radius:2px; color:var(--gold); }
+.content-wrap { max-width:780px; margin:0 auto; padding:3rem 2rem 4rem; }
+h2 { font-size:1.4rem; font-weight:400; color:var(--gold); margin:3rem 0 1rem; letter-spacing:.06em; }
+h3 { font-size:1.1rem; font-weight:600; color:var(--text); margin:2rem 0 .7rem; }
+p { margin-bottom:1.1rem; }
+strong { color:var(--text); } em { color:var(--gold); font-style:normal; }
+.section-tag { font-family:'Courier New',monospace; font-size:.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:.3rem; opacity:.8; }
+.gold-rule { border:none; border-top:1px solid var(--gold-dim); margin:2.5rem 0; opacity:.4; }
+.insight-box { background:rgba(10,186,181,.06); border:1px solid rgba(10,186,181,.2); padding:1.2rem 1.5rem; margin:2rem 0; border-radius:4px; }
+.insight-label { font-size:.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; font-family:'Courier New',monospace; margin-bottom:.4rem; }
+.thm-box { background:rgba(10,186,181,.04); border:1px solid rgba(10,186,181,.3); border-radius:4px; padding:1.2rem 1.5rem; margin:1.8rem 0; }
+.thm-label { font-size:.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; font-family:'Courier New',monospace; margin-bottom:.5rem; }
+.def-box { background:rgba(74,158,255,.05); border:1px solid rgba(74,158,255,.25); border-radius:4px; padding:1.2rem 1.5rem; margin:1.8rem 0; }
+.def-label { font-size:.7rem; letter-spacing:.2em; color:var(--c-color); text-transform:uppercase; font-family:'Courier New',monospace; margin-bottom:.5rem; }
+.status-table { width:100%; border-collapse:collapse; font-size:14px; margin:1.5rem 0; }
+.status-table th { background:var(--surface2); color:var(--gold); font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; font-family:'Courier New',monospace; padding:.6rem .8rem; text-align:left; border-bottom:1px solid var(--gold-dim); }
+.status-table td { padding:.5rem .8rem; border-bottom:1px solid #1a2e42; color:var(--text); }
+.status-table tr:hover td { background:var(--surface2); }
+.proved{color:var(--f-color);font-weight:600} .open{color:var(--zero-color);font-weight:600} .reform{color:var(--gold);font-weight:600}
+.figure-wrap { margin:2.5rem 0; border:1px solid #1a2e42; border-radius:6px; overflow:hidden; background:var(--surface); }
+.figure-header { background:var(--surface2); border-bottom:1px solid #1a2e42; padding:.6rem 1rem; display:flex; justify-content:space-between; align-items:center; font-family:'Courier New',monospace; font-size:.72rem; letter-spacing:.1em; color:var(--gold); flex-wrap:wrap; gap:.5rem; }
+canvas { display:block; width:100%; }
+.figure-controls { background:var(--surface2); border-top:1px solid #1a2e42; padding:.8rem 1rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+.ctrl { display:flex; align-items:center; gap:.4rem; font-size:.78rem; color:var(--text-dim); font-family:'Courier New',monospace; }
+.ctrl label { color:var(--gold); font-size:.7rem; letter-spacing:.1em; }
+.ctrl span { color:var(--text); }
+input[type=range] { -webkit-appearance:none; width:80px; height:3px; background:#1a2e42; border-radius:2px; outline:none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:11px; height:11px; background:var(--gold); border-radius:50%; cursor:pointer; }
+.ctrl-btn { background:var(--gold-dim); color:var(--gold); border:none; padding:.25rem .7rem; font:700 .68rem 'Courier New',monospace; cursor:pointer; border-radius:2px; transition:background .15s; }
+.ctrl-btn:hover { background:var(--gold); color:var(--dark); }
+.prime-btn { border:1px solid; padding:.2rem .5rem; font:700 .68rem 'Courier New',monospace; cursor:pointer; border-radius:2px; transition:all .15s; background:transparent; }
+.prime-btn.on { opacity:1; }
+.prime-btn.off { opacity:.35; filter:saturate(0); }
+.figure-caption { padding:.8rem 1rem; font:italic 13px/1.5 Georgia; color:var(--text-dim); border-top:1px solid #1a2e42; }
+.bridge { background:rgba(10,186,181,.05); border:1px solid rgba(10,186,181,.25); border-radius:6px; padding:1.5rem; margin:2.5rem 0; }
+.bridge-label { font-size:.7rem; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; font-family:'Courier New',monospace; margin-bottom:.7rem; }
+.chapter-nav { display:flex; justify-content:space-between; align-items:center; padding:2rem 0; border-top:1px solid #1a2e42; margin-top:3rem; }
+.chapter-nav a { color:var(--gold); text-decoration:none; font-size:.85rem; letter-spacing:.08em; border:1px solid rgba(10,186,181,.25); padding:.5rem 1rem; border-radius:2px; transition:all .2s; font-family:'Courier New',monospace; }
+.chapter-nav a:hover { background:rgba(10,186,181,.08); }
+footer { text-align:center; padding:2rem; font-size:.72rem; letter-spacing:.12em; color:var(--text-dim); border-top:1px solid #1a2e42; }
+footer a { color:var(--gold-dim); text-decoration:none; }
+mjx-container { overflow-x:auto; max-width:100%; display:block !important; }
+.table-wrap { overflow-x:auto; }
+pre { background:#07111d; border:1px solid #1a2e42; border-left:3px solid var(--gold-dim); padding:1.2rem; border-radius:0 4px 4px 0; overflow-x:auto; margin:1.5rem 0; color:#8ac0e0; font:13px/1.6 'Courier New',monospace; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://totogt.github.io/geometry/book4/index.html" class="nav-logo">⚜ PRINCIPIA ORTHOGONA · BOOK 4 ⚜</a>
+  <div class="nav-links">
+    <a href="https://totogt.github.io/geometry/book4/ch10.html">Ch 10</a>
+    <a href="ch11.html">Ch 11</a>
+    <a href="ch12.html">Ch 12</a>
+    <a href="ch13.html" class="active">Ch 13</a>
+    <a href="ch14.html">Ch 14</a>
+  </div>
+</nav>
+
+<div class="po-ring-strip">
+  <div class="po-ring-badge">
+    <span class="po-ring-num">G4 · RH Arc</span>
+    <span class="po-ring-sep">·</span>
+    <span class="po-ring-meta">Operator <span style="color:var(--f-color)">F</span> · CEFR C1 · Book 4 · Ch 13</span>
+  </div>
+  <div class="po-ring-ends">
+    <a href="ch12.html">← Ch 12 · Critical Contact</a>
+    <a href="ch14.html">Ch 14 · Positivity Rung →</a>
+  </div>
+</div>
+
+<section class="book-hero">
+  <div class="series-label">Principia Orthogona · Volume IV · Higher Dimensions Arc</div>
+  <div class="chapter-num">Chapter 13 · Operator <span style="color:var(--f-color)">F</span> · Fold</div>
+  <h1 class="book-title">The Adelic Tesseract</h1>
+  <p class="book-subtitle">Local-to-Global — Assembling $\zeta(s)$ from its Prime Factors</p>
+  <div class="operator-display">
+    <span class="g">G</span> = <span class="u">U</span> ∘ <span class="f">F</span> ∘ <span class="k">K</span> ∘ <span class="c">C</span>
+    &nbsp;·&nbsp; <span style="color:var(--f-color)">$\zeta(s) = \prod_p (1-p^{-s})^{-1}$</span>
+  </div>
+  <div class="hero-meta">
+    <span class="hero-badge">Reformulation</span>
+    <span>p-adic local factors</span>
+    <span>Adelic assembly</span>
+    <span>Connes comparison</span>
+  </div>
+</section>
+
+<div class="content-wrap">
+
+<p>Chapters 11 and 12 treated $\zeta(s)$ as a single global analytic function. Chapter 13 disaggregates it: the Euler product formula $\zeta(s) = \prod_p (1-p^{-s})^{-1}$ writes $\zeta(s)$ as an infinite product over all primes $p = 2, 3, 5, 7, 11, \ldots$ simultaneously. Each factor $(1-p^{-s})^{-1}$ is a <em>local contribution</em> — the $p$-adic piece of the zeta function. The global contact form $\alpha_{\mathrm{arith}}$ decomposes into local contact forms $\alpha_p$, one for each prime.</p>
+
+<p>This decomposition is the <em>adelic structure</em>: the global arithmetic lives in a product space $\mathbb{A} = \mathbb{R} \times \prod_p \mathbb{Q}_p$ (the adele ring), and $\zeta(s)$ is a product of local $L$-functions on this space. Chapter 13 builds this explicitly and connects it to Connes' noncommutative geometry program.</p>
+
+<div class="insight-box">
+  <div class="insight-label">The central construction of Ch 13</div>
+  The global contact form $\alpha_{\mathrm{arith}} = c(\sigma,t)\,dU - g(\sigma,t)\,dV$ decomposes locally: each prime $p$ contributes a local factor $\alpha_p = c_p(\sigma,t)\,dU_p - g_p(\sigma,t)\,dV_p$ where
+  $$g_p(\sigma,t) = \frac{(\log p)\,p^{-\sigma}\sin(t\log p)}{1 - 2p^{-\sigma}\cos(t\log p) + p^{-2\sigma}}$$
+  (from the imaginary part of the local logarithmic derivative, as computed in §13.3). The global form is the adelic sum of these local pieces. This is the correct arithmetic-geometric decomposition — the F-fold of the GTCT chain manifested as a sum structure.
+</div>
+
+<!-- §13.1 -->
+<div class="section-tag">§ 13.1</div>
+<h2>The Telescope Metaphor</h2>
+
+<p>A telescope gathers light from distant stars by combining many optical elements — lenses, mirrors, apertures — each contributing to the final image. No single element sees the whole image; the whole emerges from the assembly. The astronomer can also work in reverse: disassemble the light into its wavelengths to understand the chemistry of the source.</p>
+
+<p>The Euler product is the telescope of $\zeta(s)$. Each prime $p$ is one optical element. The product $\prod_p (1-p^{-s})^{-1}$ assembles the full $\zeta(s)$ from its prime components. And just as spectroscopy decomposes light, the adelic structure decomposes $\zeta(s)$ into its local $p$-adic wavelengths.</p>
+
+<!-- §13.2 -->
+<div class="section-tag">§ 13.2</div>
+<h2>The Euler Product</h2>
+
+<div class="def-box">
+  <div class="def-label">The Euler Product (Euler 1737)</div>
+  For $\sigma > 1$:
+  $$\zeta(s) = \sum_{n=1}^\infty \frac{1}{n^s} = \prod_{p \text{ prime}} \frac{1}{1-p^{-s}}$$
+  This equality follows from unique factorization: every positive integer $n$ factors uniquely into prime powers $n = 2^{a_1} \cdot 3^{a_2} \cdot 5^{a_3} \cdots$, and expanding each factor as a geometric series $\sum_{k=0}^\infty p^{-ks}$ recovers the Dirichlet series.
+</div>
+
+<p>The diagram below animates the Euler product. Toggle individual primes to see how each local factor contributes to the global $|\zeta(\sigma+it)|$. The product of all primes up to the selected cutoff gives the partial approximation shown in gold.</p>
+
+<!-- FIGURE: Euler product animation -->
+<div class="figure-wrap">
+  <div class="figure-header">
+    <span>FIG 13.1 · EULER TELESCOPE · Building $\zeta(s)$ prime by prime</span>
+    <div style="font-size:.68rem; color:var(--text-dim)">Toggle primes · σ and t sliders</div>
+  </div>
+  <div class="figure-body">
+    <canvas id="eulerCanvas" height="420"></canvas>
+  </div>
+  <div class="figure-controls">
+    <div class="ctrl">
+      <label>σ=</label>
+      <input type="range" id="sig13" min="0.55" max="2.0" step="0.05" value="1.0">
+      <span id="sig13Val">1.00</span>
+    </div>
+    <div class="ctrl">
+      <label>t=</label>
+      <input type="range" id="t13" min="0" max="30" step="0.5" value="14.13">
+      <span id="t13Val">14.1</span>
+    </div>
+    <div style="display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;">
+      <span style="font-size:.68rem; color:var(--text-dim); font-family:'Courier New',monospace;">PRIMES:</span>
+      <button class="prime-btn on" data-p="2" style="color:var(--p2); border-color:var(--p2)">p=2</button>
+      <button class="prime-btn on" data-p="3" style="color:var(--p3); border-color:var(--p3)">p=3</button>
+      <button class="prime-btn on" data-p="5" style="color:var(--p5); border-color:var(--p5)">p=5</button>
+      <button class="prime-btn on" data-p="7" style="color:var(--p7); border-color:var(--p7)">p=7</button>
+      <button class="prime-btn on" data-p="11" style="color:var(--p11); border-color:var(--p11)">p=11</button>
+      <button class="prime-btn on" data-p="13" style="color:var(--p13); border-color:var(--p13)">p=13</button>
+      <button class="prime-btn on" data-p="17" style="color:var(--p17); border-color:var(--p17)">p=17</button>
+    </div>
+    <button class="ctrl-btn" id="animBtn13">▶ Animate t</button>
+    <button class="ctrl-btn" id="reset13Btn">↺ Reset</button>
+  </div>
+  <div class="figure-caption">
+    Each column shows the contribution of one prime $p$ to $\zeta(\sigma+it)$: the complex number $(1-p^{-s})^{-1}$ plotted as a unit in the product. The gold column shows the running product $\prod_{p \leq P}(1-p^{-s})^{-1}$. As more primes are included, the product converges to $\zeta(\sigma+it)$ (shown by the teal target). Toggle primes to see which contribute most. Near $t \approx 14.13$ (the first zero at $\sigma=\frac{1}{2}$), the product circles the origin.
+  </div>
+</div>
+
+<!-- §13.3 -->
+<div class="section-tag">§ 13.3</div>
+<h2>The Local Contact Forms</h2>
+
+<p>The logarithmic derivative of the Euler factor at $p$ is:
+$$-\frac{d}{ds}\log(1-p^{-s})^{-1} = \frac{\log p \cdot p^{-s}}{1-p^{-s}} = \sum_{k=1}^\infty (\log p)\, p^{-ks}$$</p>
+
+<p>This is the contribution of prime $p$ to $-\zeta'/\zeta(s) = \sum_n \Lambda(n)/n^s$. Writing $-\zeta'/\zeta = c - ig$ (so $c_p = \mathrm{Re}(\ldots)$ and $g_p = -\mathrm{Im}(\ldots)$), the local coefficients are:
+$$c_p(\sigma,t) = \mathrm{Re}\left(\frac{\log p \cdot p^{-s}}{1-p^{-s}}\right) = \frac{(\log p)\,p^{-\sigma}(1 - p^{-\sigma}\cos(t\log p))}{1 - 2p^{-\sigma}\cos(t\log p) + p^{-2\sigma}}$$
+$$g_p(\sigma,t) = -\mathrm{Im}\left(\frac{\log p \cdot p^{-s}}{1-p^{-s}}\right) = \frac{(\log p)\,p^{-\sigma}\sin(t\log p)}{1 - 2p^{-\sigma}\cos(t\log p) + p^{-2\sigma}}$$</p>
+<p>(Sign convention: $\mathrm{Im}(-\zeta'/\zeta) = -g$, so $g > 0$ where the prime-$p$ contribution reinforces. Both $c_p$ and $g_p$ have denominator $D = 1 - 2p^{-\sigma}\cos(t\log p) + p^{-2\sigma} > 0$.)</p>
+
+<div class="def-box">
+  <div class="def-label">Definition 13.1 — Local Arithmetic Contact Form at prime p</div>
+  $$\alpha_p = c_p(\sigma,t)\,dU_p - g_p(\sigma,t)\,dV_p$$
+  where $g_p$ is the local von Mangoldt coefficient at prime $p$. The global form satisfies:
+  $$g(\sigma,t) = \sum_p g_p(\sigma,t)$$
+  and hence $\alpha_{\mathrm{arith}} = \sum_p \alpha_p$ (additivity of local contributions).
+</div>
+
+<!-- §13.4 -->
+<div class="section-tag">§ 13.4</div>
+<h2>The p-adic Boundary and a Correction</h2>
+
+<p>The local factor $(1-p^{-s})^{-1}$ may be analysed $p$-adically by treating $c = p^{-s}$ as a variable in the open unit disk of $\mathbb{C}_p$ (the completion of $\overline{\mathbb{Q}}_p$). <em>Category note:</em> the arithmetic input has $s \in \mathbb{C}$, so $p^{-s} = e^{-s\log p} \in \mathbb{C}$; to apply $p$-adic norms one embeds $\mathbb{C}$ into $\mathbb{C}_p$ via a chosen field embedding. The analysis below works in $\mathbb{C}_p$ with $|c|_p$ the $p$-adic absolute value. The previous analysis claimed that as $|c|_p \to 1^-$, the denominator $(1-c)^2$ acquires positive $p$-adic valuation, "locking" the trajectory. This claim was incorrect:</p>
+
+<div class="insight-box" style="border-color:rgba(224,90,58,.4)">
+  <div class="insight-label" style="color:var(--k-color)">Correction — p-adic norm at the boundary</div>
+  By the ultrametric inequality: when $|c|_p < 1$ and $|1|_p = 1$, we have $|1-c|_p = \max(|1|_p, |c|_p) = 1$ throughout the entire interior of the unit disk. Therefore $|(1-c)^2|_p = 1$ everywhere inside, and $|g_p|_p = |c|_p = p^{-\sigma}$, which approaches <strong>1</strong> as $|c|_p \to 1^-$ — not 0.
+  <br><br>
+  The correct statement: the local form $\alpha_p$ is well-defined and non-degenerate on the open unit disk $|c|_p < 1$ in $\mathbb{C}_p$. The boundary $|c|_p = 1$ corresponds to poles of the local Euler factor $(1-p^{-s})^{-1}$, which occur at $p^{-s} = 1$, i.e.\ $s = 2\pi ik/\log p$ for $k \in \mathbb{Z}$. <strong>These are not "trivial zeros"</strong> of $\zeta(s)$ — trivial zeros of $\zeta$ are at $s = -2, -4, -6, \ldots$. The points $s = 2\pi ik/\log p$ are simply poles of a single Euler factor; globally they cancel in the full product. The global adelic form lives on the admissible domain away from these poles.
+</div>
+
+<!-- §13.5 -->
+<div class="section-tag">§ 13.5</div>
+<h2>Connection to Connes–Consani</h2>
+
+<p>Alain Connes' approach to the Riemann Hypothesis (1999, 2016 with Consani) uses noncommutative geometry to study the action of the idèle class group $\mathbb{A}^*/\mathbb{Q}^*$ on a noncommutative space. The spectral realization places the non-trivial zeros as eigenvalues of a self-adjoint operator, reducing RH to a positivity statement about that operator.</p>
+
+<div class="thm-box">
+  <div class="thm-label">Comparison — Contact geometry vs. Connes–Consani</div>
+  <table style="width:100%; font-size:.88rem;">
+    <tr style="color:var(--text-dim); font-size:.75rem; letter-spacing:.08em;">
+      <td style="padding:.3rem .5rem">This framework (Ch 11–13)</td>
+      <td style="padding:.3rem .5rem">Connes–Consani (2016)</td>
+    </tr>
+    <tr><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Contact form $\alpha_{\mathrm{arith}}$</td><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Spectral triple $(\mathcal{A}, \mathcal{H}, D)$</td></tr>
+    <tr><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Kernel $\ker\alpha_{\mathrm{arith}}$</td><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Hilbert space $\mathcal{H}$</td></tr>
+    <tr><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Non-integrability $\alpha \wedge d\alpha \neq 0$</td><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Spectral gap of $D$</td></tr>
+    <tr><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Global positivity of $\alpha \wedge d\alpha$ on $\ker\alpha$</td><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Positivity of Weil explicit formula</td></tr>
+    <tr><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Adelic decomposition $\alpha_{\mathrm{arith}} = \sum_p \alpha_p$</td><td style="padding:.3rem .5rem; border-top:1px solid #1a2e42">Local factors of the $L$-function</td></tr>
+  </table>
+  <p style="margin-top:.8rem; font-size:.88rem;">Both frameworks reduce RH to a positivity condition. The contact-geometric language is new; the underlying mathematics is in the same neighborhood as Connes'. The reformulation may be useful; it is not a proof.</p>
+</div>
+
+<!-- §13.6 -->
+<div class="section-tag">§ 13.6</div>
+<h2>The Function-Field Analogy</h2>
+
+<p>Over a function field $\mathbb{F}_q(X)$ (a finite field, not $\mathbb{Q}$), the analogue of the Riemann Hypothesis is <em>proved</em> — by Weil (1948) and Grothendieck/Deligne (1974). In this setting:</p>
+
+<ul style="margin:1rem 0 1rem 1.5rem; line-height:2.2;">
+  <li>The "zeta function" $Z(X/\mathbb{F}_q, T)$ is a <em>rational function</em> in $T = q^{-s}$: the Euler product is indexed by <em>closed points</em> of the curve $X$ (there are infinitely many), but the product telescopes to $Z = P(T)/((1-T)(1-qT))$ where $P(T)$ is a polynomial of degree $2g$ ($g$ = genus of $X$). Crucially, $Z$ has only <em>finitely many zeros</em> — the $2g$ roots of $P$.</li>
+  <li>Weil's RH for curves (Weil 1948, proved in full generality by Deligne 1974): all roots of $P(T)$ satisfy $|T| = q^{-1/2}$, i.e.\ the zeros lie on $\mathrm{Re}(s) = \tfrac{1}{2}$.</li>
+  <li>The key tool is <em>Riemann–Roch for the curve</em>: it controls the dimension of function spaces and provides the numerical inequality that forces the roots onto the critical line. In the number-field case, no such finite-dimensional bound exists — this is the core difficulty.</li>
+  <li>For the contact-geometric analogy: $\alpha_{\mathrm{arith}}$ in the function-field case involves finitely many non-zero Von Mangoldt contributions (since $\log \zeta$ is a rational function of $q^{-s}$, its power-series coefficients terminate). The Global Positivity condition of Ch 14 becomes a finite-dimensional statement, and Riemann–Roch supplies the proof.</li>
+</ul>
+
+<p>This is the key: in the function-field case, the positivity condition of Ch 14 collapses to a finite-dimensional statement governed by the Riemann–Roch theorem for curves. The contact-geometric framework, if valid, should reproduce this as a special case, with the analytic difficulty of the number-field case replaced by finite-dimensional curve geometry. Verifying this bridge is the concrete "proof of concept" for the reformulation.</p>
+
+<!-- §13.7 Honest Status -->
+<div class="section-tag">§ 13.7</div>
+<h2>Honest Status</h2>
+
+<div class="table-wrap">
+<table class="status-table">
+  <tr><th>Claim</th><th>Status</th></tr>
+  <tr><td>Euler product $\zeta(s) = \prod_p(1-p^{-s})^{-1}$</td><td class="proved">✓ Classical theorem</td></tr>
+  <tr><td>Local contact forms $\alpha_p$ are well-defined on $|c|_p < 1$</td><td class="proved">✓ Algebraically correct</td></tr>
+  <tr><td>Boundary of $|c|_p = 1$ is a pole wall, not a "soft lock"</td><td class="proved">✓ Corrected (ultrametric calculation)</td></tr>
+  <tr><td>Global form $\alpha_{\mathrm{arith}} = \sum_p \alpha_p$</td><td class="reform">∼ Reformulation (additive decomposition)</td></tr>
+  <tr><td>Function-field analogue confirms positivity approach</td><td class="reform">∼ Known (Weil/Deligne) — bridge not yet explicit</td></tr>
+  <tr><td>Adelic positivity implies zeros at $\sigma = \tfrac{1}{2}$</td><td class="open">○ Global Positivity — Ch 14</td></tr>
+</table>
+</div>
+
+<div class="bridge">
+  <div class="bridge-label">→ Bridge to Chapter 14</div>
+  <p style="margin:0">Chapter 13 assembled the arithmetic contact manifold from local pieces. Chapter 14 asks the one question that Chapters 11–13 have been building toward: <em>is the global 3-form $\alpha_{\mathrm{arith}} \wedge d\alpha_{\mathrm{arith}}$ positive-definite on $\ker\alpha_{\mathrm{arith}}$ at $\sigma = \tfrac{1}{2}$?</em> This is the Global Positivity Theorem — the final rung of the proof ladder. Chapter 14 states it precisely, explains why it is hard, identifies three research directions toward it, and shows that it is equivalent to the Riemann Hypothesis.</p>
+</div>
+
+<!-- Tasks -->
+<hr class="gold-rule">
+<div class="section-tag">§ 13.8 · Tasks</div>
+<h2>Exercises</h2>
+
+<div class="insight-box">
+  <div class="insight-label">Task 1 — The Euler Product for $\sigma > 1$</div>
+  Write out the Euler product $\prod_p (1-p^{-s})^{-1}$ for $p = 2, 3, 5$ only (a 3-prime approximation). At $s = 2$ (so $\sigma = 2$, $t = 0$), compute the numerical value of this 3-prime product. Compare to $\zeta(2) = \pi^2/6 \approx 1.6449$. How far off is the 3-prime approximation? How would you expect the error to decrease as you add more primes?
+</div>
+
+<div class="insight-box">
+  <div class="insight-label">Task 2 — The Local Contact Coefficient</div>
+  At $p = 2$, $\sigma = 0.5$, $t = 0$: compute $g_2(0.5, 0) = (\log 2) \cdot 2^{-0.5} \cdot \sin(0) / (\ldots)$. What is the value? Now compute $g_2(0.5, 14.13)$, where $t = 14.13$ is near the first zero. What happens to $g_2$ near the zero? (Hint: the denominator of $g_p$ is $1 - 2p^{-\sigma}\cos(t\log p) + p^{-2\sigma}$. What is its value when $t = 0$ vs. when $t \approx 14.13$?)
+</div>
+
+<div class="insight-box">
+  <div class="insight-label">Task 3 — The Function-Field Case</div>
+  In the function-field case (finite fields), the Riemann Hypothesis is proved. Recall: $Z(X/\mathbb{F}_q, T)$ is a rational function in $T = q^{-s}$ with finitely many zeros (degree $2g$ numerator); Weil/Deligne prove all zeros have $|T| = q^{-1/2}$. The Euler product is indexed by infinitely many closed points, but the product is rational — the key is that $\log Z$ has power-series coefficients that terminate (finitely many non-zero Von Mangoldt contributions). Does the contact-geometric analogy hold in this finite-dimensional setting? What does $\alpha_{\mathrm{arith}}$ reduce to, and which theorem replaces the open positivity conjecture of Ch 14?
+</div>
+
+</div>
+
+<div class="chapter-nav">
+  <a href="ch12.html">← Ch 12 · The Critical Contact</a>
+  <span style="color:var(--text-dim); font-family:'Courier New',monospace; font-size:.75rem;">CHAPTER 13 · THE ADELIC TESSERACT</span>
+  <a href="ch14.html">Ch 14 · The Positivity Rung →</a>
+</div>
+
+<footer>
+  Principia Orthogona · Book 4 · Higher Dimensions · © 2026 Pablo Nogueira Grossi · G6 LLC<br>
+  ORCID <a href="https://orcid.org/0009-0000-6496-2186">0009-0000-6496-2186</a> ·
+  Zenodo DOI <a href="https://doi.org/10.5281/zenodo.19117400">10.5281/zenodo.19117400</a><br>
+  CHAPTER 13 · THE ADELIC TESSERACT · $\zeta(s) = \prod_p (1-p^{-s})^{-1}$
+</footer>
+
+<script>
+const canvas = document.getElementById('eulerCanvas');
+const ctx = canvas.getContext('2d');
+
+const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47];
+const PRIME_COLORS = {2:'#ff6b8a',3:'#f9c74f',5:'#50c878',7:'#c084fc',11:'#4a9eff',13:'#ff9f43',17:'#0ABAB5',19:'#e05a3a',23:'#a0d8ef'};
+const activePrimes = new Set([2,3,5,7,11,13,17]);
+
+let sigma = 1.0, tVal = 14.13, animating = false, animT = 0, animFrame2;
+
+function resize() {
+  canvas.width = canvas.parentElement.clientWidth;
+  canvas.height = 420;
+}
+resize();
+window.addEventListener('resize', () => { resize(); draw13(); });
+
+// Local Euler factor (1-p^-s)^-1 as complex number
+function eulerFactor(p, sig, t) {
+  const c_re = Math.pow(p, -sig) * Math.cos(t * Math.log(p));
+  const c_im = -Math.pow(p, -sig) * Math.sin(t * Math.log(p));
+  // 1/(1-c) = (1-c*) / |1-c|^2
+  const a = 1 - c_re, b = -c_im;
+  const denom = a*a + b*b;
+  return { re: a/denom, im: b/denom };
+}
+
+// Zeta partial sum for comparison
+function zetaExact(sig, t, N) {
+  N = N || 300;
+  let re = 0, im = 0;
+  for (let n = 1; n <= N; n++) {
+    const ns = Math.pow(n, -sig);
+    re += ns * Math.cos(t * Math.log(n));
+    im -= ns * Math.sin(t * Math.log(n));
+  }
+  return { re, im };
+}
+
+function draw13() {
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#07101c';
+  ctx.fillRect(0, 0, W, H);
+
+  const curT = animating ? animT : tVal;
+
+  // === LEFT PANEL: Euler factor spiral ===
+  const LW = W * 0.52, CX = LW/2, CY = H/2;
+  const scale = Math.min(LW, H) * 0.12;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(10,186,181,0.07)'; ctx.lineWidth = 1;
+  for (let u = -3; u <= 3; u++) {
+    ctx.beginPath(); ctx.moveTo(CX + u*scale, 20); ctx.lineTo(CX + u*scale, H-20); ctx.stroke();
+  }
+  for (let v = -3; v <= 3; v++) {
+    ctx.beginPath(); ctx.moveTo(20, CY - v*scale); ctx.lineTo(LW-20, CY - v*scale); ctx.stroke();
+  }
+  // Axes
+  ctx.strokeStyle = 'rgba(10,186,181,0.25)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(20, CY); ctx.lineTo(LW-10, CY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(CX, 10); ctx.lineTo(CX, H-10); ctx.stroke();
+
+  ctx.font = '10px Courier New';
+  ctx.fillStyle = 'rgba(10,186,181,0.5)';
+  ctx.fillText('Re', LW-28, CY-6);
+  ctx.fillText('Im', CX+5, 18);
+
+  // Draw each active prime's Euler factor
+  let prodRe = 1, prodIm = 0;
+  let cumRe = 1, cumIm = 0;
+
+  const factors = [];
+  for (const p of PRIMES) {
+    if (!activePrimes.has(p)) continue;
+    const f = eulerFactor(p, sigma, curT);
+    factors.push({ p, f });
+    // Multiply into running product: (prodRe+i*prodIm)*(f.re+i*f.im)
+    const nr = prodRe * f.re - prodIm * f.im;
+    const ni = prodRe * f.im + prodIm * f.re;
+    prodRe = nr; prodIm = ni;
+  }
+
+  // Draw cumulative product as chain
+  let cumX = CX, cumY = CY;
+  let runRe = 1, runIm = 0;
+  factors.forEach(({ p, f }, idx) => {
+    const nr = runRe * f.re - runIm * f.im;
+    const ni = runRe * f.im + runIm * f.re;
+    const nx = CX + nr * scale, ny = CY - ni * scale;
+    const ox = CX + runRe * scale, oy = CY - runIm * scale;
+    // Arrow from prev to new
+    const col = PRIME_COLORS[p] || '#888';
+    ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(nx, ny);
+    ctx.strokeStyle = col + 'cc'; ctx.lineWidth = 2; ctx.stroke();
+    // Dot
+    ctx.beginPath(); ctx.arc(nx, ny, 4, 0, 2*Math.PI);
+    ctx.fillStyle = col; ctx.fill();
+    // Label
+    ctx.fillStyle = col + 'cc'; ctx.font = '9px Courier New';
+    ctx.fillText(`×p${p}`, nx+5, ny-3);
+    runRe = nr; runIm = ni;
+  });
+
+  // Origin dot
+  ctx.beginPath(); ctx.arc(CX, CY, 4, 0, 2*Math.PI);
+  ctx.fillStyle = 'rgba(255,107,138,0.6)'; ctx.fill();
+  ctx.strokeStyle = '#ff6b8a'; ctx.lineWidth = 1; ctx.stroke();
+
+  // Partial product dot
+  const ppx = CX + runRe * scale, ppy = CY - runIm * scale;
+  ctx.beginPath(); ctx.arc(ppx, ppy, 7, 0, 2*Math.PI);
+  ctx.fillStyle = 'rgba(201,168,76,0.4)'; ctx.fill();
+  ctx.strokeStyle = '#c9a84c'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = '#c9a84c'; ctx.font = '9px Courier New';
+  ctx.fillText('∏ₚ', ppx+8, ppy+3);
+
+  // Exact zeta target
+  const exact = zetaExact(sigma, curT, 250);
+  const ex = CX + exact.re * scale, ey = CY - exact.im * scale;
+  ctx.beginPath(); ctx.arc(ex, ey, 6, 0, 2*Math.PI);
+  ctx.fillStyle = 'rgba(10,186,181,0.4)'; ctx.fill();
+  ctx.strokeStyle = '#0ABAB5'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = '#0ABAB5'; ctx.font = '9px Courier New';
+  ctx.fillText('ζ(s)', ex+7, ey-3);
+
+  // Panel label
+  ctx.fillStyle = 'rgba(10,186,181,0.7)'; ctx.font = '11px Courier New';
+  ctx.fillText('EULER PRODUCT SPIRAL', 12, 18);
+  ctx.fillStyle = 'rgba(10,186,181,0.5)'; ctx.font = '10px Courier New';
+  ctx.fillText(`σ=${sigma.toFixed(2)}  t=${curT.toFixed(2)}`, 12, 32);
+
+  // === RIGHT PANEL: |ζ(σ+it)| vs t, showing zeros ===
+  const RX0 = LW + 20, RW = W - LW - 25;
+  const tRange = 35;
+  const N_T = 300;
+
+  ctx.fillStyle = 'rgba(10,186,181,0.4)'; ctx.font = '11px Courier New';
+  ctx.fillText('|ζ(σ+it)| vs t', RX0, 18);
+
+  // Draw |ζ(σ+it)| curve
+  const magPts = [];
+  for (let i = 0; i <= N_T; i++) {
+    const ti = (tRange * i) / N_T;
+    const z = zetaExact(sigma, ti, 200);
+    const mag = Math.sqrt(z.re*z.re + z.im*z.im);
+    magPts.push({ t: ti, mag });
+  }
+  const maxMag = Math.max(...magPts.map(p => Math.min(p.mag, 5)));
+  const graphH = H - 80;
+  const graphY0 = H - 30;
+
+  // Axes for right panel
+  ctx.strokeStyle = 'rgba(10,186,181,0.2)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(RX0, graphY0); ctx.lineTo(RX0+RW, graphY0); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(RX0, 30); ctx.lineTo(RX0, graphY0); ctx.stroke();
+
+  // Zero marker line
+  const zeroY = graphY0;
+  ctx.strokeStyle = 'rgba(255,107,138,0.3)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]);
+  ctx.beginPath(); ctx.moveTo(RX0, zeroY); ctx.lineTo(RX0+RW, zeroY); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Curve
+  ctx.beginPath();
+  magPts.forEach((p, i) => {
+    const x = RX0 + (p.t / tRange) * RW;
+    const y = graphY0 - Math.min(p.mag, 5) / 5 * graphH * 0.85;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = sigma < 0.6 ? '#0ABAB5' : '#4a9eff';
+  ctx.lineWidth = 1.5; ctx.stroke();
+
+  // Mark known zeros (for σ ≈ 0.5)
+  if (sigma < 0.6) {
+    [14.1347, 21.022, 25.011, 30.425, 32.935].forEach(z0 => {
+      if (z0 <= tRange) {
+        const zx = RX0 + (z0/tRange)*RW;
+        ctx.strokeStyle = '#ff6b8a'; ctx.lineWidth = 1; ctx.setLineDash([2,2]);
+        ctx.beginPath(); ctx.moveTo(zx, 30); ctx.lineTo(zx, graphY0); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#ff6b8a'; ctx.font = '9px Courier New';
+        ctx.fillText(`ρ`, zx-2, 28);
+      }
+    });
+  }
+
+  // Current t marker
+  const cx_ = RX0 + (curT/tRange)*RW;
+  ctx.strokeStyle = 'rgba(201,168,76,0.8)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(cx_, 30); ctx.lineTo(cx_, graphY0); ctx.stroke();
+  ctx.fillStyle = '#c9a84c'; ctx.font = '9px Courier New';
+  ctx.fillText(`t=${curT.toFixed(1)}`, cx_+2, 28);
+
+  // t axis labels
+  ctx.fillStyle = 'rgba(10,186,181,0.4)'; ctx.font = '9px Courier New';
+  for (let tl = 0; tl <= tRange; tl += 5) {
+    const lx = RX0 + (tl/tRange)*RW;
+    ctx.fillText(tl, lx-5, graphY0+12);
+  }
+  ctx.fillText('t', RX0+RW-8, graphY0+12);
+  ctx.fillText('|ζ|', RX0-16, 35);
+}
+
+// Controls
+document.getElementById('sig13').addEventListener('input', e => {
+  sigma = parseFloat(e.target.value);
+  document.getElementById('sig13Val').textContent = sigma.toFixed(2);
+  if (!animating) draw13();
+});
+document.getElementById('t13').addEventListener('input', e => {
+  tVal = parseFloat(e.target.value);
+  document.getElementById('t13Val').textContent = tVal.toFixed(1);
+  if (!animating) draw13();
+});
+
+document.querySelectorAll('.prime-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const p = parseInt(btn.dataset.p);
+    if (activePrimes.has(p)) { activePrimes.delete(p); btn.classList.replace('on','off'); }
+    else { activePrimes.add(p); btn.classList.replace('off','on'); }
+    if (!animating) draw13();
+  });
+});
+
+const animBtn = document.getElementById('animBtn13');
+animBtn.addEventListener('click', () => {
+  animating = !animating;
+  animBtn.textContent = animating ? '⏸ Pause t' : '▶ Animate t';
+  if (animating) loopAnim();
+});
+document.getElementById('reset13Btn').addEventListener('click', () => {
+  animT = 0; animating = false; animBtn.textContent = '▶ Animate t'; draw13();
+});
+
+function loopAnim() {
+  if (!animating) return;
+  animT += 0.05;
+  if (animT > 35) animT = 0;
+  draw13();
+  animFrame2 = requestAnimationFrame(loopAnim);
+}
+
+draw13();
+</script>
+</body>
+</html>
