@@ -50,9 +50,11 @@ theorem TE_def (n : ℕ) :
     cost of crossing the 3n+1 branch with no 2-adic discount. -/
 theorem TE_odd {n : ℕ} (hn : Odd n) :
     TE n = Real.log 3 := by
-  -- v₂(odd) = 0, so the second term vanishes.
-  -- Full proof depends on padicValNat lemmas; left as `sorry` for AXLE.
-  sorry
+  -- v₂(odd n) = 0 because 2 ∤ n, so the log-2 term vanishes.
+  obtain ⟨k, hk⟩ := hn
+  have hndvd : ¬ 2 ∣ n := by subst hk; omega
+  have hv : padicValNat 2 n = 0 := padicValNat.eq_zero_of_not_dvd hndvd
+  simp [TE, hv]
 
 /-- TE is *not* a force in the dynamical sense; it is a conformal
     reparameterization of the clock on which G, Cᵣ, Cₒ, F act.
