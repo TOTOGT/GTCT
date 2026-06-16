@@ -205,30 +205,69 @@ In dm³ language: the entropic operator E cannot close the cycle — too many
 fold events proliferate before E can enforce coherence.
 -/
 
+-- ── critDim arithmetic helpers (used by rank theorems below) ─────────────────
+
+/-- critDim 3 = 26: 2*(13-1)+2 = 26. -/
+lemma critDim_3 : critDim 3 = 26 := by
+  unfold critDim; rw [nBonacciRingSize_3]; norm_num
+
+/-- critDim 4 = 112: 2*(56-1)+2 = 112. -/
+lemma critDim_4 : critDim 4 = 112 := by
+  unfold critDim; rw [nBonacciRingSize_4]; norm_num
+
+/-- critDim 5 > 26: by monotonicity from critDim 4 = 112. -/
+lemma critDim_5_gt : critDim 5 > 26 := by
+  have h := critDim_monotone 4 5 (by norm_num) (by norm_num)
+  rw [critDim_4] at h; omega
+
+-- ── Rank instantiations ───────────────────────────────────────────────────────
+
 theorem tribonacci_3_critical :
-    IsRankCriticalPoint 3 := by
-  exact ⟨rfl, by sorry, by sorry, dm3_criticality_principle_instance⟩
+    IsRankCriticalPoint 3 :=
+  ⟨rfl, critDim_3, nBonacciRingSize_3, dm3_criticality_principle_instance⟩
 
 theorem tetranacci_4_supercritical :
-    IsSupercriticalRank 4 := by
-  refine ⟨by norm_num, ?_, by sorry⟩
-  -- critDim 4 = 112 > 26: from Npf(4) = a₇(tetranacci) = 56
-  sorry
+    IsSupercriticalRank 4 :=
+  ⟨by norm_num, by rw [critDim_4]; norm_num, by sorry⟩
+  -- sorry: IsSupercriticalRegime as universal ∀ M [ContactStructure M] ...
+  -- This is the contact-geometry bridge (O3); the arithmetic is now closed.
 
 theorem pentanacci_5_strong_supercritical :
-    IsSupercriticalRank 5 := by
-  refine ⟨by norm_num, ?_, by sorry⟩
-  sorry
+    IsSupercriticalRank 5 :=
+  ⟨by norm_num, critDim_5_gt, by sorry⟩
+  -- sorry: same contact-geometry bridge as above (O3)
 
 /-- Monotonicity of critical dimension: higher rank → larger Dcrit. -/
 theorem critDim_monotone :
     ∀ m n : ℕ, 3 < m → m < n → critDim m < critDim n := by
-  sorry  -- Follows from growth rate of n-bonacci ring sizes
+  intro m n hm hmn
+  -- nBonacciRingSize is strictly increasing (axiom), so m < n gives the key bound
+  have hmono : nBonacciRingSize m < nBonacciRingSize n :=
+    nBonacciRingSize_monotone m n hmn
+  -- and 3 < m gives nBonacciRingSize m > nBonacciRingSize 3 = 13 ≥ 1,
+  -- so the ℕ-truncated subtraction in critDim behaves like ordinary subtraction
+  have hgt : nBonacciRingSize 3 < nBonacciRingSize m :=
+    nBonacciRingSize_monotone 3 m hm
+  have h13 : nBonacciRingSize 3 = 13 := nBonacciRingSize_3
+  have hpos : 1 ≤ nBonacciRingSize m := by omega
+  unfold critDim
+  omega
 
 /-- Above rank 3, the critical dimension escapes 26 and never returns. -/
 theorem no_return_to_critical :
     ∀ n : ℕ, n > 3 → critDim n > 26 := by
-  sorry  -- Follows from critDim_monotone and critDim 4 = 112
+  intro n hn
+  -- critDim 4 = 2 * (56 - 1) + 2 = 112, computed directly from the rank-4 axiom
+  have hcrit4 : critDim 4 = 112 := by
+    unfold critDim
+    rw [nBonacciRingSize_4]
+  rcases (show (4:ℕ) ≤ n from hn).lt_or_eq with h4 | h4
+  · -- n > 4: critDim n > critDim 4 = 112 > 26 by critDim_monotone
+    have := critDim_monotone 4 n (by norm_num) h4
+    omega
+  · -- n = 4: critDim 4 = 112 > 26 directly
+    rw [← h4, hcrit4]
+    norm_num
 
 -- ============================================================
 -- SECTION 6: The Bridge — Potential Criticality ↔ Rank Criticality
