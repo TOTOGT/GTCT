@@ -1989,12 +1989,7 @@ bind(enE,'en'); bind(brE,'br');
 // Defer canvas init until layout is complete
 setTimeout(()=>{ enE.running=false; brE.running=false; drawCym(enE); drawCym(brE); }, 100);
 </script>
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>DM³ Machine — GTCT 12-Step D Major Triad Sequencer</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<div class="dm3-seq-app">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
 
@@ -2018,7 +2013,7 @@ setTimeout(()=>{ enE.running=false; brE.running=false; drawCym(enE); drawCym(brE
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body {
+.dm3-seq-app {
   background: var(--bg);
   color: var(--ink);
   font-family: 'Space Mono', monospace;
@@ -2256,8 +2251,6 @@ html, body {
   background: var(--glow-t);
 }
 </style>
-</head>
-<body>
 
 <header class="header">
   <div>
@@ -2920,14 +2913,11 @@ window.addEventListener('resize', () => {
   drawRing();
 });
 </script>
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>DM³ Machine v2 — House Engine · GTCT 12-Step · D Major</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+</div><!-- /dm3-seq-app -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<div class="dm3-house-app">
 <style>
 :root {
   --bg:      #05080a;
@@ -2948,8 +2938,8 @@ window.addEventListener('resize', () => {
   --glow-f:  rgba(24,201,106,0.55);
   --glow-u:  rgba(237,232,220,0.45);
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body {
+.dm3-house-app *, .dm3-house-app *::before, .dm3-house-app *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.dm3-house-app {
   background: var(--bg);
   color: var(--ink);
   font-family: 'JetBrains Mono', monospace;
@@ -3163,8 +3153,6 @@ html, body {
   box-shadow: 0 0 8px var(--teal);
 }
 </style>
-</head>
-<body>
 
 <header class="header">
   <div class="header-left">
@@ -4174,9 +4162,6 @@ window.addEventListener('resize', () => {
   drawRing();
 });
 </script>
-</body>
-</html>
-</body>
-</html>
+</div><!-- /dm3-house-app -->
 </body>
 </html>
