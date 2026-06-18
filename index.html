@@ -183,7 +183,7 @@ footer a:hover { color:#c8a96e; }
     <div class="meta"><strong>Verification</strong><br>AXLE v6.1 · Lean 4 + Mathlib4 · 0 extra axioms</div>
     <div class="meta"><strong>License</strong><br>MIT · © 2026 Pablo Nogueira Grossi — G6 LLC</div>
   </div>
-  <div class="ch-abs">We study a three-dimensional model system on a contact manifold in cylindrical coordinates and establish that the unit circle r = 1 is a globally attracting helix for all initial conditions with r(0) &gt; 1, with exponential convergence rate μ → −2. The inner-basin boundary is asymmetric at r* = 0.77594, correcting the symmetric Gronwall estimate ε₀ = 1/3. This is a concrete instantiation of the dm³ operator cycle C → K → F → U in the GTCT framework, with formal verification in Lean 4 (AXLE v6.1).</div>
+  <div class="ch-abs">We study a three-dimensional model system on a contact manifold in cylindrical coordinates and establish that the unit circle r = 1 is a globally attracting helix for all initial conditions with r(0) &gt; 1, with exponential convergence rate μ → −2. The inner-basin boundary is asymmetric at r* = 0.77594, correcting the coarse Lyapunov bound ε₀ = 1/3. This is a concrete instantiation of the dm³ operator cycle C → K → F → U in the GTCT framework, with formal verification in Lean 4 (AXLE v6.1).</div>
 
   <div class="toc-wrap" style="padding:1.5rem 0 0;">
     <h4>Contents</h4>
@@ -290,12 +290,12 @@ footer a:hover { color:#c8a96e; }
 </div>
 
 <div class="pf">Proof sketch (numerical)</div>
-<p>Linearise about r = 1: setting u = r − 1 gives u̇ ≈ −2u + O(u²) + ε·u·e<sup>−z</sup>. Since z grows monotonically on the outer basin (ż ≥ r² − ε·u²·e<sup>−z</sup> &gt; 0 for small u), the coupling decays and the decay rate approaches μ = −2. Gronwall's inequality gives exponential convergence in a neighbourhood. Numerical evidence (DOP853, rtol = 10<sup>−10</sup>) confirms convergence globally for r(0) up to at least 3.0. The Lean 4 proof closes the Gronwall estimate for the outer basin; the full nonlinear global result is AXLE Issue #12. □</p>
+<p>Linearise about r = 1: setting u = r − 1 gives u̇ ≈ −2u + O(u²) + ε·u·e<sup>−z</sup>. Since z grows monotonically on the outer basin (ż ≥ r² − ε·u²·e<sup>−z</sup> &gt; 0 for small u), the coupling decays and the decay rate approaches μ = −2. Lyapunov analysis gives exponential convergence in a neighbourhood. Numerical evidence (DOP853, rtol = 10<sup>−10</sup>) confirms convergence globally for r(0) up to at least 3.0. The Lean 4 proof closes the outer-basin convergence (Lyapunov); the full nonlinear global result is AXLE Issue #12. □</p>
 
 </div><!-- end main -->
 <div class="side">
   <div class="sn"><strong>OPERATOR CHAIN</strong><br>C → K → F → U<br>Compress · Curvature · Fold · Unfold<br>Γ is the fixed point of repeated G = U∘F∘K∘C.</div>
-  <div class="sn"><strong>KEY CONSTANTS</strong><br>μ = −2 (decay rate)<br>r* = 0.77594 (inner boundary)<br>ε₀ = 1/3 (Gronwall, outer)<br>g₃₃ = 33 (threshold cycles)<br>κ ≤ √(7/9) ≈ 0.882</div>
+  <div class="sn"><strong>KEY CONSTANTS</strong><br>μ = −2 (decay rate)<br>r* = 0.77594 (inner boundary)<br>ε₀ = 1/3 (Lyapunov, outer)<br>g₃₃ = 33 (threshold cycles)<br>κ ≤ √(7/9) ≈ 0.882</div>
   <div class="sn"><strong>INTEGRATION</strong><br>DOP853 (Hairer 1993)<br>rtol = 10⁻¹⁰<br>atol = 10⁻¹²<br>Python source: /numerics/</div>
   <div class="sn"><strong>DOWNLOADS</strong><br><a href="PO_10_Pablo_Grossi.pdf">SBM submission PDF</a><br><a href="https://github.com/TOTOGT/GTCT">Full source (GitHub)</a><br><a href="https://github.com/TOTOGT/GTCT/blob/main/FINDINGS.md">FINDINGS.md</a></div>
 </div>
@@ -455,10 +455,10 @@ footer a:hover { color:#c8a96e; }
 <div class="sec-num" id="s6">§ 6</div>
 <h2 class="sec">The Basin Asymmetry Correction</h2>
 
-<p>The Gronwall estimate predicts a symmetric basin |r − 1| &lt; ε₀ = 1/3, i.e. r ∈ (2/3, 4/3). The outer side is correct and in fact too conservative — all r(0) &gt; 1 converge. The inner side fails: the true inner boundary is r* = 0.77594, not 0.667.</p>
+<p>The coarse Lyapunov bound predicts a symmetric basin |r − 1| &lt; ε₀ = 1/3, i.e. r ∈ (2/3, 4/3). The outer side is correct and in fact too conservative — all r(0) &gt; 1 converge. The inner side fails: the true inner boundary is r* = 0.77594, not 0.667.</p>
 
 <div class="cor env f">
-  <p><strong>Basin asymmetry.</strong> The inner basin boundary is r* = 0.77594. Trajectories with r(0) ∈ (0.667, 0.77594) — in the Gronwall basin but outside the true basin — escape to r = 0, z → −∞ in finite time. The coupling amplification is the mechanism: for r &lt; 1 and decreasing z, the term ε(r−1)e<sup>−z</sup> grows exponentially, driving r further from 1.</p>
+  <p><strong>Basin asymmetry.</strong> The inner basin boundary is r* = 0.77594. Trajectories with r(0) ∈ (0.667, 0.77594) — inside the Lyapunov bound but outside the true basin — escape to r = 0, z → −∞ in finite time. The coupling amplification is the mechanism: for r &lt; 1 and decreasing z, the term ε(r−1)e<sup>−z</sup> grows exponentially, driving r further from 1.</p>
 </div>
 
 <!-- FIGURE 4: Basin diagram -->
@@ -493,7 +493,7 @@ footer a:hover { color:#c8a96e; }
       <text x="518" y="110" fill="#7a7060">3</text>
       <!-- labels above -->
       <text x="60" y="55" fill="#c86e8a">ESCAPE (r &lt; r*)</text>
-      <text x="155" y="45" fill="#8b3a0f" font-size="8">Gronwall gap</text>
+      <text x="155" y="45" fill="#8b3a0f" font-size="8">basin gap</text>
       <text x="194" y="55" fill="#3d6b3f" font-size="8">inner basin</text>
       <text x="310" y="55" fill="#1a4d6e">OUTER BASIN (all r &gt; 1 converge)</text>
       <!-- arrows -->
@@ -502,11 +502,11 @@ footer a:hover { color:#c8a96e; }
       <path d="M 370 88 L 240 88" fill="none" stroke="#1a4d6e" stroke-width="1.8" marker-end="url(#b3)"/>
     </svg>
   </div>
-  <div class="fig-cap"><b></b>Basin of attraction on the r-axis. The outer basin (r &gt; 1, blue) is entirely convergent. The Gronwall inner boundary 2/3 (dashed) is too permissive — the true boundary r* = 0.77594 is further from the attractor. The gap (orange) contains initial conditions the Gronwall estimate misclassifies as converging.</div>
+  <div class="fig-cap"><b></b>Basin of attraction on the r-axis. The outer basin (r &gt; 1, blue) is entirely convergent. The Lyapunov inner bound 2/3 (dashed) is too permissive — the true boundary r* = 0.77594 is further from the attractor. The gap (orange) contains initial conditions the Lyapunov bound misclassifies as converging.</div>
 </div>
 
 <div class="rem env f">
-  <p><strong>Corrected theorem statement.</strong> The outer-basin theorem is clean: "For all r(0) &gt; 1, the trajectory converges exponentially to Γ at rate μ → −2." The inner-basin claim should be restated as: r(0) &gt; r* = 0.77594 with explicit coupling bounds — not the symmetric Gronwall ball of radius 1/3.</p>
+  <p><strong>Corrected theorem statement.</strong> The outer-basin theorem is clean: "For all r(0) &gt; 1, the trajectory converges exponentially to Γ at rate μ → −2." The inner-basin claim should be restated as: r(0) &gt; r* = 0.77594 with explicit coupling bounds — not the symmetric Lyapunov ball of radius 1/3.</p>
 </div>
 
 <!-- §7 -->
@@ -530,9 +530,9 @@ footer a:hover { color:#c8a96e; }
 <span class="lc">-- Verified structural constants</span>
 <span class="lk">noncomputable def</span> <span class="ln">mu_max</span>   : ℝ := <span class="ls">-2</span>
 <span class="lk">noncomputable def</span> <span class="ln">r_star</span>   : ℝ := <span class="ls">0.77594</span>   <span class="lc">-- asymmetric inner basin</span>
-<span class="lk">noncomputable def</span> <span class="ln">eps_zero</span> : ℝ := <span class="ls">1</span> / <span class="ls">3</span>   <span class="lc">-- Gronwall (outer only)</span>
+<span class="lk">noncomputable def</span> <span class="ln">eps_zero</span> : ℝ := <span class="ls">1</span> / <span class="ls">3</span>   <span class="lc">-- Lyapunov stability radius (outer only)</span>
 
-<span class="lc">-- Outer basin convergence (Gronwall)</span>
+<span class="lc">-- Outer basin convergence (Lyapunov)</span>
 <span class="lk">theorem</span> <span class="lt">gronwall_outer</span>
     (r₀ : ℝ) (hr : r₀ > <span class="ls">1</span>)
     (hb : <span class="ln">mu_max</span> + <span class="ls">3</span> * <span class="ln">r_star</span> ≤ <span class="ls">-1.6</span>) :
