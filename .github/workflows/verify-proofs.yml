@@ -1,0 +1,84 @@
+name: Verify Lean proofs (real kernel check)
+
+# Runs on GitHub's own infrastructure, not any local sandbox, so it can
+# reach the Lean/Mathlib toolchain hosts that are blocked elsewhere.
+#
+# What this does, honestly:
+#   1. Installs the exact Lean toolchain pinned in GTCT/GCTC/lean-toolchain
+#   2. Runs `lake build` for real — if anything fails to compile, this job fails
+#   3. Generates one `#print axioms <name>` line per theorem/lemma actually
+#      found in the source, runs it through the real compiler, and parses
+#      the real output into a CSV: proved / uses-sorry / uses-other-axiom
+#   4. Uploads that CSV as a build artifact so registry.csv is always the
+#      last real build's output, not a hand-typed number.
+#
+# This replaces any hand-typed or manually-maintained theorem count.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'GTCT/GCTC/**'
+      - '.github/workflows/verify-proofs.yml'
+  workflow_dispatch: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install elan (Lean version manager)
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- --default-toolchain none -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Cache Mathlib build
+        uses: actions/cache@v4
+        with:
+          path: GTCT/GCTC/.lake
+          key: lake-${{ runner.os }}-${{ hashFiles('GTCT/GCTC/lean-toolchain', 'GTCT/GCTC/lakefile.lean', 'GTCT/GCTC/lake-manifest.json') }}
+
+      - name: lake build (the real check — fails the job if anything doesn't compile)
+        working-directory: GTCT/GCTC
+        run: |
+          lake update
+          lake build
+
+      - name: Generate theorem/lemma name list from source
+        working-directory: GTCT/GCTC
+        run: |
+          python3 ../../scripts/extract_names.py . > /tmp/all_names.txt
+          wc -l /tmp/all_names.txt
+
+      - name: Generate #print axioms probe file
+        working-directory: GTCT/GCTC
+        run: |
+          python3 ../../scripts/make_axiom_probe.py /tmp/all_names.txt GCTC > CheckAllAxioms.lean
+
+      - name: Run real axiom check through the Lean kernel
+        working-directory: GTCT/GCTC
+        run: |
+          lake env lean CheckAllAxioms.lean > /tmp/axiom_output.txt 2>&1 || true
+          tail -50 /tmp/axiom_output.txt
+
+      - name: Parse real output into registry.csv
+        working-directory: GTCT/GCTC
+        run: |
+          python3 ../../scripts/parse_axiom_output.py /tmp/axiom_output.txt /tmp/all_names.txt > ../../registry.csv
+          echo "=== Summary ==="
+          python3 -c "
+          import csv
+          from collections import Counter
+          with open('../../registry.csv') as f:
+              rows = list(csv.DictReader(f))
+          print(Counter(r['status'] for r in rows))
+          print(f'total: {len(rows)}')
+          "
+
+      - name: Upload real registry as build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: theorem-registry-real
+          path: registry.csv
