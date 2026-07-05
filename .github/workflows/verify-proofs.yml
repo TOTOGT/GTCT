@@ -37,41 +37,44 @@ jobs:
       - name: Cache Mathlib build
         uses: actions/cache@v4
         with:
-          path: GTCT/GCTC/.lake
-          key: lake-${{ runner.os }}-${{ hashFiles('GTCT/GCTC/lean-toolchain', 'GTCT/GCTC/lakefile.lean', 'GTCT/GCTC/lake-manifest.json') }}
+          path: GTCT/.lake
+          key: lake-${{ runner.os }}-${{ hashFiles('GTCT/lean-toolchain', 'GTCT/lakefile.lean', 'GTCT/lake-manifest.json') }}
 
+      # NOTE: the package root is GTCT/ (that's where lakefile.lean and
+      # lean-toolchain actually live) — GCTC is just the library subfolder
+      # declared inside that lakefile, not the package root itself.
       - name: lake build (the real check — fails the job if anything doesn't compile)
-        working-directory: GTCT/GCTC
+        working-directory: GTCT
         run: |
           lake update
           lake build
 
       - name: Generate theorem/lemma name list from source
-        working-directory: GTCT/GCTC
+        working-directory: GTCT
         run: |
-          python3 ../../scripts/extract_names.py . > /tmp/all_names.txt
+          python3 ../scripts/extract_names.py . > /tmp/all_names.txt
           wc -l /tmp/all_names.txt
 
       - name: Generate #print axioms probe file
-        working-directory: GTCT/GCTC
+        working-directory: GTCT
         run: |
-          python3 ../../scripts/make_axiom_probe.py /tmp/all_names.txt GCTC > CheckAllAxioms.lean
+          python3 ../scripts/make_axiom_probe.py /tmp/all_names.txt GCTC > CheckAllAxioms.lean
 
       - name: Run real axiom check through the Lean kernel
-        working-directory: GTCT/GCTC
+        working-directory: GTCT
         run: |
           lake env lean CheckAllAxioms.lean > /tmp/axiom_output.txt 2>&1 || true
           tail -50 /tmp/axiom_output.txt
 
       - name: Parse real output into registry.csv
-        working-directory: GTCT/GCTC
+        working-directory: GTCT
         run: |
-          python3 ../../scripts/parse_axiom_output.py /tmp/axiom_output.txt /tmp/all_names.txt > ../../registry.csv
+          python3 ../scripts/parse_axiom_output.py /tmp/axiom_output.txt /tmp/all_names.txt > ../registry.csv
           echo "=== Summary ==="
           python3 -c "
           import csv
           from collections import Counter
-          with open('../../registry.csv') as f:
+          with open('../registry.csv') as f:
               rows = list(csv.DictReader(f))
           print(Counter(r['status'] for r in rows))
           print(f'total: {len(rows)}')
