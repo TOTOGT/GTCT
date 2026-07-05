@@ -52,7 +52,11 @@ jobs:
       - name: Generate theorem/lemma name list from source
         working-directory: GTCT
         run: |
-          python3 ../scripts/extract_names.py . > /tmp/all_names.txt
+          # Scan GCTC/ only (the actual lean_lib glob target), not all of GTCT/.
+          # GTCT/ also contains an orphaned sibling Operators/ duplicate directory
+          # (never part of the lake build) whose stale declarations previously
+          # showed up as false "unresolved" names in the probe.
+          python3 ../scripts/extract_names.py GCTC > /tmp/all_names.txt
           wc -l /tmp/all_names.txt
 
       - name: Generate #print axioms probe file
