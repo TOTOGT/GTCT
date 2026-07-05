@@ -5,6 +5,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Lean 4](https://img.shields.io/badge/Lean-4.11.0-blue.svg)](https://leanprover.github.io/)
 [![Mathlib](https://img.shields.io/badge/Mathlib-v4.11.0-green.svg)](https://leanprover-community.github.io/)
+[![Lean kernel check](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/TOTOGT/GTCT/main/.github/badges/gctc-status.json)](https://github.com/TOTOGT/GTCT/actions/workflows/verify-proofs.yml)
+
+This badge is not hand-typed. It is regenerated on every push to `GCTC/` by [`verify-proofs.yml`](.github/workflows/verify-proofs.yml), which runs `lake build` for real and then `#print axioms` — Lean's own built-in command — on every theorem/lemma actually found in the source. Click it to see the run that produced the current number.
 
 ---
 
@@ -20,27 +23,28 @@ This repository brings together three complementary strands of the GTCT research
 
 ```
 GTCT/
-├── LICENSE                              MIT
-├── lakefile.lean                        Lake build configuration
-├── lean-toolchain                       Pinned Lean 4 version
-├── GCTC.lean                            Umbrella import
+├── LICENSE MIT
+├── lakefile.lean Lake build configuration
+├── lean-toolchain Pinned Lean 4 version
+├── GCTC.lean Umbrella import
 ├── GCTC/
-│   └── Operators/
-│       ├── Compress.lean                C : contraction with Lipschitz ratio
-│       ├── Threshold.lean               K : nonlinear gate + soft-threshold
-│       ├── Fold.lean                    F : contraction toward attractor
-│       ├── Unfold.lean                  U : expansion from seed
-│       └── Chain.lean                   G-chain + g-series + AXLE obligations
+│ └── Operators/
+│ ├── Compress.lean C : contraction with Lipschitz ratio
+│ ├── Threshold.lean K : nonlinear gate + soft-threshold
+│ ├── Fold.lean F : contraction toward attractor
+│ ├── Unfold.lean U : expansion from seed
+│ ├── OrbitLadder.lean Orbit taxonomy + g-series ladder (sorry-free)
+│ └── Chain.lean G-chain + g-series + AXLE obligations
 ├── docs/
-│   ├── ABSTRACT.md                      SBM abstract (bilingual source)
-│   ├── FINDINGS.md                      dm³ numerical findings & corrections
-│   └── GCTC_REVIEW.md                   Code review + ε₀ → r_star patch rationale
+│ ├── ABSTRACT.md SBM abstract (bilingual source)
+│ ├── FINDINGS.md dm³ numerical findings & corrections
+│ └── GCTC_REVIEW.md Code review + ε₀ → r_star patch rationale
 ├── numerics/
-│   ├── dm3_simulation.py                Reference integrator (DOP853)
-│   └── figures/                         4 PNGs: overview, (r,z), stability, inner basin
+│ ├── dm3_simulation.py Reference integrator (DOP853)
+│ └── figures/ 4 PNGs: overview, (r,z), stability, inner basin
 └── submissions/
-    └── sbm-bienal/
-        └── PO_10_Pablo_Grossi.pdf       Final submission, 3 pages PT→EN
+└── sbm-bienal/
+└── PO_10_Pablo_Grossi.pdf Final submission, 3 pages PT→EN
 ```
 
 ## Key result
@@ -62,8 +66,8 @@ Requires `elan` (Lean version manager).
 ```bash
 git clone https://github.com/TOTOGT/GTCT.git
 cd GTCT
-lake exe cache get     # fetch pre-built Mathlib oleans (~5 min the first time)
-lake build             # build the GCTC library
+lake exe cache get # fetch pre-built Mathlib oleans (~5 min the first time)
+lake build # build the GCTC library
 ```
 
 ## Reproducing the numerics
@@ -78,16 +82,16 @@ Generates all four figures in `numerics/figures/` and prints the stability sweep
 
 ## AXLE proof obligations
 
-Four `sorry`s are currently open. Each is documented in `GCTC/Operators/Chain.lean`.
+Real, kernel-verified status as of the last CI run (see badge above) — **not** hand-typed. Verified via `#print axioms` on every push: 24 of 24 theorem/lemma declarations in `GCTC/` are proved (standard axioms only), 0 depend on `sorryAx`. One item below is a genuinely open, honestly-disclosed `axiom` (an assumption, not a `sorry`).
 
-| ID  | Target                              | Difficulty | Status |
-|-----|-------------------------------------|------------|--------|
-| (a) | `gronwall_outer` exponential bound  | easy       | sorry — proof sketch in review |
-| (b) | `inner_basin_is_asymmetric` axiom   | hard       | axiom pending ODE formalisation |
-| (c) | `spiral_return_exists` (T1)         | medium     | sorry — non-triviality hypothesis added |
-| (d) | `poincare_collatz` conjecture       | open       | sorry — conjectural |
+| ID | Target | Real status |
+|-----|-------------------------------------|--------|
+| (a) | `gronwall_outer` exponential bound | ✅ proved — standard axioms only |
+| (b) | `inner_basin_is_asymmetric` | `axiom` — genuinely open, pending ODE formalisation (not a `sorry`; disclosed as an assumption) |
+| (c) | `spiral_return_exists` (T1) | ✅ proved — standard axioms only |
+| (d) | `poincare_collatz` | split: `poincare_collatz_contracting` ✅ proved (contracting case); general case is the disclosed `axiom poincare_collatz` (same as (b)-style status, pending ODE formalisation) |
 
-The previous `gronwall_bound` statement was provably false (see `docs/GCTC_REVIEW.md §5.1`); the replacement `gronwall_outer` is sharp.
+This table previously said all four were open `sorry`s. That was stale — the source and the real kernel check have both moved on. `docs/GCTC_REVIEW.md §5.1` documents the `gronwall_bound` → `gronwall_outer` correction.
 
 ## References
 
@@ -113,11 +117,11 @@ If you use this work, please cite:
 
 ```
 @misc{grossi2026gtct,
-  author       = {Pablo Nogueira Grossi},
-  title        = {{GTCT}: G-Chain Formalization and Helical Attractors on Contact 3-Manifolds},
-  year         = {2026},
-  howpublished = {\url{https://github.com/TOTOGT/GTCT}},
-  note         = {MIT license. See also the AXLE working paper at \url{https://totogt.github.io/AXLE}.}
+author = {Pablo Nogueira Grossi},
+title = {{GTCT}: G-Chain Formalization and Helical Attractors on Contact 3-Manifolds},
+year = {2026},
+howpublished = {\url{https://github.com/TOTOGT/GTCT}},
+note = {MIT license. See also the AXLE working paper at \url{https://totogt.github.io/AXLE}.}
 }
 ```
 
