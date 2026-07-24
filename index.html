@@ -743,7 +743,7 @@ function draw(){
   // grid
   cx.strokeStyle='rgba(255,255,255,0.025)';
   cx.lineWidth=1;
-  for(let x=0;x<W;x+=55){cx.beginPath);cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke();}
+  for(let x=0;x<W;x+=55){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke();}
   for(let y=0;y<H;y+=55){cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke();}
 
   const sR=W*0.26, oR=W*0.15, sZ=H*0.05, oZ=H*0.87;
