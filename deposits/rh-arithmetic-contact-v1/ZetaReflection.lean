@@ -53,10 +53,11 @@
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.NumberTheory.LSeries.Dirichlet
 import Mathlib.Analysis.SpecialFunctions.Gamma.Digamma
+import Mathlib.Analysis.Calculus.Deriv.Star
 
 namespace Book4.Ch12
 
-open Complex ArithmeticFunction
+open Complex ArithmeticFunction ComplexConjugate
 
 /-- The logarithmic derivative of ζ. Both chapter-12 coefficients live here. -/
 noncomputable def Zlog (s : ℂ) : ℂ := logDeriv riemannZeta s
@@ -86,11 +87,42 @@ theorem reflection_law (σ t : ℝ) :
     gCoef σ t - gCoef (1 - σ) t = (chiLog ⟨σ, t⟩).im := by
   sorry
 
-/-- ADMITTED · why σ = 1/2 is distinguished: the defect is real there, so the
-    reflection constraint holds identically on the critical wall. -/
+/-- Γ is conjugation-symmetric as a composite: `conj ∘ Γ ∘ conj = Γ`. -/
+theorem Gamma_conj_comp : (conj ∘ Gamma ∘ conj : ℂ → ℂ) = Gamma := by
+  funext z
+  simp only [Function.comp_apply, ← Complex.Gamma_conj, Complex.conj_conj]
+
+/-- **digamma is conjugation-symmetric**: `ψ(conj s) = conj (ψ s)`.
+    From `Complex.Gamma_conj` and `deriv_conj_conj`; `digamma = logDeriv Γ`. -/
+theorem digamma_conj (s : ℂ) : digamma (conj s) = conj (digamma s) := by
+  have hd : deriv (conj ∘ Gamma ∘ conj : ℂ → ℂ) = conj ∘ deriv Gamma ∘ conj :=
+    deriv_conj_conj
+  rw [Gamma_conj_comp] at hd
+  have h1 : deriv Gamma (conj s) = conj (deriv Gamma s) := by
+    have h := congrFun hd s
+    simp only [Function.comp_apply] at h
+    rw [h, Complex.conj_conj]
+  simp only [digamma_def, logDeriv_apply, h1, Complex.Gamma_conj, map_div₀]
+
+/-- **PROVED 2026-08-30** (was ADMITTED) · why σ = 1/2 is distinguished: the
+    gamma-factor defect is real there, so the reflection constraint holds
+    identically on the critical wall.
+
+    At `s = 1/2 + it` the two digamma arguments are complex conjugates —
+    `s/2 = 1/4 + it/2` and `(1−s)/2 = 1/4 − it/2` — so by `digamma_conj`
+    their sum is `2 Re ψ(s/2)`, real; and `log π` is real. Nothing about the
+    zeros of ζ is used: this is Schwarz reflection for Γ and nothing more.
+
+    `#print axioms` reports [propext, Classical.choice, Quot.sound]. -/
 theorem chiLog_real_on_critical_line (t : ℝ) :
     (chiLog ⟨1/2, t⟩).im = 0 := by
-  sorry
+  have hconj : (1 - (⟨1/2, t⟩ : ℂ)) / 2 = conj ((⟨1/2, t⟩ : ℂ) / 2) := by
+    apply Complex.ext <;>
+      simp [Complex.div_re, Complex.div_im, Complex.normSq_apply, Complex.sub_re,
+            Complex.sub_im, Complex.one_re, Complex.one_im] <;> ring
+  rw [chiLog, hconj, digamma_conj]
+  simp [Complex.sub_im, Complex.conj_im, Complex.ofReal_im]
+  ring
 
 /-- FIXTURE · deliberately vacuous. Its axiom report is indistinguishable from
     a real theorem's, which is why reading the statements is still required. -/
