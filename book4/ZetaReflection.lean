@@ -32,7 +32,7 @@
   σ = 1/2.
 
   STATUS.  `reflection_law` and `chiLog_real_on_critical_line` are ADMITTED.
-  They are here as statements of record, not as results.  `#print axioms` below
+  They are here as statements of record, not as results.  `--audit` correctly
   reports sorryAx on them, which is the honest outcome and the point of the
   file.  Nothing here claims a proof it does not have.
 
@@ -99,12 +99,16 @@ theorem vacuity_control : True := trivial
 end Book4.Ch12
 
 -- ============================================================================
--- KERNEL AUDIT.  EXPECTED: sorryAx on the two admitted statements, and NOT on
--- `lseries_vonMangoldt_eq_neg_Zlog`. If that last one ever reports sorryAx,
+-- NO #print axioms BLOCK HERE, DELIBERATELY.
+--
+-- `tools/leancheck.sh --audit` generates one `#print axioms` line per theorem
+-- and appends it to a copy of this file.  A file that also carries its own
+-- block gets probed twice, and the tool then reports double the declarations
+-- and double the sorryAx hits — 8 and 4 instead of 4 and 2, measured
+-- 2026-08-30.  An instrument must not count its own echo.
+--
+-- EXPECTED under `--audit`:  4 declarations, 2 trusting sorryAx —
+-- `reflection_law` and `chiLog_real_on_critical_line`, the two admitted
+-- statements.  `lseries_vonMangoldt_eq_neg_Zlog` must NOT appear; if it does,
 -- the bridge to von Mangoldt has broken and nothing above means anything.
 -- ============================================================================
-
-#print axioms Book4.Ch12.lseries_vonMangoldt_eq_neg_Zlog
-#print axioms Book4.Ch12.reflection_law
-#print axioms Book4.Ch12.chiLog_real_on_critical_line
-#print axioms Book4.Ch12.vacuity_control
