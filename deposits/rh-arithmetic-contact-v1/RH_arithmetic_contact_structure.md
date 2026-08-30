@@ -4,19 +4,35 @@
 
 *Preprint — not peer reviewed*
 
-**DOI reserved for v1: [10.5281/zenodo.22179684](https://doi.org/10.5281/zenodo.22179684)** — Zenodo community *Principia Orthogona*. Deposit pending; the DOI will not resolve until the record is published.
+**DOI: [10.5281/zenodo.22179684](https://doi.org/10.5281/zenodo.22179684)** — Zenodo community *Principia Orthogona*.
 
-*Version 2, revised 30 August 2026.* Version 1 (10 June 2026) constructed the form and
-stated the missing rung. This version adds §4.4–§4.6: the one-sided pole at zeros, the two
-reflection laws, the Riemann–Siegel identification (classical, credited), the refutation of
-the contactomorphism conjecture, and a status-of-claims table separating what is proved,
-machine-checked, classical, and numerical.
+**Source, Lean and figures:** [github.com/TOTOGT/GTCT](https://github.com/TOTOGT/GTCT) → `deposits/rh-arithmetic-contact-v1/`.
+Formalisation: [`book4/ZetaReflection.lean`](https://github.com/TOTOGT/GTCT/blob/main/book4/ZetaReflection.lean).
+Related corpus: [TOTOGT/geometry](https://github.com/TOTOGT/geometry) (*Principia Orthogona*, Books 1–8),
+[TOTOGT/AXLE](https://github.com/TOTOGT/AXLE) (Lean corpus).
+
+**Zenodo v2, 30 August 2026.** Record v1 (same day) carried the construction, the two
+reflection laws, the one-sided pole, the Riemann–Siegel identification and the refutation of
+the contactomorphism conjecture.
+
+**What is new in v2.** Four statements that v1 listed as *argued* or *admitted* are now
+proved and kernel-audited in Lean 4 / Mathlib v4.32.0 — `chiLog_real_on_critical_line`,
+`Zlog_conj`, `gCoef_odd_in_t` and `cCoef_even_in_t` (§4.7). None of them uses any
+information about the location of the zeros of $\zeta$; all four rest on Schwarz reflection
+alone. The single remaining admitted statement, `reflection_law`, is reduced to one named
+classical input, with its route and its side conditions written out. The status table in
+§4.6 is updated accordingly, §7.4 adds a comparison with the Deninger, Meyer, Bost–Connes
+and Connes–Consani–Marcolli programmes with verified citations, and a new
+*Deposit contents and reproducibility* section lists every file and how to check it.
+v2 also **credits the thermodynamic contact lineage**: the lift of a 2D state space to a 3D
+contact manifold carrying $c\,dU-g\,dV$ is the standard construction of contact
+thermodynamics, not something introduced here, and §7.4 now says so and cites it.
 
 ---
 
 ## Abstract
 
-We reformulate the Riemann Hypothesis (RH) as a non-vanishing condition on a globally defined arithmetic contact 3-form on the adele class space $\mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times$. Starting from the classical $2D+t$ contact geometry prototype of *Principia Orthogona* (Book 4, Chapter 2), we lift the Riemann zeta function to an extended arithmetic phase space, construct an explicit contact 1-form $\alpha_{\text{arith}}$ whose twisting coefficient is the von Mangoldt–Dirichlet series (or its meromorphic continuation), and decompose it into local contact forms $\alpha_v$ at each place of $\mathbb{Q}$. The non-integrability condition $\alpha_{\text{arith}} \wedge d\alpha_{\text{arith}} \neq 0$ — which in the smooth ODE setting is automatic — becomes, in the arithmetic setting, equivalent to a global positivity statement on the action of the idele class group on $\ker\alpha_{\text{arith}}$. We compare this positivity condition to Weil's explicit formula criterion, Connes' spectral-triple approach, and the function-field case (where everything is already proved), identifying precisely where the final rung of the proof would need to sit. This revision adds two reflection laws for the form's coefficients under the functional equation, verified numerically to 30 digits; the observation that the pole at each zero falls entirely into one component while the other remains analytic and coincides with the Riemann–Siegel $\vartheta'$; and a refutation of the earlier conjecture that the functional equation acts as a contactomorphism. **RH itself is untouched, and §4.6 states exactly which claims are proved, which are machine-checked, which are classical, and which are numerical only.** The contribution remains a translation dictionary between contact geometry and arithmetic, intended for researchers at the arithmetic–geometry–physics interface.
+We reformulate the Riemann Hypothesis (RH) as a non-vanishing condition on a globally defined arithmetic contact 3-form on the adele class space $\mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times$. Starting from the classical $2D+t$ contact geometry prototype of *Principia Orthogona* (Book 4, Chapter 2), we lift the Riemann zeta function to an extended arithmetic phase space, construct an explicit contact 1-form $\alpha_{\text{arith}}$ whose twisting coefficient is the von Mangoldt–Dirichlet series (or its meromorphic continuation), and decompose it into local contact forms $\alpha_v$ at each place of $\mathbb{Q}$. The non-integrability condition $\alpha_{\text{arith}} \wedge d\alpha_{\text{arith}} \neq 0$ — which in the smooth ODE setting is automatic — becomes, in the arithmetic setting, equivalent to a global positivity statement on the action of the idele class group on $\ker\alpha_{\text{arith}}$. We compare this positivity condition to Weil's explicit formula criterion, Connes' spectral-triple approach, and the function-field case (where everything is already proved), identifying precisely where the final rung of the proof would need to sit. This revision adds two reflection laws for the form's coefficients under the functional equation, verified numerically to 30 digits; the observation that the pole at each zero falls entirely into one component while the other remains analytic and coincides with the Riemann–Siegel $\vartheta'$; and a refutation of the earlier conjecture that the functional equation acts as a contactomorphism. In this version four supporting lemmas — the reality of the gamma-factor defect on the critical line, the conjugation symmetry of $\zeta'/\zeta$, and the parity of the two coefficients in $t$ — are proved and kernel-audited in Lean 4, reducing the one remaining admitted statement to a single classical input. **RH itself is untouched, and §4.6 states exactly which claims are proved, which are machine-checked, which are classical, and which are numerical only.** The contribution remains a translation dictionary between contact geometry and arithmetic, intended for researchers at the arithmetic–geometry–physics interface.
 
 **MSC classes:** 11M26 (Riemann and Hurwitz zeta functions) · 53D10 (Contact manifolds, general) · 11R56 (Adèle rings and groups) · 81Q10 (Selfadjoint operator theory in quantum mechanics)
 
@@ -212,17 +228,94 @@ What survives is a graded statement: $\Phi^*\alpha_{\text{arith}} - \alpha_{\tex
 
 ### 4.6 Status of claims
 
+Four tiers, and the distinction between them is load-bearing. **Machine-checked** means the
+declaration compiles and `#print axioms` reports a subset of
+`[propext, Classical.choice, Quot.sound]` — no `sorryAx`, and no `native_decide`, which is
+compiler-trusted rather than kernel-checked. A clean compile alone is not a verification.
+
 | Claim | Status |
 |---|---|
-| $c,g$ are the real and imaginary parts of $-\zeta'/\zeta$; $\sum\Lambda(n)n^{-s} = -\zeta'/\zeta$ for $\Re s>1$ | **Proved, machine-checked.** Lean 4 / Mathlib v4.32.0, `lseries_vonMangoldt_eq_neg_Zlog`, resting on `[propext, Classical.choice, Quot.sound]` |
+| $c,g$ are the real and imaginary parts of $-\zeta'/\zeta$; $\sum\Lambda(n)n^{-s} = -\zeta'/\zeta$ for $\Re s>1$ | **Proved, machine-checked.** `lseries_vonMangoldt_eq_neg_Zlog` |
+| $\chi'/\chi$ is real on $\sigma=\tfrac12$ | **Proved, machine-checked** (v2). `chiLog_real_on_critical_line` — was *admitted* in v1 |
+| $\zeta'/\zeta(\bar s) = \overline{\zeta'/\zeta(s)}$ | **Proved, machine-checked** (v2). `Zlog_conj` |
+| $g$ is odd in $t$; $c$ is even in $t$ | **Proved, machine-checked** (v2). `gCoef_odd_in_t`, `cCoef_even_in_t` — asserted without proof in v1 |
 | Proposition 4.3, the pole is one-sided | Proved above; residue confirmed numerically |
-| Corollary 4.5, $c(\tfrac12,t)=\vartheta'(t)$ | **Classical** (equivalent to $Z$ real); verified to 25 digits |
-| Reflection laws of §4.5 | **Numerical only**, 30 digits at 7 points. Stated in Lean as `reflection_law`, *admitted* (`sorryAx`) |
-| $\chi'/\chi$ real on $\sigma=\tfrac12$ | Argued above; stated in Lean as `chiLog_real_on_critical_line`, *admitted* |
+| Corollary 4.5, $c(\tfrac12,t)=\vartheta'(t)$ | **Classical** (equivalent to $Z$ real); verified to 25 digits. See Titchmarsh §6.5 |
+| Reflection laws of §4.5 | **Numerical**, 30 digits at 7 points. Stated in Lean as `reflection_law`, *admitted* — but see §4.7: the parity half is now proved, and one classical input remains |
 | Proposition 4.6, failure of contactomorphism | Argued, not formalised |
+| $\alpha_{\text{arith}}$ as a differential form on $\mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times$ | **Formal only.** See §5.5 |
 | Global positivity (§6), and RH itself | **Open.** Nothing here bears on it |
 
 Lean source: `TOTOGT/GTCT`, `book4/ZetaReflection.lean`.
+
+
+### 4.7 The formalisation
+
+The Lean file `book4/ZetaReflection.lean` states the claims of §4.4–§4.5 so that a kernel can
+hold them. Its purpose is to make the boundary between *proved* and *asserted* impossible to
+blur. Compiled against **Lean 4.32.0 / Mathlib v4.32.0**; every declaration below was probed
+with `#print axioms`.
+
+**Proved in v2, none of them using the location of the zeros.** All four reduce to Schwarz
+reflection — the statement that $\Gamma$ and $\zeta$ commute with complex conjugation — which
+is why none of them is circular.
+
+$$\texttt{Gamma\_conj\_comp} : \ \overline{\phantom{x}}\circ\Gamma\circ\overline{\phantom{x}} = \Gamma,
+\qquad
+\texttt{digamma\_conj} : \ \psi(\bar s)=\overline{\psi(s)}$$
+
+$$\texttt{chiLog\_real\_on\_critical\_line} : \ \operatorname{Im}\frac{\chi'}{\chi}\!\left(\tfrac12+it\right)=0$$
+
+At $s=\tfrac12+it$ the two digamma arguments $s/2 = \tfrac14 + \tfrac{it}{2}$ and
+$(1-s)/2 = \tfrac14 - \tfrac{it}{2}$ are complex conjugates, so their sum is
+$2\operatorname{Re}\psi(s/2)$, real; and $\log\pi$ is real. This is *why* $\sigma=\tfrac12$ is
+distinguished in §4.5, and it is now a theorem rather than a remark.
+
+$$\texttt{Zlog\_conj} : \ \frac{\zeta'}{\zeta}(\bar s) = \overline{\frac{\zeta'}{\zeta}(s)}
+\qquad\Longrightarrow\qquad
+\texttt{gCoef\_odd\_in\_t},\ \texttt{cCoef\_even\_in\_t}$$
+
+$$g(\sigma,-t) = -g(\sigma,t), \qquad c(\sigma,-t) = c(\sigma,t).$$
+
+The parity of $c$ and $g$ was *asserted* in v1 and is proved here. It is not decoration: it
+is the step that makes the reflection law close at all, because the functional equation
+relates $s=\sigma+it$ to $1-s=(1-\sigma)-it$, whereas the law of §4.5 is stated at
+$(1-\sigma)+it$. Odd parity in $t$ is exactly what bridges the two points.
+
+**What remains.** `reflection_law` is still admitted, and it now depends on one classical
+input and nothing else:
+
+$$\frac{\zeta'}{\zeta}(s) + \frac{\zeta'}{\zeta}(1-s) \;=\; \frac{\chi'}{\chi}(s)
+\tag{FE-log}$$
+
+verified numerically to 30 digits at $s = 0.7+14.3i,\ 0.3+25.1i,\ 1.4+6.2i$. Granting
+(FE-log), the law of §4.5 follows in three lines:
+
+$$g(\sigma,t) \;=\; \operatorname{Im}\tfrac{\chi'}{\chi}(\sigma+it) - g(1-\sigma,-t)
+\;=\; \operatorname{Im}\tfrac{\chi'}{\chi}(\sigma+it) + g(1-\sigma,t).$$
+
+Two remarks for anyone formalising (FE-log), both of which cost time to discover:
+
+1. **Use the symmetric functional equation, not the asymmetric one.** Mathlib's
+   `riemannZeta_one_sub` gives $\zeta(1-s) = 2(2\pi)^{-s}\Gamma(s)\cos(\pi s/2)\zeta(s)$, whose
+   logarithmic derivative is $-\log 2\pi + \psi(s) - \tfrac{\pi}{2}\tan(\pi s/2)$ — *not*
+   $\chi'/\chi$. Converting between them costs Legendre duplication and Euler reflection.
+   Use `completedRiemannZeta_one_sub`, $\Lambda(1-s)=\Lambda(s)$ with
+   $\Lambda(s)=\pi^{-s/2}\Gamma(s/2)\zeta(s)$; taking `logDeriv` of both sides and applying
+   `logDeriv_mul` twice yields (FE-log) directly.
+2. **In Mathlib, $\Gamma$ vanishes.** Poles are encoded as zeros
+   (`Complex.Gamma_eq_zero_iff`), so the hypothesis $\Gamma(s/2)\neq 0$ demanded by
+   `logDeriv_mul` is *not* free; it requires $s\notin\{0,-2,-4,\dots\}$ and likewise for
+   $1-s$. Both hold throughout the open critical strip, but they must be carried.
+
+The full side conditions are therefore $s,\,1-s \notin \{0,-2,-4,\dots\}$ and
+$\zeta(s),\zeta(1-s)\neq 0$ — that is, the identity is stated off the zeros, which is where
+$g$ is defined in any case. Nothing in it assumes *where* the zeros are.
+
+A deliberately vacuous declaration, `vacuity_control : True`, sits at the end of the file.
+Its axiom report is indistinguishable from a real theorem's. It is there as a standing
+reminder that an axiom report certifies the *proof*, never the *statement*: reading what was
+proved remains necessary.
 
 ---
 
@@ -230,7 +323,7 @@ Lean source: `TOTOGT/GTCT`, `book4/ZetaReflection.lean`.
 
 ### 5.1 Why adeles?
 
-The von Mangoldt coefficient $g(\sigma,t)$ is a global sum over all primes simultaneously. To make the contact structure genuinely "local-to-global" — and to connect with the Euler product factorization of $\zeta$ — we decompose $\alpha_{\text{arith}}$ over the adele ring $\mathbb{A}_\mathbb{Q} = \mathbb{R} \times \prod_p' \mathbb{Q}_p$.
+The von Mangoldt coefficient $g(\sigma,t)$ is a global sum over all primes simultaneously. To make the contact structure genuinely "local-to-global" — and to connect with the Euler product factorization of $\zeta$ — we decompose $\alpha_{\text{arith}}$ over the adele ring $\mathbb{A}_{\mathbb{Q}} = \mathbb{R} \times \prod_p' \mathbb{Q}_p$.
 
 ### 5.2 Local contact forms
 
@@ -262,19 +355,40 @@ $$d\alpha_p = i(\log p)^2 \frac{c}{(1-c)^2}\,dt_p \wedge dU_p.$$
 
 $$|\partial_{t_p} g_p|_p = |c|_p = p^{-\sigma}\cdot|p^{-it_p}|_p.$$
 
-As a trajectory approaches the boundary $|c|_p \to 1^-$, the denominator $(1-c)^2$ acquires positive $p$-adic valuation, forcing $|d\alpha_p|_p \to 0$. The contact condition $\alpha_p(\dot\gamma_p) = 0$ thus imposes a **valuation inequality** that confines the local flow inside the rigid-analytic unit disk. Any attempt to cross into the ramified region $|c|_p \geq 1$ — corresponding to non-unit idelic components that would break the restricted-product structure of $\mathbb{A}_\mathbb{Q}$ — is geometrically forbidden.
+As a trajectory approaches the boundary $|c|_p \to 1^-$, the denominator $(1-c)^2$ acquires positive $p$-adic valuation, forcing $|d\alpha_p|_p \to 0$. The contact condition $\alpha_p(\dot\gamma_p) = 0$ thus imposes a **valuation inequality** that confines the local flow inside the rigid-analytic unit disk. Any attempt to cross into the ramified region $|c|_p \geq 1$ — corresponding to non-unit idelic components that would break the restricted-product structure of $\mathbb{A}_{\mathbb{Q}}$ — is geometrically forbidden.
 
 ### 5.4 Global assembly
 
-A global 1-form on the adele class space $\mathbb{A}_\mathbb{Q}/\mathbb{Q}^\times$ is assembled as a restricted direct product of local forms. Because the Euler product factorizes globally, only finitely many places contribute non-trivially at any adelic point, and the global exterior derivative commutes with localization:
+A global 1-form on the adele class space $\mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times$ is assembled as a restricted direct product of local forms. Because the Euler product factorizes globally, only finitely many places contribute non-trivially at any adelic point, and the global exterior derivative commutes with localization:
 
 $$d\alpha_{\text{arith}} = \sum_v d\alpha_v \qquad \text{(restricted sum)}.$$
 
 The global non-integrability condition
 
-$$\alpha_{\text{arith}}\wedge d\alpha_{\text{arith}} \neq 0 \quad \text{on } \mathbb{A}_\mathbb{Q}/\mathbb{Q}^\times$$
+$$\alpha_{\text{arith}}\wedge d\alpha_{\text{arith}} \neq 0 \quad \text{on } \mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times$$
 
 is the statement that the restricted product of local 3-forms is nowhere-vanishing on the adele class space. The local "locking" mechanisms at each place — linear independence of $\{\log p\}$ at $v=\infty$, valuation rigidity of $(1-c)^2$ at $v=p$ — act jointly to enforce this.
+
+
+### 5.5 What category this construction lives in
+
+Stated plainly, because it bounds everything above. On
+$\mathbb{R}^2_{(U,V)}\times\mathbb{R}_t$ the form $\alpha_{\text{arith}}$ is an ordinary smooth
+1-form and $\alpha\wedge d\alpha\neq0$ has its usual meaning as a non-vanishing top form.
+On $\mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times$ it does not. That quotient is not a smooth manifold —
+$\mathbb{Q}^\times$ acts multiplicatively on a ring with zero divisors, the quotient is
+badly behaved and non-Hausdorff, and this is precisely the obstruction that led Connes to
+noncommutative geometry rather than differential geometry. Classical exterior calculus is
+not available there.
+
+So §5.4 is a **formal assembly**, a dictionary matching local data place by place, and not
+the construction of a contact manifold. Making it literal would require choosing a category
+and re-deriving the reformulation inside it — the candidates being noncommutative 1-forms
+over a dense subalgebra in the spectral-triple sense, a foliated or leafwise structure in
+Deninger's sense, or a rigid-analytic or Berkovich structure place by place. Each changes
+what $\alpha\wedge d\alpha\neq0$ *means*, and none is carried out here. This is the largest
+gap between the dictionary and a geometric statement, and it is separate from, and prior to,
+the positivity question of §6.
 
 ---
 
@@ -284,7 +398,7 @@ is the statement that the restricted product of local 3-forms is nowhere-vanishi
 
 All the local machinery works. The remaining step is:
 
-**Conjecture 6.1 (Global Positivity / RH restated).** *The natural action of the idele class group $\mathbb{A}_\mathbb{Q}^\times/\mathbb{Q}^\times$ on $\ker\alpha_{\text{arith}}$ is **positive-definite**. Equivalently, the total "twisting energy" of the arithmetic contact structure is strictly minimized precisely on the hyperplane $\sigma = \tfrac{1}{2}$, and any zero-curve at $\sigma \neq \tfrac{1}{2}$ would force $\alpha_{\text{arith}} \wedge d\alpha_{\text{arith}} = 0$ at some adelic point — a contradiction with maximal non-integrability.*
+**Conjecture 6.1 (Global Positivity / RH restated).** *The natural action of the idele class group $\mathbb{A}_{\mathbb{Q}}^\times/\mathbb{Q}^\times$ on $\ker\alpha_{\text{arith}}$ is **positive-definite**. Equivalently, the total "twisting energy" of the arithmetic contact structure is strictly minimized precisely on the hyperplane $\sigma = \tfrac{1}{2}$, and any zero-curve at $\sigma \neq \tfrac{1}{2}$ would force $\alpha_{\text{arith}} \wedge d\alpha_{\text{arith}} = 0$ at some adelic point — a contradiction with maximal non-integrability.*
 
 This conjecture is exactly the Riemann Hypothesis, restated in contact-arithmetic language. It is not easier to prove in this language; the arithmetic difficulty is fully preserved.
 
@@ -311,7 +425,7 @@ where the sum is over non-trivial zeros. This is a spectral positivity statement
 
 ### 7.2 Connes' spectral triple
 
-Connes (1999) proposes to realize the zeros of $\zeta$ as the **missing part of the spectrum** of an operator on $L^2(\mathbb{A}_\mathbb{Q}/\mathbb{Q}^\times)$. The absorption spectrum of a suitable Hamiltonian $H$ would contain the zeros, and RH would follow if $H$ were shown to be self-adjoint (Hermitian), forcing real eigenvalues — hence $\operatorname{Im}(\rho) \in \mathbb{R}$, i.e., $\operatorname{Re}(\rho) = \tfrac{1}{2}$.
+Connes (1999) proposes to realize the zeros of $\zeta$ as the **missing part of the spectrum** of an operator on $L^2(\mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times)$. The absorption spectrum of a suitable Hamiltonian $H$ would contain the zeros, and RH would follow if $H$ were shown to be self-adjoint (Hermitian), forcing real eigenvalues — hence $\operatorname{Im}(\rho) \in \mathbb{R}$, i.e., $\operatorname{Re}(\rho) = \tfrac{1}{2}$.
 
 **Translation to contact language.** The self-adjointness of $H$ corresponds to the positive-definiteness of the idele-class action in our framework. Connes' "Reeb vector field" is our contact-geometric Reeb flow. The spectral gap condition in Connes corresponds to the strict non-vanishing of $\alpha\wedge d\alpha$ away from $\sigma = \tfrac{1}{2}$.
 
@@ -328,6 +442,52 @@ Over a finite field $\mathbb{F}_q$, the analogue of $\zeta(s)$ is the **zeta fun
 3. In contact terms: the "arithmetic contact form" over $\mathbb{F}_q$ has a **finite-dimensional Reeb flow**, and positive-definiteness can be verified by an explicit computation over the Jacobian of $C$.
 
 **Lesson for the number-field case.** The function-field proof works because algebraic geometry (Riemann–Roch, Lefschetz trace formula) provides the positivity "for free." Over $\mathbb{Q}$, there is no analogue of Riemann–Roch that directly controls the infinite-dimensional adele class space. The contact form in Section 4 encodes all the same arithmetic, but the positivity argument must come from elsewhere — perhaps from a new analytic tool, a motivic cohomology result, or a non-commutative geometry calculation.
+
+
+### 7.4 Other geometric and dynamical programmes
+
+Every citation below was checked against the published record before inclusion; three
+in-circulation attributions were found wrong and are corrected here.
+
+**Deninger's foliated dynamical systems.** Deninger [11] proposes an infinite-dimensional
+foliated leaf space carrying an $\mathbb{R}$-action whose closed orbits correspond to primes
+and whose transfer-operator trace reproduces the local factors. *Where it stops:* the space
+itself has never been constructed; the differential operators on it remain hypothetical.
+This is the closest programme in spirit to the present paper, and it fails at the same
+point — §5.5 — namely producing an actual geometric object rather than a dictionary.
+
+**Meyer's spectral interpretation.** Meyer [12] reformulates the explicit formula through a
+representation of the idele class group on a Hilbert space extension. *Where it stops:*
+self-adjointness of the generator is structurally equivalent to Weil positivity again.
+
+**The Bost–Connes system.** Bost and Connes [13] encode the primes in the KMS states of a
+Hecke $C^*$-algebra, with a phase transition at inverse temperature $\beta=1$. *Where it
+stops:* the system makes no contact with the critical strip, where the zeros are.
+
+**Morishita's bridge.** Morishita [14] constructs a continuous, Galois-equivariant and
+flow-anti-equivariant map from Deninger's Witt-space foliated dynamical systems to
+Connes–Consani's adelic spaces, carrying closed orbits to prime places. This is the most
+direct link between the two programmes the present construction sits between, and any
+serious attempt at §5.5 should start there rather than here.
+
+**The lift is a standard device, and should be recognised as one.** Promoting a
+two-dimensional state space to a three-dimensional contact manifold carrying a 1-form of the
+shape $c\,dU - g\,dV$ is exactly the construction used in the contact geometry of
+thermodynamics, where the Gibbs form on the extended state space plays this role and the
+equations of state appear as Legendre submanifolds [19]. The present paper does not
+introduce that geometry; it applies it, with $(c,g)$ the real and imaginary parts of
+$-\zeta'/\zeta$ in place of the conjugate thermodynamic pairs.
+
+We think this makes the contribution clearer rather than smaller. The transferable object is
+not a new kind of manifold but a **dictionary entry**: the assertion that the arithmetic of
+$\zeta$ can be written in the same extended-phase-space language, with the functional
+equation appearing as a reflection law on the coefficients (§4.5) and the zeros as punctures
+of the $U=V=0$ axis (§4.4).
+
+**What is not claimed.** No novelty is asserted for the lift, for the two-coefficient form,
+or for the one-sided pole of §4.4. Establishing which of these are unremarked would require
+a literature search we have not run, and an unsearched novelty claim is a claim of ignorance
+dressed as a result. What is claimed is exactly what §4.6 lists, and nothing else.
 
 ---
 
@@ -353,7 +513,7 @@ Step 4 is precisely Global Positivity (Conjecture 6.1) and is equivalent to RH.
 
 2. **Can the DNLS nonlinearity be tuned to approximate the prime distribution?** The reduced DNLS contact form (Section 2.4) produces chaotic helices whose statistics can be adjusted via $\beta$ and $\gamma$. Is there a parameter regime where the local zero-spacing statistics match GUE (the random matrix prediction for zeta zeros)?
 
-3. **Adelic contact geometry as a field.** The construction of $\alpha_{\text{arith}}$ on $\mathbb{A}_\mathbb{Q}/\mathbb{Q}^\times$ is, to our knowledge, new. Does this space admit a well-defined contact topology (tight vs. overtwisted contact structures)? If $\alpha_{\text{arith}}$ defines a *tight* contact structure, that would be a strong rigidity result consistent with RH.
+3. **Adelic contact geometry as a field.** The construction of $\alpha_{\text{arith}}$ on $\mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times$ is, to our knowledge, new. Does this space admit a well-defined contact topology (tight vs. overtwisted contact structures)? If $\alpha_{\text{arith}}$ defines a *tight* contact structure, that would be a strong rigidity result consistent with RH.
 
 4. **$p$-adic Reeb dynamics.** The local Reeb vector field at each place $p$ is the dual vector field to $\alpha_p$ (defined by $\alpha_p(R_p) = 1$, $d\alpha_p(R_p, \cdot) = 0$). Studying the dynamics of $R_p$ in the rigid-analytic setting might reveal additional arithmetic structure.
 
@@ -373,7 +533,7 @@ using this meromorphic continuation. The exterior derivative formula $d\alpha_{\
 
 | Concept | Smooth ODE (Grossi Ch. 2) | Arithmetic (this paper) | Connes' approach |
 |---------|--------------------------|------------------------|-----------------|
-| Phase space | $\mathbb{R}^2 \times \mathbb{R}_t$ | $\mathbb{A}_\mathbb{Q}/\mathbb{Q}^\times$ | $L^2(\mathbb{A}_\mathbb{Q}/\mathbb{Q}^\times)$ |
+| Phase space | $\mathbb{R}^2 \times \mathbb{R}_t$ | $\mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times$ | $L^2(\mathbb{A}_{\mathbb{Q}}/\mathbb{Q}^\times)$ |
 | Contact form | $\alpha = dy - g(x,y)\,dx$ | $\alpha_{\text{arith}} = dV - g_{\text{cont}}\,dU$ | Spectral triple $(A, H, D)$ |
 | Non-integrability | $\alpha\wedge d\alpha \neq 0$ (local, automatic) | $\alpha_{\text{arith}}\wedge d\alpha_{\text{arith}} \neq 0$ (global, non-trivial) | $D$ self-adjoint |
 | RH condition | N/A (smooth zeros are fine) | Global positivity of idele-class action | Self-adjointness of $H$ |
@@ -381,21 +541,71 @@ using this meromorphic continuation. The exterior derivative formula $d\alpha_{\
 | Status | Proved (trivially) | Open (= RH) | Open (= RH) |
 | Function-field analogue | Same framework, finite-dim | Weil positivity via Riemann–Roch | Proven (Deligne) |
 
+
+## Deposit Contents and Reproducibility
+
+Everything that produces a number or a figure in this paper is deposited beside it, and
+every claim in §4.6 resolves to one of these files.
+
+| File | What it is |
+|---|---|
+| `rh_arithmetic_contact_v2.pdf` | this paper |
+| `RH_arithmetic_contact_structure.md` | its source |
+| `ZetaReflection.lean` | the formalisation of §4.7. Lean 4.32.0 / Mathlib v4.32.0 |
+| `verify_reflection_laws.py` | the 30-digit numerical checks of §4.5 and (FE-log) |
+| `figures.py` | generates Figure 1 |
+| `fig1_rh_lift.pdf`, `fig1_rh_lift.png` | Figure 1 |
+| `RELATED-WORK.md` | the citation audit behind §7.4, including what was rejected |
+
+**Repositories.** Source and Lean: [`TOTOGT/GTCT`](https://github.com/TOTOGT/GTCT),
+under `deposits/rh-arithmetic-contact-v1/`, with the formalisation also at
+`book4/ZetaReflection.lean`. Wider corpus:
+[`TOTOGT/geometry`](https://github.com/TOTOGT/geometry) (*Principia Orthogona*, Books 1–8)
+and [`TOTOGT/AXLE`](https://github.com/TOTOGT/AXLE).
+
+**To check the formalisation yourself.** In any Lean project pinned to Mathlib v4.32.0:
+
+```
+lake env lean ZetaReflection.lean
+```
+
+then append `#print axioms Book4.Ch12.<name>` for each declaration. A claim in §4.6 marked
+*machine-checked* must report a subset of `[propext, Classical.choice, Quot.sound]`. If it
+reports `sorryAx`, the statement is admitted, not proved; if it reports a `native_decide`
+axiom, it is compiler-trusted, not kernel-checked. Both are reasons to disbelieve the table,
+and both have been found in this corpus before.
+
+**To check the numerics.** `python3 verify_reflection_laws.py` (requires `mpmath`) prints the
+residuals for the reflection laws and for (FE-log) at the sample points, at 30 significant
+digits.
+
 ---
 
 ## References
 
+Entries marked **[verified]** were verified against the published record while preparing v2. Where a
+commonly circulated citation is wrong, the correction is noted.
+
 1. B. Riemann, *Über die Anzahl der Primzahlen unter einer gegebenen Grösse*, Monatsberichte der Berliner Akademie (1859).
-2. A. Weil, *Sur les "formules explicites" de la théorie des nombres premiers*, Comm. Sém. Math. Univ. Lund (1952).
-3. A. Connes, *Trace formula in noncommutative geometry and the zeros of the Riemann zeta function*, Selecta Math. **5** (1999), 29–106.
+2. A. Weil, *Sur les "formules explicites" de la théorie des nombres premiers*, Comm. Sém. Math. Univ. Lund (1952), 252–265.
+3. [verified] A. Connes, *Trace formula in noncommutative geometry and the zeros of the Riemann zeta function*, Selecta Math. (N.S.) **5** (1999), 29–106.
 4. A. Connes and C. Consani, *On the notion of geometry over $\mathbb{F}_1$*, J. Algebraic Geom. **20** (2011), 525–557.
-5. H. Montgomery, *The pair correlation of zeros of the zeta function*, Analytic Number Theory, Proc. Sympos. Pure Math. **24** (1973), 181–193.
-6. P. N. Grossi, *Principia Orthogona*, Book 4, Chapter 2: Contact geometry and the extended phase space. Available at: https://totogt.github.io/geometry/book4/ch02.html
+5. H. Montgomery, *The pair correlation of zeros of the zeta function*, Proc. Sympos. Pure Math. **24** (1973), 181–193.
+6. P. N. Grossi, *Principia Orthogona*, Book 4, Chapter 2: Contact geometry and the extended phase space. https://totogt.github.io/geometry/book4/ch02.html
 7. H. Iwaniec and E. Kowalski, *Analytic Number Theory*, AMS Colloquium Publications **53** (2004).
-8. V. I. Arnold, *Mathematical Methods of Classical Mechanics*, Springer (1989). [Contact geometry background]
-9. J. Etnyre, *Introductory lectures on contact geometry*, Topology and Geometry of Manifolds, Proc. Sympos. Pure Math. **71** (2003).
+8. V. I. Arnold, *Mathematical Methods of Classical Mechanics*, Springer (1989).
+9. J. Etnyre, *Introductory lectures on contact geometry*, Proc. Sympos. Pure Math. **71** (2003).
 10. P. Deligne, *La conjecture de Weil I*, Publ. Math. IHÉS **43** (1974), 273–307.
+11. [verified] C. Deninger, *Some analogies between number theory and dynamical systems on foliated spaces*, Documenta Math., Extra Vol. ICM I (1998), 163–186. *(Frequently miscited as "…and topology", and to* Ergod. Th. & Dynam. Sys.*; both are wrong.)*
+12. [verified] R. Meyer, *On a representation of the idele class group related to primes and zeros of $L$-functions*, Duke Math. J. **127** (2005); preprint arXiv:math/0311468. *(Often truncated to "…related to prime numbers".)*
+13. [verified] J.-B. Bost and A. Connes, *Hecke algebras, type III factors and phase transitions with spontaneous symmetry breaking in number theory*, Selecta Math. (N.S.) **1** (1995), 411–457. *(Sometimes miscited as "…and arithmetical dynamical systems".)*
+14. [verified] M. Morishita, *On a relation between Deninger's foliated dynamical systems and Connes–Consani's adelic spaces*, arXiv:2508.15971 (2025).
+15. [verified] A. Connes, C. Consani and M. Marcolli, *The Weil proof and the geometry of the adeles class space*, in *Algebra, Arithmetic and Geometry* (Manin Festschrift), Progr. Math. **269**, Birkhäuser (2009).
+16. E. C. Titchmarsh, *The Theory of the Riemann Zeta-Function*, 2nd ed., rev. D. R. Heath-Brown, Oxford University Press (1986). §3.3 (local expansions near zeros), §6.5 (phase of $Z(t)$).
+17. H. Davenport, *Multiplicative Number Theory*, 3rd ed., rev. H. L. Montgomery, Springer GTM **74** (2000).
+18. The mathlib Community, *The Lean Mathematical Library*, CPP 2020. Version v4.32.0 used throughout.
+19. [verified] R. Mrugała, *Continuous contact transformations in thermodynamics*, Rep. Math. Phys. **33** (1993), 149–154. *(Circulated with the wrong title, year, volume and pages — "…in thermodynamic phase space", 1990, 29(1), 117–129 — none of which match the record.)* For the underlying contact structure on the extended thermodynamic state space see also R. Hermann, *Geometry, Physics and Systems*, Marcel Dekker (1973).
 
 ---
 
-*End of draft. Version 0.1 — for internal review and critique.*
+*Zenodo v2 · 30 August 2026 · Preprint, not peer reviewed · CC BY 4.0*

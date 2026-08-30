@@ -16,7 +16,7 @@ here entered the paper on trust.
 
 ## Not mentioned by Gemini, and directly on point
 
-- **"On a relation between Deninger's foliated dynamical systems and Connes–Consani's adelic spaces"**, arXiv:2508.15971 (2026). It connects precisely the two programmes this paper sits between. Read before the next revision.
+- **"On a relation between Deninger's foliated dynamical systems and Connes–Consani's adelic spaces"**, arXiv:2508.15971 (2025). It connects precisely the two programmes this paper sits between. Read before the next revision.
 - Consani–Marcolli, *Non-commutative geometry, dynamics, and ∞-adic Arakelov geometry*, arXiv:math.AG/0205306 (Selecta Math. 2004).
 
 ## Claims rejected in the audit
@@ -68,3 +68,33 @@ numerically to 30 digits (mpmath) at s = 0.7+14.3i, 0.3+25.1i, 1.4+6.2i.
 Also noted: the session's stated *Goal* line and its closing parenthetical both
 give `g(σ,t) + g(1−σ,t) = −Im[χ'/χ]`, which contradicts its own step 5. The
 body derivation is correct; the header and the aside are not.
+
+## Second audit round (2026-08-30, evening)
+
+A further bibliography arrived from the same source. Four more entries wrong:
+
+| given | actual |
+|---|---|
+| Bost–Connes, *"…and arithmetical dynamical systems"* | *"…and phase transitions with spontaneous symmetry breaking in number theory"*, Selecta Math. **1** (1995), 411–457 |
+| Deninger, *"Some analogies between number theory and topology"* | *"…and dynamical systems on foliated spaces"*, Documenta Math., Extra Vol. ICM I (1998), 163–186 |
+| Meyer, *"…related to prime numbers"* | *"…related to primes and zeros of L-functions"*, Duke Math. J. **127** (2005); arXiv:math/0311468 |
+| Mrugała, *"Continuous contact transformations in thermodynamic phase space"*, Rep. Math. Phys. **29**(1) (1990), 117–129 | *"Continuous contact transformations in thermodynamics"*, Rep. Math. Phys. **33** (1993), 149–154 |
+
+Also corrected here: **Morishita is arXiv 2508, i.e. August 2025, not 2026.** That was my
+own error in the first audit round, not the source's.
+
+Left uncited because they could not be verified: a second Deninger paper on Γ-factors of
+regularized determinants, and two Consani–Marcolli / Connes–Consani–Marcolli entries whose
+titles, journals and years did not agree with anything found.
+
+### The one that mattered
+Mrugała, despite the wrong citation, was the most important item of the day.
+**The lift of a 2D state space to a 3D contact manifold carrying `c dU − g dV` is the
+standard construction of contact thermodynamics** — the Gibbs form on the extended state
+space, with equations of state as Legendre submanifolds. The paper does not introduce that
+geometry, it applies it. §7.4 now says so and cites it, and the novelty claims that were
+provisionally attached to the lift are withdrawn.
+
+**Ryszard Mrugała**, Department of Mathematical Physics, Nicolaus Copernicus University,
+Toruń. Also: *On contact and metric structures on thermodynamic spaces*, RIMS Kôkyûroku
+**1142** (2000).
