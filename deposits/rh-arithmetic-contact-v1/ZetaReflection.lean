@@ -146,10 +146,18 @@ theorem cCoef_even_in_t (σ t : ℝ) : cCoef σ (-t) = cCoef σ t := by
     `logDeriv_comp` for the `1 − s` chain rule,
         Λ'/Λ(s) = −½ log π + ½ψ(s/2) + ζ'/ζ(s)
     and Λ'/Λ(s) = −Λ'/Λ(1−s) rearranges directly into (FE-log). The side
-    conditions are the non-vanishing needed by `logDeriv_mul`: Γ(s/2) ≠ 0
-    (always), and ζ(s) ≠ 0, ζ(1−s) ≠ 0 — so the identity is stated off the
-    zeros, which is where g is defined anyway. Nothing here assumes where the
-    zeros are. -/
+    conditions are the non-vanishing needed by `logDeriv_mul`.
+
+    CAREFUL with Γ. It is true classically that Γ never vanishes, but Mathlib
+    encodes Γ's POLES as zeros: `Complex.Gamma_eq_zero_iff s : Γ s = 0 ↔ ∃ m : ℕ,
+    s = −m`. So `Γ(s/2) ≠ 0` is NOT free here — it needs `s ∉ {0, −2, −4, …}`,
+    and the hypothesis has to be carried. Harmless for this chapter, which lives
+    in the critical strip, but it will not discharge itself.
+
+    Full side conditions: `s ∉ {0, −2, −4, …}` and `(1−s) ∉ {0, −2, −4, …}` for
+    the two Γ factors, and `ζ(s) ≠ 0`, `ζ(1−s) ≠ 0`. The identity is therefore
+    stated off the zeros — which is where g is defined anyway. Nothing in it
+    assumes WHERE the zeros are. -/
 theorem reflection_law (σ t : ℝ) :
     gCoef σ t - gCoef (1 - σ) t = (chiLog ⟨σ, t⟩).im := by
   sorry
