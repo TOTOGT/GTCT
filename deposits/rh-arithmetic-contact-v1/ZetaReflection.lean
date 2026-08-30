@@ -118,15 +118,38 @@ theorem cCoef_even_in_t (σ t : ℝ) : cCoef σ (-t) = cCoef σ t := by
 /-- ADMITTED · the transformation law of §12.2, numerically verified but not
     proved here. This is the obligation, stated so it can be pointed at.
 
-    WHAT REMAINS, as of 2026-08-30. The parity half is now proved above
-    (`gCoef_odd_in_t`), so the only missing input is the functional equation in
-    logarithmic-derivative form, `ζ'/ζ(s) = χ'/χ(s) − ζ'/ζ(1−s)`, which Mathlib
-    does not yet carry. Given it, the law follows in three lines:
-      ζ'/ζ(σ+it) = χ'/χ(σ+it) − ζ'/ζ((1−σ) − it)      (functional equation)
-      Im: g(σ,t) = Im χ'/χ(σ+it) − g(1−σ, −t)          (definition of g)
-                 = Im χ'/χ(σ+it) + g(1−σ, t)           (gCoef_odd_in_t)
-    Deriving the log-derivative functional equation from Mathlib's
-    `riemannZeta_one_sub` is the real work, and it is analytic, not geometric. -/
+    WHAT REMAINS, as of 2026-08-30. The parity half is proved above
+    (`gCoef_odd_in_t`), so the only missing input is
+
+        ζ'/ζ(s) + ζ'/ζ(1−s) = chiLog s                          (FE-log)
+
+    Verified numerically to 30 digits at three interior points (mpmath,
+    2026-08-30). Given it, the law is three lines:
+      ζ'/ζ(σ+it) = chiLog(σ+it) − ζ'/ζ((1−σ) − it)     (FE-log)
+      Im: g(σ,t) = Im chiLog(σ+it) − g(1−σ, −t)         (definition of g)
+                 = Im chiLog(σ+it) + g(1−σ, t)          (gCoef_odd_in_t)
+
+    ROUTE, and this is the part worth getting right. Do NOT go via Mathlib's
+    `riemannZeta_one_sub`. That is the ASYMMETRIC equation
+
+        ζ(1−s) = 2 (2π)^(−s) Γ(s) cos(πs/2) ζ(s)
+
+    whose logarithmic derivative is −log(2π) + ψ(s) − (π/2)tan(πs/2), which is
+    NOT `chiLog`. Getting from one to the other needs Legendre duplication and
+    Euler reflection for Γ — a real grind, not a chain rule.
+
+    Go instead via the SYMMETRIC equation, which Mathlib also has:
+
+        `completedRiemannZeta_one_sub : Λ (1 − s) = Λ s`,  Λ(s) = π^(−s/2) Γ(s/2) ζ(s)
+
+    Take `logDeriv` of both sides. With `logDeriv_mul` (twice) and
+    `logDeriv_comp` for the `1 − s` chain rule,
+        Λ'/Λ(s) = −½ log π + ½ψ(s/2) + ζ'/ζ(s)
+    and Λ'/Λ(s) = −Λ'/Λ(1−s) rearranges directly into (FE-log). The side
+    conditions are the non-vanishing needed by `logDeriv_mul`: Γ(s/2) ≠ 0
+    (always), and ζ(s) ≠ 0, ζ(1−s) ≠ 0 — so the identity is stated off the
+    zeros, which is where g is defined anyway. Nothing here assumes where the
+    zeros are. -/
 theorem reflection_law (σ t : ℝ) :
     gCoef σ t - gCoef (1 - σ) t = (chiLog ⟨σ, t⟩).im := by
   sorry

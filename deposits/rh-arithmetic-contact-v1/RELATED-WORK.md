@@ -48,3 +48,23 @@ it is right, and it matches what is now proved in `ZetaReflection.lean`
 `g = Im(−ζ'/ζ)`, but this corpus defines `g = Im(+ζ'/ζ)` with only `c` carrying
 the minus sign. The asymmetry is deliberate; using Gemini's sign flips the
 identity.
+
+## Correction to the proposed Lean route (2026-08-30)
+
+A Gemini session proposed closing `reflection_law` via Mathlib's
+`riemannZeta_one_sub`, calling it "strictly local — `HasDerivAt.log` and the
+chain rule". That names the wrong functional equation.
+
+`riemannZeta_one_sub` is the **asymmetric** form,
+`ζ(1−s) = 2(2π)^(−s) Γ(s) cos(πs/2) ζ(s)`, whose logarithmic derivative is
+`−log(2π) + ψ(s) − (π/2)tan(πs/2)` — not this corpus's `chiLog`. Converting
+between them requires Legendre duplication and Euler reflection for Γ.
+
+Use `completedRiemannZeta_one_sub : Λ(1−s) = Λ(s)` instead, with
+`Λ(s) = π^(−s/2)Γ(s/2)ζ(s)`. Taking `logDeriv` of both sides and applying
+`logDeriv_mul` twice gives `ζ'/ζ(s) + ζ'/ζ(1−s) = chiLog s` directly. Verified
+numerically to 30 digits (mpmath) at s = 0.7+14.3i, 0.3+25.1i, 1.4+6.2i.
+
+Also noted: the session's stated *Goal* line and its closing parenthetical both
+give `g(σ,t) + g(1−σ,t) = −Im[χ'/χ]`, which contradicts its own step 5. The
+body derivation is correct; the header and the aside are not.
