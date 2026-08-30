@@ -19,7 +19,7 @@
   [propext, Classical.choice, Quot.sound] — no `sorryAx`, no `native_decide`.
   Re-check with:  #print axioms GCTC.<name>
 -/
-import Mathlib
+import Mathlib.Tactic
 
 namespace GCTC
 

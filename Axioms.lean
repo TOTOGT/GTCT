@@ -17,7 +17,13 @@
   [propext, Classical.choice, Quot.sound] — no `sorryAx`, no `native_decide`.
   Re-check with:  #print axioms GCTC.<name>
 -/
-import Mathlib
+import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.Analysis.Calculus.Deriv.Pow
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Inv
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+import Mathlib.Tactic
 
 namespace GCTC
 
