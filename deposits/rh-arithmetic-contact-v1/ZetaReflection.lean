@@ -52,6 +52,7 @@
 
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.NumberTheory.LSeries.Dirichlet
+import Mathlib.NumberTheory.Harmonic.ZetaAsymp
 import Mathlib.Analysis.SpecialFunctions.Gamma.Digamma
 import Mathlib.Analysis.Calculus.Deriv.Star
 
@@ -81,8 +82,51 @@ theorem lseries_vonMangoldt_eq_neg_Zlog {s : ℂ} (hs : 1 < s.re) :
   simpa [Zlog, logDeriv_apply, neg_div] using
     LSeries_vonMangoldt_eq_deriv_riemannZeta_div hs
 
+
+/-- ζ is conjugation-symmetric as a composite. -/
+theorem zeta_conj_comp : (conj ∘ riemannZeta ∘ conj : ℂ → ℂ) = riemannZeta := by
+  funext z
+  simp only [Function.comp_apply, ← riemannZeta_conj, Complex.conj_conj]
+
+/-- **PROVED 2026-08-30** · `ζ'/ζ` is conjugation-symmetric. -/
+theorem Zlog_conj (s : ℂ) : Zlog (conj s) = conj (Zlog s) := by
+  have hd : deriv (conj ∘ riemannZeta ∘ conj : ℂ → ℂ)
+      = conj ∘ deriv riemannZeta ∘ conj := deriv_conj_conj
+  rw [zeta_conj_comp] at hd
+  have h1 : deriv riemannZeta (conj s) = conj (deriv riemannZeta s) := by
+    have h := congrFun hd s
+    simp only [Function.comp_apply] at h
+    rw [h, Complex.conj_conj]
+  simp only [Zlog, logDeriv_apply, h1, riemannZeta_conj, map_div₀]
+
+/-- **PROVED 2026-08-30 · g is odd in t.**  The header states this; here it is
+    checked. It is also the step that any short "route" to `reflection_law`
+    will skip, and it is load-bearing: the functional equation relates
+    `s = σ + it` to `1 − s = (1−σ) − it`, whereas the law is stated at
+    `(1−σ) + it`. Odd parity in `t` is exactly what bridges the two. -/
+theorem gCoef_odd_in_t (σ t : ℝ) : gCoef σ (-t) = - gCoef σ t := by
+  have h : (⟨σ, -t⟩ : ℂ) = conj (⟨σ, t⟩ : ℂ) := by
+    apply Complex.ext <;> simp
+  simp only [gCoef, h, Zlog_conj, Complex.conj_im]
+
+/-- **PROVED 2026-08-30 · c is even in t**, by the same symmetry. -/
+theorem cCoef_even_in_t (σ t : ℝ) : cCoef σ (-t) = cCoef σ t := by
+  have h : (⟨σ, -t⟩ : ℂ) = conj (⟨σ, t⟩ : ℂ) := by
+    apply Complex.ext <;> simp
+  simp only [cCoef, h, Zlog_conj, ← map_neg, Complex.conj_re]
+
 /-- ADMITTED · the transformation law of §12.2, numerically verified but not
-    proved here. This is the obligation, stated so it can be pointed at. -/
+    proved here. This is the obligation, stated so it can be pointed at.
+
+    WHAT REMAINS, as of 2026-08-30. The parity half is now proved above
+    (`gCoef_odd_in_t`), so the only missing input is the functional equation in
+    logarithmic-derivative form, `ζ'/ζ(s) = χ'/χ(s) − ζ'/ζ(1−s)`, which Mathlib
+    does not yet carry. Given it, the law follows in three lines:
+      ζ'/ζ(σ+it) = χ'/χ(σ+it) − ζ'/ζ((1−σ) − it)      (functional equation)
+      Im: g(σ,t) = Im χ'/χ(σ+it) − g(1−σ, −t)          (definition of g)
+                 = Im χ'/χ(σ+it) + g(1−σ, t)           (gCoef_odd_in_t)
+    Deriving the log-derivative functional equation from Mathlib's
+    `riemannZeta_one_sub` is the real work, and it is analytic, not geometric. -/
 theorem reflection_law (σ t : ℝ) :
     gCoef σ t - gCoef (1 - σ) t = (chiLog ⟨σ, t⟩).im := by
   sorry
