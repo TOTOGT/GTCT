@@ -10,9 +10,9 @@ namespace GTCT
 
 /-!
 # dm³ Criticality Principle — Extended Framework
-## Navrátil–GTCT Synthesis: n-bonacci Ladder, Supercriticality, and the Tribonacci Phase Boundary
+## n-bonacci Ladder, Supercriticality, and the Tribonacci Phase Boundary
 
-### Core Insight (Navratil + GTCT)
+### Core Insight
 
 The dm³ Criticality Principle asserts c* = 3 as the unique balanced fixed point of
 the cubic potential V_c(q) = q³ - c·q.
@@ -32,7 +32,7 @@ The V_c potential double-root condition (c = 3 ↔ q=1 is degenerate) is the
 the cubic is the minimal polynomial admitting a degenerate (critical) real root
 alongside a non-trivial complex conjugate pair that encodes genuine phase winding.
 
-### Connection to Navratil Document
+### Empirical Rank Comparison
 
   - Rank 2 (Fibonacci):  Dcrit = 26 only accidentally; arg(λ₂) = π (trivial phase);
                           no ring over ℤ; Weinberg angle off by 16.9%.
