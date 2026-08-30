@@ -229,8 +229,8 @@ git submodule update --init --recursive
 | G⁵ | The Seed — Complete Completeness | 979-8-9954416-5-6 | Published |
 
 **Buy:** [g6llc.gumroad.com/l/soundworks](https://g6llc.gumroad.com/l/soundworks)  
-**PayPal eBook:** [paypal.me/pgrossi/213.24](https://www.paypal.com/paypalme/pgrossi/213.24)  
-**PayPal Hardcover:** [paypal.me/pgrossi/263.36](https://www.paypal.com/paypalme/pgrossi/263.36)
+**PayPal eBook:**   
+**PayPal Hardcover:** 
 
 ---
 
