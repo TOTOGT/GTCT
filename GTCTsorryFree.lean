@@ -307,8 +307,7 @@ theorem T₃_cayley_hamilton :
 The Tribonacci sequence with seed (a₁, a₂, a₃) = (1, 1, 2):
   a₁ = 1, a₂ = 1, a₃ = 2, a₄ = 4, a₅ = 7, a₆ = 13, ...
 
-Wait — Navrátil uses a₇ = 13 with a specific seeding.
-From the document Table (Section 9):
+Note — a different seeding convention gives a₇ = 13 instead of a₆ = 13 above:
   n=7: aₙ = 13, bₙ = 11, cₙ = 7  where T₃ⁿ = aₙT₃² + bₙT₃ + cₙI
 
 So Npf = a₇ = 13 refers to the coefficient sequence of the CH recurrence,
@@ -452,8 +451,27 @@ theorem weinberg_monotone (Δ₁ Δ₂ : ℝ)
     (h1 : 0 < Δ₁) (h2 : Δ₁ < Δ₂) (h3 : Δ₂ < 1) :
     Δ₁ / (1 + Δ₁) * (1 - Δ₁ ^ 2 / 6) <
     Δ₂ / (1 + Δ₂) * (1 - Δ₂ ^ 2 / 6) := by
-  -- This follows from the composition being increasing; detailed proof by calc
-  sorry -- This one requires more work; marked for later
+  have hd1 : Δ₁ < 1 := lt_trans h2 h3
+  have h2' : 0 < Δ₂ := lt_trans h1 h2
+  have hp1 : (0:ℝ) < 1 + Δ₁ := by linarith
+  have hp2 : (0:ℝ) < 1 + Δ₂ := by linarith
+  -- f(Δ) = Δ(1 - Δ²/6)/(1 + Δ). The difference of numerators factors through
+  -- (Δ₂ - Δ₁) times a bracket bounded below by 1/6 on (0,1).
+  have hb : (0:ℝ) < 1 - (Δ₁ ^ 2 + Δ₁ * Δ₂ + Δ₂ ^ 2) / 6 - Δ₁ * Δ₂ * (Δ₁ + Δ₂) / 6 := by
+    nlinarith [mul_pos h1 h2', mul_pos (sub_pos.mpr hd1) (sub_pos.mpr h3),
+               sq_nonneg Δ₁, sq_nonneg Δ₂, sq_nonneg (Δ₁ + Δ₂)]
+  have hid : Δ₂ * (1 - Δ₂ ^ 2 / 6) * (1 + Δ₁) - Δ₁ * (1 - Δ₁ ^ 2 / 6) * (1 + Δ₂)
+           = (Δ₂ - Δ₁) * (1 - (Δ₁ ^ 2 + Δ₁ * Δ₂ + Δ₂ ^ 2) / 6 - Δ₁ * Δ₂ * (Δ₁ + Δ₂) / 6) := by
+    ring
+  have hnum : 0 < Δ₂ * (1 - Δ₂ ^ 2 / 6) * (1 + Δ₁) - Δ₁ * (1 - Δ₁ ^ 2 / 6) * (1 + Δ₂) := by
+    rw [hid]; exact mul_pos (sub_pos.mpr h2) hb
+  rw [← sub_pos]
+  have hsplit : Δ₂ / (1 + Δ₂) * (1 - Δ₂ ^ 2 / 6) - Δ₁ / (1 + Δ₁) * (1 - Δ₁ ^ 2 / 6)
+      = (Δ₂ * (1 - Δ₂ ^ 2 / 6) * (1 + Δ₁) - Δ₁ * (1 - Δ₁ ^ 2 / 6) * (1 + Δ₂))
+        / ((1 + Δ₁) * (1 + Δ₂)) := by
+    field_simp
+  rw [hsplit]
+  exact div_pos hnum (mul_pos hp1 hp2)
 
 -- ============================================================
 -- SECTION 8: CP conservation from SL(3,ℤ)
@@ -499,6 +517,8 @@ PROVED (0 sorry):
   ✓ Dcrit_rank4                  — Dcrit(56) = 112
   ✓ Dcrit_monotone               — arithmetic monotonicity
   ✓ Dcrit_above_26               — no return to 26 above Npf=13
+  ✓ weinberg_monotone            — f(Δ) strictly increasing on (0,1)
+                                   [proved 29 Aug 2026 — was this file's one sorry]
   ✓ nBonacciPoly_2/3/4           — polynomial forms
   ✓ tribonacci_root_in_interval  — IVT existence of η₃
   ✓ weinberg_range               — formula is well-formed
