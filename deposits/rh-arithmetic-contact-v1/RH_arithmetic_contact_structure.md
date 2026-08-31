@@ -11,9 +11,18 @@ Formalisation: [`book4/ZetaReflection.lean`](https://github.com/TOTOGT/GTCT/blob
 Related corpus: [TOTOGT/geometry](https://github.com/TOTOGT/geometry) (*Principia Orthogona*, Books 1–8),
 [TOTOGT/AXLE](https://github.com/TOTOGT/AXLE) (Lean corpus).
 
-**Zenodo v2, 30 August 2026.** Record v1 (same day) carried the construction, the two
-reflection laws, the one-sided pole, the Riemann–Siegel identification and the refutation of
-the contactomorphism conjecture.
+**Zenodo v3, 30 August 2026.** Record v1 carried the construction, the two reflection laws,
+the one-sided pole, the Riemann–Siegel identification and the refutation of the
+contactomorphism conjecture. Record v2 added everything described below.
+
+**v3 is a file correction, and it is worth stating plainly what went wrong.** The v2 upload
+shipped the *pre-revision* `ZetaReflection.lean` — 5,749 bytes, containing none of the four
+theorems that v2's own §4.7 describes as proved and kernel-audited. It also uploaded the v1
+markdown source under the name the paper's manifest gives for the v2 source, and omitted
+`RELATED-WORK.md`, which that manifest lists. In a paper whose argument is that a published
+claim must resolve to the artifact that produces it, a deposit whose §4.7 did not resolve to
+its own Lean file is the one error that cannot be left standing. v3 carries the correct
+files and nothing else has changed.
 
 **What is new in v2.** Four statements that v1 listed as *argued* or *admitted* are now
 proved and kernel-audited in Lean 4 / Mathlib v4.32.0 — `chiLog_real_on_critical_line`,
@@ -547,15 +556,20 @@ using this meromorphic continuation. The exterior derivative formula $d\alpha_{\
 Everything that produces a number or a figure in this paper is deposited beside it, and
 every claim in §4.6 resolves to one of these files.
 
-| File | What it is |
-|---|---|
-| `rh_arithmetic_contact_v2.pdf` | this paper |
-| `RH_arithmetic_contact_structure.md` | its source |
-| `ZetaReflection.lean` | the formalisation of §4.7. Lean 4.32.0 / Mathlib v4.32.0 |
-| `verify_reflection_laws.py` | the 30-digit numerical checks of §4.5 and (FE-log) |
-| `figures.py` | generates Figure 1 |
-| `fig1_rh_lift.pdf`, `fig1_rh_lift.png` | Figure 1 |
-| `RELATED-WORK.md` | the citation audit behind §7.4, including what was rejected |
+| File | Bytes | What it is |
+|---|---|---|
+| `rh_arithmetic_contact_v3.pdf` | — | this paper |
+| `RH_arithmetic_contact_structure.md` | 46,6xx | its source |
+| `ZetaReflection.lean` | **11,344** | the formalisation of §4.7. Lean 4.32.0 / Mathlib v4.32.0 |
+| `RELATED-WORK.md` | 7,012 | the citation audit behind §7.4, including what was rejected |
+| `verify_reflection_laws.py` | 3,311 | the 30-digit numerical checks of §4.5 and (FE-log) |
+| `figures.py` | 2,847 | generates Figure 1 |
+| `fig1_rh_lift.pdf` / `.png` | 43,129 / 278,509 | Figure 1 |
+
+Byte counts are given so that a reader can tell at a glance whether the file they downloaded
+is the one this paper describes. `ZetaReflection.lean` must be **11,344 bytes** and must
+contain `chiLog_real_on_critical_line`, `Zlog_conj`, `gCoef_odd_in_t` and `cCoef_even_in_t`.
+If it does not, the deposit is wrong and this table is how you find out.
 
 **Repositories.** Source and Lean: [`TOTOGT/GTCT`](https://github.com/TOTOGT/GTCT),
 under `deposits/rh-arithmetic-contact-v1/`, with the formalisation also at
@@ -608,4 +622,4 @@ commonly circulated citation is wrong, the correction is noted.
 
 ---
 
-*Zenodo v2 · 30 August 2026 · Preprint, not peer reviewed · CC BY 4.0*
+*Zenodo v3 · 30 August 2026 · Preprint, not peer reviewed · CC BY 4.0*
