@@ -487,6 +487,32 @@ equations of state appear as Legendre submanifolds [19]. The present paper does 
 introduce that geometry; it applies it, with $(c,g)$ the real and imaginary parts of
 $-\zeta'/\zeta$ in place of the conjugate thermodynamic pairs.
 
+**And the structure group is the right one.** Mrugała [20] proves that for a thermodynamic
+system with $n$ degrees of freedom, the structure group of the tangent bundle of the
+$(2n+1)$-dimensional thermodynamic phase space reduces to $U(n)\times 1$. The construction
+of §3 is the case $n=1$: $\mathbb{R}^2_{(U,V)}\times\mathbb{R}_t$ is $2\cdot1+1$
+dimensional, and the reduced group is $U(1)\times 1$ &mdash; a circle acting on the contact
+plane, trivial along the remaining direction.
+
+That is precisely the geometry this paper uses, and it was not chosen for that reason. The
+phase of $\zeta$ rotates in the $(U,V)$ plane as $t$ advances, and $t$ itself is inert: the
+helices of Figure 1 are orbits of exactly this $U(1)$, and the $\times 1$ is the height
+coordinate they climb. It also explains why the form has *two* coefficients rather than one.
+$U(1)$ acts on a complex quantity, and $(c,g)$ are not two independent functions but the real
+and imaginary parts of a single meromorphic object, $-\zeta'/\zeta$. The two-coefficient
+shape of $\alpha_{\text{arith}} = c\,d\tilde U - g\,d\tilde V$ is what the structure group
+requires, not a modelling choice &mdash; which is a better reason for it than the one given
+in §4.1.
+
+The reading remains live rather than historical. Pernambuco and Céleri [21], working on
+quantum thermodynamics rather than on arithmetic, arrive at a thermodynamic gauge group
+$\mathcal{G}_T \simeq U(n_1)\times\cdots\times U(n_k)$ acting on degenerate energy
+subspaces, and identify irreversibility as a consequence of *restricted observability* under
+gauge reduction rather than of the underlying dynamics, which is reversible. Nothing in that
+work bears on $\zeta$ or on the claims of this paper, and it is cited only for the
+convergence: two independent routes into the geometry of thermodynamics, three decades
+apart, both landing on unitary groups as its symmetry.
+
 We think this makes the contribution clearer rather than smaller. The transferable object is
 not a new kind of manifold but a **dictionary entry**: the assertion that the arithmetic of
 $\zeta$ can be written in the same extended-phase-space language, with the functional
@@ -559,7 +585,7 @@ every claim in §4.6 resolves to one of these files.
 | File | Bytes | What it is |
 |---|---|---|
 | `rh_arithmetic_contact_v3.pdf` | — | this paper |
-| `RH_arithmetic_contact_structure.md` | 46,6xx | its source |
+| `RH_arithmetic_contact_structure.md` | 49,185 | its source |
 | `ZetaReflection.lean` | **11,344** | the formalisation of §4.7. Lean 4.32.0 / Mathlib v4.32.0 |
 | `RELATED-WORK.md` | 7,012 | the citation audit behind §7.4, including what was rejected |
 | `verify_reflection_laws.py` | 3,311 | the 30-digit numerical checks of §4.5 and (FE-log) |
@@ -619,6 +645,8 @@ commonly circulated citation is wrong, the correction is noted.
 17. H. Davenport, *Multiplicative Number Theory*, 3rd ed., rev. H. L. Montgomery, Springer GTM **74** (2000).
 18. The mathlib Community, *The Lean Mathematical Library*, CPP 2020. Version v4.32.0 used throughout.
 19. [verified] R. Mrugała, *Continuous contact transformations in thermodynamics*, Rep. Math. Phys. **33** (1993), 149–154. *(Circulated with the wrong title, year, volume and pages — "…in thermodynamic phase space", 1990, 29(1), 117–129 — none of which match the record.)* For the underlying contact structure on the extended thermodynamic state space see also R. Hermann, *Geometry, Physics and Systems*, Marcel Dekker (1973).
+20. [verified] R. Mrugała, *Structure group $U(n)\times 1$ in thermodynamics*, J. Phys. A: Math. Gen. **38** (2005), no. 50, 10905–10916. doi:10.1088/0305-4470/38/50/003. Verified against Crossref, 30 August 2026.
+21. T. Pernambuco and L. C. Céleri, *Geometry of restricted information: the case of quantum thermodynamics*, arXiv:2602.06716 [quant-ph] (2026). Cited for convergence only; it makes no claim bearing on this paper.
 
 ---
 
