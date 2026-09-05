@@ -31,10 +31,10 @@
   provable statement is the graded one: the defect is explicit and vanishes on
   σ = 1/2.
 
-  STATUS.  `reflection_law` and `chiLog_real_on_critical_line` are ADMITTED.
-  They are here as statements of record, not as results.  `--audit` correctly
-  reports sorryAx on them, which is the honest outcome and the point of the
-  file.  Nothing here claims a proof it does not have.
+  STATUS.  Ten of the eleven theorems here are proved.  `reflection_law` is the
+  only admitted statement; `--audit` reports sorryAx on it alone, which is the
+  honest outcome and the point of the file.  Nothing here claims a proof it does
+  not have.
 
   WHERE THIS LIVES.  Beside book4/ch12.html in the GTCT repo, which is Book 4's
   Lean home.  Deliberately NOT under GTCT/GCTC/ — that is the lean_lib the
@@ -157,8 +157,38 @@ theorem cCoef_even_in_t (σ t : ℝ) : cCoef σ (-t) = cCoef σ t := by
     Full side conditions: `s ∉ {0, −2, −4, …}` and `(1−s) ∉ {0, −2, −4, …}` for
     the two Γ factors, and `ζ(s) ≠ 0`, `ζ(1−s) ≠ 0`. The identity is therefore
     stated off the zeros — which is where g is defined anyway. Nothing in it
-    assumes WHERE the zeros are. -/
-theorem reflection_law (σ t : ℝ) :
+    assumes WHERE the zeros are.
+
+    WHY THE HYPOTHESES ARE IN THE SIGNATURE.  `Zlog = logDeriv riemannZeta`, so
+    at a zero of ζ the division is by zero and Lean returns 0.  Stated for all
+    real σ, t the identity would therefore be a claim about junk values at the
+    zeros and the Γ-poles — and at a hypothetical zero off the critical line the
+    left side degenerates to `0 - gCoef (1-σ) t` with nothing forcing that to
+    vanish while the right side does not.  The statement's truth would then
+    depend on where the zeros are, which is exactly what the paragraph above
+    says it must not do.  The four hypotheses close that gap.
+
+    NOTE the pole set.  Mathlib bundles `π^(-s/2) Γ(s/2)` as `Gammaℝ`, and
+    `Gammaℝ_eq_zero_iff : Gammaℝ s = 0 ↔ ∃ n : ℕ, s = -(2 * n)` — the negative
+    EVEN integers.  `∀ m : ℕ, s ≠ -m` would be strictly stronger than needed and
+    would not match the iff.  `hΓ` at `n = 0` supplies `s ≠ 0` and `hΓ'` at
+    `n = 0` supplies `s ≠ 1`, which are exactly what `differentiableAt_completedZeta`
+    wants at both `s` and `1 - s`; no fifth hypothesis is required, and
+    `Λ s ≠ 0` is derivable from `hζ` and `hΓ` rather than assumed.
+
+    ROUTE CORRECTION.  The product form is NOT `completedRiemannZeta_eq` — that
+    one is subtractive, `Λ s = Λ₀ s - 1/s - 1/(1-s)`.  Use
+    `riemannZeta_def_of_ne_zero (hs : s ≠ 0) : ζ s = Λ s / Gammaℝ s`
+    (Mathlib/NumberTheory/LSeries/RiemannZeta.lean:155), rearranged.
+
+    DEPOSIT.  Zenodo v1 (10.5281/zenodo.22179684) carries this statement without
+    the hypotheses.  The domain is narrower here, so the difference is called out
+    in the v2 release notes. -/
+theorem reflection_law (σ t : ℝ)
+    (hΓ  : ∀ n : ℕ, (⟨σ, t⟩ : ℂ) ≠ -(2 * n))
+    (hΓ' : ∀ n : ℕ, (1 - (⟨σ, t⟩ : ℂ)) ≠ -(2 * n))
+    (hζ  : riemannZeta ⟨σ, t⟩ ≠ 0)
+    (hζ' : riemannZeta (1 - (⟨σ, t⟩ : ℂ)) ≠ 0) :
     gCoef σ t - gCoef (1 - σ) t = (chiLog ⟨σ, t⟩).im := by
   sorry
 
@@ -179,6 +209,13 @@ theorem digamma_conj (s : ℂ) : digamma (conj s) = conj (digamma s) := by
     rw [h, Complex.conj_conj]
   simp only [digamma_def, logDeriv_apply, h1, Complex.Gamma_conj, map_div₀]
 
+/-- **The critical line, as a statement about conjugation.**  `1 − s = conj s`
+    holds exactly on `σ = 1/2`.  This is the whole reason the reflection
+    constraint degenerates there, stated on its own rather than buried inside a
+    `normSq` expansion. -/
+theorem one_sub_conj (t : ℝ) : (1 : ℂ) - ⟨1/2, t⟩ = conj (⟨1/2, t⟩ : ℂ) := by
+  simp [Complex.ext_iff] <;> norm_num
+
 /-- **PROVED 2026-08-30** (was ADMITTED) · why σ = 1/2 is distinguished: the
     gamma-factor defect is real there, so the reflection constraint holds
     identically on the critical wall.
@@ -192,9 +229,7 @@ theorem digamma_conj (s : ℂ) : digamma (conj s) = conj (digamma s) := by
 theorem chiLog_real_on_critical_line (t : ℝ) :
     (chiLog ⟨1/2, t⟩).im = 0 := by
   have hconj : (1 - (⟨1/2, t⟩ : ℂ)) / 2 = conj ((⟨1/2, t⟩ : ℂ) / 2) := by
-    apply Complex.ext <;>
-      simp [Complex.div_re, Complex.div_im, Complex.normSq_apply, Complex.sub_re,
-            Complex.sub_im, Complex.one_re, Complex.one_im] <;> ring
+    rw [map_div₀, Complex.conj_ofNat, one_sub_conj]
   rw [chiLog, hconj, digamma_conj]
   simp [Complex.sub_im, Complex.conj_im, Complex.ofReal_im]
   ring
@@ -214,8 +249,12 @@ end Book4.Ch12
 -- and double the sorryAx hits — 8 and 4 instead of 4 and 2, measured
 -- 2026-08-30.  An instrument must not count its own echo.
 --
--- EXPECTED under `--audit`:  4 declarations, 2 trusting sorryAx —
--- `reflection_law` and `chiLog_real_on_critical_line`, the two admitted
--- statements.  `lseries_vonMangoldt_eq_neg_Zlog` must NOT appear; if it does,
--- the bridge to von Mangoldt has broken and nothing above means anything.
+-- EXPECTED under `--audit`:  11 declarations, 1 trusting sorryAx —
+-- `reflection_law` alone.  This count moves in the SAME edit as any change to
+-- the declarations: an expectation that lags the artifact is not a check, it is
+-- a second claim to audit.
+-- `lseries_vonMangoldt_eq_neg_Zlog` must NOT appear; if it does, the bridge to
+-- von Mangoldt has broken and nothing above means anything.  Likewise
+-- `digamma_conj` and `gCoef_odd_in_t` must NOT appear: they are the load-bearing
+-- inputs to what is proved.
 -- ============================================================================
