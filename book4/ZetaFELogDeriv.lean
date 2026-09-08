@@ -64,12 +64,13 @@
       is what hΓ and hΓ' are for.
 
   STATUS OF THIS FILE — read before trusting a line of it.
-  NOT COMPILED.  Written 2026-09-08 in a session with no Lean toolchain on its
-  path, so nothing below has been through the elaborator.  Three `sorry`s are
-  marked and deliberate ([1], [2], and Λ s ≠ 0); everything else is a ROUTE, not
-  a proof, and the lemma applications may not fire as written — `deriv_comp_const_sub`'s
-  arity and the `rw` chain in step [4] are the two most likely to need adjusting.
-  Run it before quoting it:
+  FIRST RUN 2026-09-08 under Lean v4.32.0 / Mathlib v4.32.0: two errors, both
+  tactic hygiene at the end of a proof, both fixed below and noted where.  The
+  mathematics went through untouched — every library lemma named in the route
+  resolved, `deriv_comp_const_sub` took the arity written here, and step [3], the
+  reflection and the only step with content, elaborated with no `sorry`.  Three
+  `sorry`s remain and are deliberate: [1], [2], and Λ s ≠ 0.  The fixes have NOT
+  yet been re-run; do that before quoting a clean compile:
 
       cd ~/Desktop/geometry && bash tools/leancheck.sh ~/Desktop/GTCT/book4/ZetaFELogDeriv.lean
 
@@ -118,9 +119,13 @@ theorem ne_zero_of (s : ℂ) (hΓ : ∀ n : ℕ, s ≠ -(2 * n)) : s ≠ 0 := by
 theorem differentiableAt_Gammaℝ (s : ℂ) (h : Gammaℝ s ≠ 0) :
     DifferentiableAt ℂ Gammaℝ s := by
   have hinv : DifferentiableAt ℂ (fun z => (Gammaℝ z)⁻¹) s :=
-    (differentiable_Gammaℝ_inv s)
-  have := hinv.inv (by simpa using inv_ne_zero h)
-  simpa using this
+    differentiable_Gammaℝ_inv s
+  -- `Gammaℝ = ((Gammaℝ)⁻¹)⁻¹`, and the inner function is entire.
+  have h2 : DifferentiableAt ℂ (fun z => ((Gammaℝ z)⁻¹)⁻¹) s :=
+    hinv.inv (inv_ne_zero h)
+  -- `simpa only [inv_inv]` and not bare `simpa`: an unrestricted simp set
+  -- rewrote the hypothesis into a shape that no longer matched the goal.
+  simpa only [inv_inv] using h2
 
 /-! ### Step 1 · the logarithmic derivative of the archimedean factor -/
 
@@ -168,8 +173,13 @@ theorem logDeriv_completedRiemannZeta_add_one_sub (s : ℂ)
     exact h1
   have hval : completedRiemannZeta (1 - s) = completedRiemannZeta s :=
     completedRiemannZeta_one_sub s
-  rw [logDeriv_apply, logDeriv_apply, hderiv, hval]
-  field_simp
+  -- After the rewrites the goal is `(-a) / c + a / c = 0` with `a = deriv Λ (1-s)`
+  -- and `c = Λ s`.  `field_simp` left that unsolved; collecting the numerators
+  -- first turns it into `(-a + a) / c = 0`, which `simp` closes without needing
+  -- `c ≠ 0` at all.
+  simp only [logDeriv_apply]
+  rw [hderiv, hval, div_add_div_same]
+  simp
 
 /-! ### Step 4 · assembly -/
 
