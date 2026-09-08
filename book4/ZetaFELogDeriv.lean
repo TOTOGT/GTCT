@@ -64,8 +64,8 @@
       is what hΓ and hΓ' are for.
 
   STATUS OF THIS FILE — read before trusting a line of it.
-  FIRST RUN 2026-09-08 under Lean v4.32.0 / Mathlib v4.32.0: two errors, both
-  tactic hygiene at the end of a proof, both fixed below and noted where.  The
+  RUNS 2026-09-08 under Lean v4.32.0 / Mathlib v4.32.0.  Three errors across two
+  runs, all three tactic hygiene at the end of a proof, none of them mathematical.  The
   mathematics went through untouched — every library lemma named in the route
   resolved, `deriv_comp_const_sub` took the arity written here, and step [3], the
   reflection and the only step with content, elaborated with no `sorry`.  Three
@@ -173,13 +173,16 @@ theorem logDeriv_completedRiemannZeta_add_one_sub (s : ℂ)
     exact h1
   have hval : completedRiemannZeta (1 - s) = completedRiemannZeta s :=
     completedRiemannZeta_one_sub s
-  -- After the rewrites the goal is `(-a) / c + a / c = 0` with `a = deriv Λ (1-s)`
-  -- and `c = Λ s`.  `field_simp` left that unsolved; collecting the numerators
-  -- first turns it into `(-a + a) / c = 0`, which `simp` closes without needing
-  -- `c ≠ 0` at all.
+  -- After the rewrites the goal is `(-a) / c + a / c = 0`, with `a = deriv Λ (1-s)`
+  -- and `c = Λ s`.  That is a ring identity in a field — division is multiplication
+  -- by the formal inverse, so `(-a)·c⁻¹ + a·c⁻¹ = (-a + a)·c⁻¹ = 0` needs no
+  -- side condition — and `ring` closes it.  Two earlier attempts did not:
+  -- `field_simp` left it unsolved, and `div_add_div_same` is not a name in this
+  -- Mathlib.  Reaching for a lemma by remembered name cost two runs; the identity
+  -- was closed by the tactic that does not need a name.
   simp only [logDeriv_apply]
-  rw [hderiv, hval, div_add_div_same]
-  simp
+  rw [hderiv, hval]
+  ring
 
 /-! ### Step 4 · assembly -/
 
