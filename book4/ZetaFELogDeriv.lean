@@ -104,9 +104,8 @@ noncomputable def chiLog (s : ℂ) : ℂ :=
 theorem Gammaℝ_ne_zero_of (s : ℂ) (hΓ : ∀ n : ℕ, s ≠ -(2 * n)) :
     Gammaℝ s ≠ 0 := by
   rw [Ne, Gammaℝ_eq_zero_iff]
-  push_neg
-  intro n
-  exact hΓ n
+  rintro ⟨n, hn⟩
+  exact hΓ n hn
 
 /-- `s ≠ 0` falls out of `hΓ` at `n = 0`.  This is the step that makes the
     four-hypothesis statement self-sufficient: nothing further has to be assumed
@@ -137,12 +136,47 @@ theorem differentiableAt_Gammaℝ (s : ℂ) (h : Gammaℝ s ≠ 0) :
     factor is differentiated. -/
 theorem logDeriv_Gammaℝ (s : ℂ) (hΓ : ∀ n : ℕ, s ≠ -(2 * n)) :
     logDeriv Gammaℝ s = -(Real.log Real.pi : ℂ) / 2 + digamma (s / 2) / 2 := by
-  -- Gammaℝ s = π ^ (-s/2) * Γ(s/2), so the log derivative splits.
-  -- (a)  logDeriv (fun z => (π : ℂ) ^ (-z/2)) s = -log π / 2
-  --      via cpow_def_of_ne_zero and logDeriv of an exponential.
-  -- (b)  logDeriv (fun z => Γ (z/2)) s = (1/2) * digamma (s/2)
-  --      via HasDerivAt.logDeriv_Gamma with g = (· / 2), a = 1/2.
-  sorry
+  -- NOTE.  `HasDerivAt.logDeriv_Gamma` does NOT exist in Mathlib v4.32.0 -- it is
+  -- in a later version.  The Γ half therefore goes through `logDeriv_comp` and
+  -- `digamma_def` instead, which is one line longer and needs no future library.
+  have hne : Gammaℝ s ≠ 0 := Gammaℝ_ne_zero_of s hΓ
+  have hsplit : ((Real.pi : ℂ)) ^ (-s / 2) * Gamma (s / 2) ≠ 0 := by
+    rw [← Gammaℝ_def]; exact hne
+  obtain ⟨hA, hB⟩ := mul_ne_zero_iff.mp hsplit
+  -- `s / 2 = -m` would say `s = -(2m)`, which is exactly what hΓ forbids.
+  have hΓdiff : DifferentiableAt ℂ Gamma (s / 2) :=
+    differentiableAt_Gamma _ (fun m h => hΓ m (by linear_combination 2 * h))
+  have hg : DifferentiableAt ℂ (fun z : ℂ => z / 2) s := differentiableAt_id.div_const 2
+  -- (a)  the archimedean power.  `HasDerivAt.const_cpow` gives
+  --      d/dz π^(f z) = π^(f z) · log π · f'(z), and the π^(f s) cancels.
+  have hd : HasDerivAt (fun z : ℂ => ((Real.pi : ℂ)) ^ (-z / 2))
+      (((Real.pi : ℂ)) ^ (-s / 2) * Complex.log ((Real.pi : ℂ)) * (-(1 : ℂ) / 2)) s := by
+    have h1 : HasDerivAt (fun z : ℂ => -z / 2) (-(1 : ℂ) / 2) s := by
+      simpa using (hasDerivAt_neg s).div_const 2
+    exact h1.const_cpow (Or.inl (by simp))
+  have ha : logDeriv (fun z : ℂ => ((Real.pi : ℂ)) ^ (-z / 2)) s
+      = -(Real.log Real.pi : ℂ) / 2 := by
+    rw [logDeriv_apply, hd.deriv, ← Complex.ofReal_log Real.pi_pos.le]
+    field_simp
+  -- (b)  the Γ factor.  logDeriv (Γ ∘ (·/2)) s = logDeriv Γ (s/2) · (1/2), and
+  --      `digamma` is by definition `logDeriv Gamma`.
+  have hderiv2 : deriv (fun z : ℂ => z / 2) s = 1 / 2 := by
+    simp [deriv_div_const]
+  have hb : logDeriv (fun z : ℂ => Gamma (z / 2)) s = digamma (s / 2) / 2 := by
+    have hcomp : (fun z : ℂ => Gamma (z / 2)) = Gamma ∘ (fun z : ℂ => z / 2) := rfl
+    -- The type ascription is load-bearing.  Left to infer, `logDeriv_comp`
+    -- decomposed the composite as g := (s / ·) at x := 2, which typechecks as a
+    -- unification and is not the statement wanted.
+    have h : logDeriv (Gamma ∘ fun z : ℂ => z / 2) s
+        = logDeriv Gamma (s / 2) * deriv (fun z : ℂ => z / 2) s :=
+      logDeriv_comp hΓdiff hg
+    rw [hcomp, h, hderiv2, ← digamma_def]
+    ring
+  have hprod : Gammaℝ = fun z : ℂ => ((Real.pi : ℂ)) ^ (-z / 2) * Gamma (z / 2) :=
+    funext Gammaℝ_def
+  have hBdiff : DifferentiableAt ℂ (fun z : ℂ => Gamma (z / 2)) s := hΓdiff.comp s hg
+  rw [hprod, logDeriv_mul (f := fun z : ℂ => ((Real.pi : ℂ)) ^ (-z / 2))
+      (g := fun z : ℂ => Gamma (z / 2)) s hA hB hd.differentiableAt hBdiff, ha, hb]
 
 /-! ### Step 2 · the completed zeta splits -/
 
@@ -152,10 +186,33 @@ theorem logDeriv_Gammaℝ (s : ℂ) (hΓ : ∀ n : ℕ, s ≠ -(2 * n)) :
 theorem logDeriv_completedRiemannZeta (s : ℂ)
     (hΓ : ∀ n : ℕ, s ≠ -(2 * n)) (hζ : riemannZeta s ≠ 0) (hs1 : s ≠ 1) :
     logDeriv completedRiemannZeta s = logDeriv Gammaℝ s + Zlog s := by
-  -- riemannZeta_def_of_ne_zero gives ζ z = Λ z / Gammaℝ z for z ≠ 0;
-  -- rearrange to Λ = Gammaℝ * ζ on a neighbourhood of s, then logDeriv_fun_mul
-  -- with Gammaℝ_ne_zero_of, hζ, differentiableAt_Gammaℝ, differentiableAt_riemannZeta.
-  sorry
+  have hne : Gammaℝ s ≠ 0 := Gammaℝ_ne_zero_of s hΓ
+  -- `Λ = Gammaℝ · ζ` is FALSE at the zeros of Gammaℝ — at z = -2 the right side
+  -- vanishes and Λ(-2) = Λ(3) does not — so the identity is only available on a
+  -- neighbourhood, and the neighbourhood has to be produced.  The set where
+  -- Gammaℝ ≠ 0 is open because `1/Gammaℝ` is ENTIRE (`differentiable_Gammaℝ_inv`),
+  -- so it is the preimage of an open set under a continuous map.  Going through
+  -- the inverse avoids needing continuity of Gammaℝ itself, which is exactly what
+  -- is not available at its poles.
+  have hUopen : IsOpen {z : ℂ | Gammaℝ z ≠ 0} := by
+    have hset : {z : ℂ | Gammaℝ z ≠ 0} = (fun z : ℂ => (Gammaℝ z)⁻¹) ⁻¹' {0}ᶜ := by
+      ext z; simp [inv_eq_zero]
+    rw [hset]
+    exact isOpen_compl_singleton.preimage differentiable_Gammaℝ_inv.continuous
+  have hev : completedRiemannZeta =ᶠ[nhds s] fun z : ℂ => Gammaℝ z * riemannZeta z := by
+    filter_upwards [hUopen.mem_nhds hne] with z hz
+    -- z ≠ 0 comes free: Gammaℝ 0 = 0, so the good set is already inside {0}ᶜ.
+    have hz0 : z ≠ 0 := by
+      rintro rfl
+      exact hz (Gammaℝ_eq_zero_iff.mpr ⟨0, by simp⟩)
+    rw [riemannZeta_def_of_ne_zero hz0]
+    field_simp
+  have hswap : logDeriv completedRiemannZeta s
+      = logDeriv (fun z : ℂ => Gammaℝ z * riemannZeta z) s := by
+    rw [logDeriv_apply, logDeriv_apply, hev.deriv_eq, hev.eq_of_nhds]
+  rw [hswap, logDeriv_mul (f := Gammaℝ) (g := riemannZeta) s hne hζ
+      (differentiableAt_Gammaℝ s hne) (differentiableAt_riemannZeta hs1)]
+  rfl
 
 /-! ### Step 3 · the reflection, which is the only step with content -/
 
@@ -200,9 +257,10 @@ theorem Zlog_add_Zlog_one_sub (s : ℂ)
   have h1s0 : (1 - s) ≠ 0 := ne_zero_of (1 - s) hΓ'
   have hs1 : s ≠ 1 := fun h => h1s0 (by simp [h])
   have h1s1 : (1 - s) ≠ 1 := fun h => hs0 (by linear_combination -h)
-  -- Λ s ≠ 0, from the product form.
+  -- Λ s ≠ 0.  If it vanished, so would Λ s / Gammaℝ s, which is ζ s.
   have hΛ : completedRiemannZeta s ≠ 0 := by
-    sorry
+    rw [riemannZeta_def_of_ne_zero hs0] at hζ
+    exact fun h => hζ (by rw [h]; simp)
   -- the three steps
   have key := logDeriv_completedRiemannZeta_add_one_sub s hΛ
   rw [logDeriv_completedRiemannZeta s hΓ hζ hs1,
