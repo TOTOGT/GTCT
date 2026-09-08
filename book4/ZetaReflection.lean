@@ -31,10 +31,12 @@
   provable statement is the graded one: the defect is explicit and vanishes on
   σ = 1/2.
 
-  STATUS.  Ten of the eleven theorems here are proved.  `reflection_law` is the
-  only admitted statement; `--audit` reports sorryAx on it alone, which is the
-  honest outcome and the point of the file.  Nothing here claims a proof it does
-  not have.
+  STATUS 2026-09-08.  Every theorem in this file is proved.  `Zlog_add_Zlog_one_sub`,
+  admitted since 2026-08-30 and carried on a numerical check, is closed, and with it
+  `reflection_law`, which was only ever waiting on that one input.  `--audit` reports
+  no sorryAx anywhere.  The route, and the five runs and their corrections, are in
+  `book4/ZetaFELogDeriv.lean`; the axiom report is
+  `geometry/tools/verify-audit/2026-09-08/`.
 
   WHERE THIS LIVES.  Beside book4/ch12.html in the GTCT repo, which is Book 4's
   Lean home.  Deliberately NOT under GTCT/GCTC/ — that is the lean_lib the
@@ -54,6 +56,8 @@ import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Mathlib.NumberTheory.LSeries.Dirichlet
 import Mathlib.NumberTheory.Harmonic.ZetaAsymp
 import Mathlib.Analysis.SpecialFunctions.Gamma.Digamma
+import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
+import Mathlib.Analysis.Calculus.LogDeriv
 import Mathlib.Analysis.Calculus.Deriv.Star
 
 namespace Book4.Ch12
@@ -115,8 +119,196 @@ theorem cCoef_even_in_t (σ t : ℝ) : cCoef σ (-t) = cCoef σ t := by
     apply Complex.ext <;> simp
   simp only [cCoef, h, Zlog_conj, ← map_neg, Complex.conj_re]
 
-/-- ADMITTED · the transformation law of §12.2, numerically verified but not
-    proved here. This is the obligation, stated so it can be pointed at.
+/-! ### The functional equation, differentiated.
+
+    Proved 2026-09-08.  Four steps; the route and the corrections it cost are
+    recorded in `book4/ZetaFELogDeriv.lean`, the development file this came
+    from.  Nothing below depends on anything outside Mathlib v4.32.0. -/
+
+/-! ### Step 0 · what the hypotheses actually give -/
+
+/-- `Gammaℝ s ≠ 0` is exactly the hypothesis, read through `Gammaℝ_eq_zero_iff`. -/
+theorem Gammaℝ_ne_zero_of (s : ℂ) (hΓ : ∀ n : ℕ, s ≠ -(2 * n)) :
+    Gammaℝ s ≠ 0 := by
+  rw [Ne, Gammaℝ_eq_zero_iff]
+  rintro ⟨n, hn⟩
+  exact hΓ n hn
+
+/-- `s ≠ 0` falls out of `hΓ` at `n = 0`.  This is the step that makes the
+    four-hypothesis statement self-sufficient: nothing further has to be assumed
+    to get differentiability. -/
+theorem ne_zero_of (s : ℂ) (hΓ : ∀ n : ℕ, s ≠ -(2 * n)) : s ≠ 0 := by
+  simpa using hΓ 0
+
+/-- `Gammaℝ` is differentiable wherever it is nonzero, obtained by inverting the
+    entire function `1/Gammaℝ` rather than through `Γ`'s own API. -/
+theorem differentiableAt_Gammaℝ (s : ℂ) (h : Gammaℝ s ≠ 0) :
+    DifferentiableAt ℂ Gammaℝ s := by
+  have hinv : DifferentiableAt ℂ (fun z => (Gammaℝ z)⁻¹) s :=
+    differentiable_Gammaℝ_inv s
+  -- `Gammaℝ = ((Gammaℝ)⁻¹)⁻¹`, and the inner function is entire.
+  have h2 : DifferentiableAt ℂ (fun z => ((Gammaℝ z)⁻¹)⁻¹) s :=
+    hinv.inv (inv_ne_zero h)
+  -- `simpa only [inv_inv]` and not bare `simpa`: an unrestricted simp set
+  -- rewrote the hypothesis into a shape that no longer matched the goal.
+  simpa only [inv_inv] using h2
+
+/-! ### Step 1 · the logarithmic derivative of the archimedean factor -/
+
+/-- **The reusable half.**  `logDeriv Gammaℝ s = −½ log π + ½ ψ(s/2)`.
+
+    This is the piece that is worth offering to Mathlib on its own, independently
+    of anything below: it is a statement about `Gammaℝ` and `digamma` alone, both
+    of which are Mathlib's, and it is what one needs any time an archimedean
+    factor is differentiated. -/
+theorem logDeriv_Gammaℝ (s : ℂ) (hΓ : ∀ n : ℕ, s ≠ -(2 * n)) :
+    logDeriv Gammaℝ s = -(Real.log Real.pi : ℂ) / 2 + digamma (s / 2) / 2 := by
+  -- NOTE.  `HasDerivAt.logDeriv_Gamma` does NOT exist in Mathlib v4.32.0 -- it is
+  -- in a later version.  The Γ half therefore goes through `logDeriv_comp` and
+  -- `digamma_def` instead, which is one line longer and needs no future library.
+  have hne : Gammaℝ s ≠ 0 := Gammaℝ_ne_zero_of s hΓ
+  have hsplit : ((Real.pi : ℂ)) ^ (-s / 2) * Gamma (s / 2) ≠ 0 := by
+    rw [← Gammaℝ_def]; exact hne
+  obtain ⟨hA, hB⟩ := mul_ne_zero_iff.mp hsplit
+  -- `s / 2 = -m` would say `s = -(2m)`, which is exactly what hΓ forbids.
+  have hΓdiff : DifferentiableAt ℂ Gamma (s / 2) :=
+    differentiableAt_Gamma _ (fun m h => hΓ m (by linear_combination 2 * h))
+  have hg : DifferentiableAt ℂ (fun z : ℂ => z / 2) s := differentiableAt_id.div_const 2
+  -- (a)  the archimedean power.  `HasDerivAt.const_cpow` gives
+  --      d/dz π^(f z) = π^(f z) · log π · f'(z), and the π^(f s) cancels.
+  have hd : HasDerivAt (fun z : ℂ => ((Real.pi : ℂ)) ^ (-z / 2))
+      (((Real.pi : ℂ)) ^ (-s / 2) * Complex.log ((Real.pi : ℂ)) * (-(1 : ℂ) / 2)) s := by
+    have h1 : HasDerivAt (fun z : ℂ => -z / 2) (-(1 : ℂ) / 2) s := by
+      simpa using (hasDerivAt_neg s).div_const 2
+    exact h1.const_cpow (Or.inl (by simp))
+  have ha : logDeriv (fun z : ℂ => ((Real.pi : ℂ)) ^ (-z / 2)) s
+      = -(Real.log Real.pi : ℂ) / 2 := by
+    rw [logDeriv_apply, hd.deriv, ← Complex.ofReal_log Real.pi_pos.le]
+    field_simp
+  -- (b)  the Γ factor.  logDeriv (Γ ∘ (·/2)) s = logDeriv Γ (s/2) · (1/2), and
+  --      `digamma` is by definition `logDeriv Gamma`.
+  have hderiv2 : deriv (fun z : ℂ => z / 2) s = 1 / 2 := by
+    simp [deriv_div_const]
+  have hb : logDeriv (fun z : ℂ => Gamma (z / 2)) s = digamma (s / 2) / 2 := by
+    have hcomp : (fun z : ℂ => Gamma (z / 2)) = Gamma ∘ (fun z : ℂ => z / 2) := rfl
+    -- The type ascription is load-bearing.  Left to infer, `logDeriv_comp`
+    -- decomposed the composite as g := (s / ·) at x := 2, which typechecks as a
+    -- unification and is not the statement wanted.
+    have h : logDeriv (Gamma ∘ fun z : ℂ => z / 2) s
+        = logDeriv Gamma (s / 2) * deriv (fun z : ℂ => z / 2) s :=
+      logDeriv_comp hΓdiff hg
+    rw [hcomp, h, hderiv2, ← digamma_def]
+    ring
+  have hprod : Gammaℝ = fun z : ℂ => ((Real.pi : ℂ)) ^ (-z / 2) * Gamma (z / 2) :=
+    funext Gammaℝ_def
+  have hBdiff : DifferentiableAt ℂ (fun z : ℂ => Gamma (z / 2)) s := hΓdiff.comp s hg
+  rw [hprod, logDeriv_mul (f := fun z : ℂ => ((Real.pi : ℂ)) ^ (-z / 2))
+      (g := fun z : ℂ => Gamma (z / 2)) s hA hB hd.differentiableAt hBdiff, ha, hb]
+
+/-! ### Step 2 · the completed zeta splits -/
+
+/-- Near any `s ≠ 0`, `Λ` agrees with the product `Gammaℝ · ζ`, so its log
+    derivative splits.  The equality is only needed on a neighbourhood, which is
+    why `s ≠ 0` suffices. -/
+theorem logDeriv_completedRiemannZeta (s : ℂ)
+    (hΓ : ∀ n : ℕ, s ≠ -(2 * n)) (hζ : riemannZeta s ≠ 0) (hs1 : s ≠ 1) :
+    logDeriv completedRiemannZeta s = logDeriv Gammaℝ s + Zlog s := by
+  have hne : Gammaℝ s ≠ 0 := Gammaℝ_ne_zero_of s hΓ
+  -- `Λ = Gammaℝ · ζ` is FALSE at the zeros of Gammaℝ — at z = -2 the right side
+  -- vanishes and Λ(-2) = Λ(3) does not — so the identity is only available on a
+  -- neighbourhood, and the neighbourhood has to be produced.  The set where
+  -- Gammaℝ ≠ 0 is open because `1/Gammaℝ` is ENTIRE (`differentiable_Gammaℝ_inv`),
+  -- so it is the preimage of an open set under a continuous map.  Going through
+  -- the inverse avoids needing continuity of Gammaℝ itself, which is exactly what
+  -- is not available at its poles.
+  have hUopen : IsOpen {z : ℂ | Gammaℝ z ≠ 0} := by
+    have hset : {z : ℂ | Gammaℝ z ≠ 0} = (fun z : ℂ => (Gammaℝ z)⁻¹) ⁻¹' {0}ᶜ := by
+      ext z; simp [inv_eq_zero]
+    rw [hset]
+    exact isOpen_compl_singleton.preimage differentiable_Gammaℝ_inv.continuous
+  have hev : completedRiemannZeta =ᶠ[nhds s] fun z : ℂ => Gammaℝ z * riemannZeta z := by
+    filter_upwards [hUopen.mem_nhds hne] with z hz
+    -- z ≠ 0 comes free: Gammaℝ 0 = 0, so the good set is already inside {0}ᶜ.
+    have hz0 : z ≠ 0 := by
+      rintro rfl
+      exact hz (Gammaℝ_eq_zero_iff.mpr ⟨0, by simp⟩)
+    rw [riemannZeta_def_of_ne_zero hz0]
+    field_simp
+  have hswap : logDeriv completedRiemannZeta s
+      = logDeriv (fun z : ℂ => Gammaℝ z * riemannZeta z) s := by
+    rw [logDeriv_apply, logDeriv_apply, hev.deriv_eq, hev.eq_of_nhds]
+  rw [hswap, logDeriv_mul (f := Gammaℝ) (g := riemannZeta) s hne hζ
+      (differentiableAt_Gammaℝ s hne) (differentiableAt_riemannZeta hs1)]
+  rfl
+
+/-! ### Step 3 · the reflection, which is the only step with content -/
+
+/-- `Λ(1−s) = Λ(s)` differentiated.  The minus sign from `deriv_comp_const_sub`
+    is the whole of the functional equation as it acts on log derivatives. -/
+theorem logDeriv_completedRiemannZeta_add_one_sub (s : ℂ)
+    (hΛ : completedRiemannZeta s ≠ 0) :
+    logDeriv completedRiemannZeta s + logDeriv completedRiemannZeta (1 - s) = 0 := by
+  have hfun : (fun z : ℂ => completedRiemannZeta (1 - z)) = completedRiemannZeta := by
+    funext z; exact completedRiemannZeta_one_sub z
+  have hderiv : deriv completedRiemannZeta s = -deriv completedRiemannZeta (1 - s) := by
+    have h1 : deriv (fun z : ℂ => completedRiemannZeta (1 - z)) s
+        = -deriv completedRiemannZeta (1 - s) := deriv_comp_const_sub _ _ _
+    rw [hfun] at h1
+    exact h1
+  have hval : completedRiemannZeta (1 - s) = completedRiemannZeta s :=
+    completedRiemannZeta_one_sub s
+  -- After the rewrites the goal is `(-a) / c + a / c = 0`, with `a = deriv Λ (1-s)`
+  -- and `c = Λ s`.  That is a ring identity in a field — division is multiplication
+  -- by the formal inverse, so `(-a)·c⁻¹ + a·c⁻¹ = (-a + a)·c⁻¹ = 0` needs no
+  -- side condition — and `ring` closes it.  Two earlier attempts did not:
+  -- `field_simp` left it unsolved, and `div_add_div_same` is not a name in this
+  -- Mathlib.  Reaching for a lemma by remembered name cost two runs; the identity
+  -- was closed by the tactic that does not need a name.
+  simp only [logDeriv_apply]
+  rw [hderiv, hval]
+  ring
+
+/-- **PROVED 2026-09-08** (was ADMITTED) · the analytic input, no longer assumed.
+    Off the zeros of ζ and the poles of the two Γ factors, the logarithmic
+    derivative and its reflection sum to the gamma-factor defect.
+
+    The proof is Λ(1−s) = Λ(s) differentiated: `logDeriv Λ s + logDeriv Λ (1−s) = 0`,
+    then `logDeriv Λ = logDeriv Gammaℝ + logDeriv ζ`, then `logDeriv Gammaℝ` read off.
+    The four hypotheses are exactly the side conditions the route needs and are also
+    exactly sufficient — at `n = 0` they supply `s ≠ 0` and `s ≠ 1`, the two points
+    where ζ and Λ are not differentiable, so nothing further is assumed.
+
+    The numerical check that stood in place of this proof (30 digits, eight points,
+    max deviation 8.8e-16) is retained in the header as a record and is no longer
+    load-bearing. -/
+theorem Zlog_add_Zlog_one_sub (s : ℂ)
+    (hΓ  : ∀ n : ℕ, s ≠ -(2 * n))
+    (hΓ' : ∀ n : ℕ, (1 - s) ≠ -(2 * n))
+    (hζ  : riemannZeta s ≠ 0)
+    (hζ' : riemannZeta (1 - s) ≠ 0) :
+    Zlog s + Zlog (1 - s) = chiLog s := by
+  -- s ≠ 0 from hΓ at n = 0; s ≠ 1 from hΓ' at n = 0.
+  have hs0 : s ≠ 0 := ne_zero_of s hΓ
+  have h1s0 : (1 - s) ≠ 0 := ne_zero_of (1 - s) hΓ'
+  have hs1 : s ≠ 1 := fun h => h1s0 (by simp [h])
+  have h1s1 : (1 - s) ≠ 1 := fun h => hs0 (by linear_combination -h)
+  -- Λ s ≠ 0.  If it vanished, so would Λ s / Gammaℝ s, which is ζ s.
+  have hΛ : completedRiemannZeta s ≠ 0 := by
+    rw [riemannZeta_def_of_ne_zero hs0] at hζ
+    exact fun h => hζ (by rw [h]; simp)
+  -- the three steps
+  have key := logDeriv_completedRiemannZeta_add_one_sub s hΛ
+  rw [logDeriv_completedRiemannZeta s hΓ hζ hs1,
+      logDeriv_completedRiemannZeta (1 - s) hΓ' hζ' h1s1,
+      logDeriv_Gammaℝ s hΓ, logDeriv_Gammaℝ (1 - s) hΓ'] at key
+  -- key : (-logπ/2 + ψ(s/2)/2 + Zlog s) + (-logπ/2 + ψ((1-s)/2)/2 + Zlog (1-s)) = 0
+  rw [chiLog]
+  linear_combination key
+
+/-- **PROVED, from the one admitted input above** · the transformation law of
+    §12.2. The reduction below is kernel-checked; the only thing it consumes is
+    `Zlog_add_Zlog_one_sub`. The parity half is `gCoef_odd_in_t`, proved above,
+    which is what bridges `1 − s = (1−σ) − it` to the law's `(1−σ) + it`.
 
     WHAT REMAINS, as of 2026-08-30. The parity half is proved above
     (`gCoef_odd_in_t`), so the only missing input is
@@ -190,7 +382,17 @@ theorem reflection_law (σ t : ℝ)
     (hζ  : riemannZeta ⟨σ, t⟩ ≠ 0)
     (hζ' : riemannZeta (1 - (⟨σ, t⟩ : ℂ)) ≠ 0) :
     gCoef σ t - gCoef (1 - σ) t = (chiLog ⟨σ, t⟩).im := by
-  sorry
+  have hsub : (1 : ℂ) - (⟨σ, t⟩ : ℂ) = (⟨1 - σ, -t⟩ : ℂ) := by
+    apply Complex.ext <;> simp
+  have hodd := gCoef_odd_in_t (1 - σ) t
+  have hval : gCoef (1 - σ) (-t) = (Zlog (1 - (⟨σ, t⟩ : ℂ))).im := by
+    simp only [gCoef, hsub]
+  rw [hval] at hodd
+  have hg2 : gCoef (1 - σ) t = -((Zlog (1 - (⟨σ, t⟩ : ℂ))).im) := by linarith
+  have hkey := Zlog_add_Zlog_one_sub (⟨σ, t⟩ : ℂ) hΓ hΓ' hζ hζ'
+  rw [hg2, sub_neg_eq_add]
+  show (Zlog (⟨σ, t⟩ : ℂ)).im + (Zlog (1 - (⟨σ, t⟩ : ℂ))).im = (chiLog ⟨σ, t⟩).im
+  rw [← Complex.add_im, hkey]
 
 /-- Γ is conjugation-symmetric as a composite: `conj ∘ Γ ∘ conj = Γ`. -/
 theorem Gamma_conj_comp : (conj ∘ Gamma ∘ conj : ℂ → ℂ) = Gamma := by
@@ -249,10 +451,13 @@ end Book4.Ch12
 -- and double the sorryAx hits — 8 and 4 instead of 4 and 2, measured
 -- 2026-08-30.  An instrument must not count its own echo.
 --
--- EXPECTED under `--audit`:  11 declarations, 1 trusting sorryAx —
--- `reflection_law` alone.  This count moves in the SAME edit as any change to
--- the declarations: an expectation that lags the artifact is not a check, it is
--- a second claim to audit.
+-- EXPECTED under `--audit`:  18 declarations, 0 trusting sorryAx.  Six theorems
+-- were added on 2026-09-08 (Gammaℝ_ne_zero_of, ne_zero_of, differentiableAt_Gammaℝ,
+-- logDeriv_Gammaℝ, logDeriv_completedRiemannZeta,
+-- logDeriv_completedRiemannZeta_add_one_sub) and the two that trusted sorryAx —
+-- Zlog_add_Zlog_one_sub and reflection_law — no longer do.  This count moves in
+-- the SAME edit as any change to the declarations: an expectation that lags the
+-- artifact is not a check, it is a second claim to audit.
 -- `lseries_vonMangoldt_eq_neg_Zlog` must NOT appear; if it does, the bridge to
 -- von Mangoldt has broken and nothing above means anything.  Likewise
 -- `digamma_conj` and `gCoef_odd_in_t` must NOT appear: they are the load-bearing

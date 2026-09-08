@@ -64,22 +64,18 @@
       is what hΓ and hΓ' are for.
 
   STATUS OF THIS FILE — read before trusting a line of it.
-  STATUS 2026-09-08.  Compiles clean under Lean v4.32.0 / Mathlib v4.32.0 in 64s,
-  and NO `sorry` remains in the code — seven theorems, two definitions, all
-  elaborating.  That is not the same as verified and this file does not claim to
-  be: a clean compile says the elaborator accepted it, and says nothing about
-  what it rests on.  The gate is `#print axioms`, and until the report exists
-  the honest word is "compiles".
+  STATUS 2026-09-08.  CLOSED.  Compiles clean, no `sorry` in the code, and the
+  gate agrees: seven declarations, every one on `[propext, Classical.choice,
+  Quot.sound]`, no `sorryAx`.  Report written by the run at
+  `geometry/tools/verify-audit/2026-09-08/ZetaFELogDeriv.axioms.txt`.
 
-      cd ~/Desktop/geometry
-      bash tools/leancheck.sh --audit --full ~/Desktop/GTCT/book4/ZetaFELogDeriv.lean
+  The proof has been moved into `book4/ZetaReflection.lean`, where it replaces the
+  statement that had been admitted since 2026-08-30.  This file is kept as the
+  development record: it is where the route and its five runs live, and deleting it
+  would leave the corrected file with no account of how it was arrived at.
 
-  EXPECTED under `--audit`: 7 declarations, 0 trusting `sorryAx`, everything on
-  `[propext, Classical.choice, Quot.sound]`.  If any declaration reports more
-  than those three, the extra is the finding and this header is wrong.
-
-  Five runs were needed, and all five failures were tactic hygiene or a name read
-  from the wrong place.  None was mathematical; the route of the four steps below
+  Five runs, five failures, none mathematical — three tactic hygiene, two names
+  read from the docs site rather than from the pinned tree.  The four-step route
   never changed.  Each correction is recorded at its site rather than here.
 
   LIBRARY FACTS THIS LEANS ON — all confirmed present, 2026-09-08:
