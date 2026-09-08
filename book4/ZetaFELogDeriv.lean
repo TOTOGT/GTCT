@@ -64,15 +64,23 @@
       is what hΓ and hΓ' are for.
 
   STATUS OF THIS FILE — read before trusting a line of it.
-  RUNS 2026-09-08 under Lean v4.32.0 / Mathlib v4.32.0.  Three errors across two
-  runs, all three tactic hygiene at the end of a proof, none of them mathematical.  The
-  mathematics went through untouched — every library lemma named in the route
-  resolved, `deriv_comp_const_sub` took the arity written here, and step [3], the
-  reflection and the only step with content, elaborated with no `sorry`.  Three
-  `sorry`s remain and are deliberate: [1], [2], and Λ s ≠ 0.  The fixes have NOT
-  yet been re-run; do that before quoting a clean compile:
+  STATUS 2026-09-08.  Compiles clean under Lean v4.32.0 / Mathlib v4.32.0 in 64s,
+  and NO `sorry` remains in the code — seven theorems, two definitions, all
+  elaborating.  That is not the same as verified and this file does not claim to
+  be: a clean compile says the elaborator accepted it, and says nothing about
+  what it rests on.  The gate is `#print axioms`, and until the report exists
+  the honest word is "compiles".
 
-      cd ~/Desktop/geometry && bash tools/leancheck.sh ~/Desktop/GTCT/book4/ZetaFELogDeriv.lean
+      cd ~/Desktop/geometry
+      bash tools/leancheck.sh --audit --full ~/Desktop/GTCT/book4/ZetaFELogDeriv.lean
+
+  EXPECTED under `--audit`: 7 declarations, 0 trusting `sorryAx`, everything on
+  `[propext, Classical.choice, Quot.sound]`.  If any declaration reports more
+  than those three, the extra is the finding and this header is wrong.
+
+  Five runs were needed, and all five failures were tactic hygiene or a name read
+  from the wrong place.  None was mathematical; the route of the four steps below
+  never changed.  Each correction is recorded at its site rather than here.
 
   LIBRARY FACTS THIS LEANS ON — all confirmed present, 2026-09-08:
     Complex.Gammaℝ_def, Complex.Gammaℝ_eq_zero_iff, Complex.differentiable_Gammaℝ_inv
