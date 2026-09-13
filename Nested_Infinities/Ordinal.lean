@@ -1,3 +1,5 @@
+-- GATE-DECLARE: sorries = NestedInfinities.omega0_not_succ, NestedInfinities.omega0_lt_omega0_add_omega0, NestedInfinities.exists_epsilon0
+-- GATE-REASON: Nested Infinities scaffold. Ordinal API obligations; no published page cites these.
 /-
   © 2026 Pablo Nogueira Grossi — G6 LLC · MIT License
   Nested Infinities · Part A, Chapter 2: Ordinal Numbers and Epsilon Numbers
